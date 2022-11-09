@@ -1,0 +1,746 @@
+/* configurações inicias para as divs*/
+:root {
+    --preto: #1a1b1c;
+    --branco: rgb(242, 239, 239);
+    --azul: #525fd6;
+    --laranja: #f9995d;
+    --verde: rgb(90, 172, 90);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+html {
+    width: 100%;
+    height: 100vh;
+    background-color: #e0e0e06b;
+    background-size: 100% 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    min-height: 100vh;
+    scroll-snap-type: y mandatory;
+}
+
+section::-webkit-scrollbar {
+    width: 12px;
+    /* width of the entire scrollbar */
+}
+
+section::-webkit-scrollbar-track {
+    background: none;
+    /* color of the tracking area */
+}
+
+section::-webkit-scrollbar-thumb {
+    background-color: grey;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 1px solid rgb(239, 238, 235);
+    /* creates padding around scroll thumb */
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: #e0e0e06b;
+    flex: 1 0 auto;
+
+}
+
+a {
+    font-weight: 600;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 16pt;
+}
+
+.referencia-header {
+    text-decoration: none;
+    color: white;
+    display: flex;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* TITULO DA PAGINA
+/* -----------------------------------------------------------------------------------------*/
+
+.header-titulo {
+    width: 100%;
+    min-width: 300px;
+    height: 65px;
+    background: linear-gradient(to right, rgb(0, 0, 0), var(--preto));
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    box-shadow: 0px 0px 10px -4px rgb(48, 48, 48);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15pt;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.titulo-section {
+    background-color: #38383a00;
+    margin-top: 2px;
+    border-radius: 5px;
+
+}
+
+.titulo-principal {
+    position: sticky;
+    top: 0px;
+    font-size: 12pt;
+    z-index: 100;
+    box-shadow: 0px 3px 20px -7px black;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.titulo-principal p {
+    margin-right: 30px;
+    font-size: 12pt;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* SECTION PRINCIPAL
+/* -----------------------------------------------------------------------------------------*/
+
+.section-principal {
+    width: 70%;
+    min-width: 300px;
+    height: 550px;
+    margin: 20px auto 10px auto;
+    border-radius: 5px;
+    background: none;
+    box-shadow: 0px 0px 6px rgba(242, 239, 239, 0.853);
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* PRINCIPAIS BOTOES DA PAGINA DE VENDA (ADD , PESQUISAR)
+/* -----------------------------------------------------------------------------------------*/
+
+.botoes-principais {
+    width: 100%;
+    height: 80px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    padding-top: 10px;
+    display: flex;
+    position: relative;
+    padding: 13px;
+    border-radius: 20px;
+}
+
+.botao {
+    width: 180px;
+    height: 50px;
+    color: white;
+    background-color: #313232;
+    border: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 12pt;
+    box-shadow: 3px 3px 10px #41434286;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.botao:hover { 
+    background-color: var(--preto);
+    box-shadow: 1px 1px 12px -2px rgba(120, 118, 118, 0.818);
+}
+
+.div-pesquisar {
+    position: absolute;
+    right: 0;
+    display: flex;
+    margin-right: 10px;
+}
+
+.pesquisar {
+    height: 30px;
+    width: 160px;
+    margin: 8px;
+    padding: 4px;
+    outline: none;
+    border-radius: 20px;
+    border: 2.6px solid #1d1e20;
+    background: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-weight: 500;
+    transition: 0.4s;
+}
+.pesquisar::placeholder{
+    font-weight: 600;
+    color: #8d8d90;
+}
+.pesquisar:focus{
+    width: 250px;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* SECTION QUE CONTEM AS TABELAS DOS PRODUTOS
+/* -----------------------------------------------------------------------------------------*/
+
+.section-produtos {
+    display: flex;
+    justify-content: center;
+    width: auto;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* CSS DAS TABELAS
+/* -----------------------------------------------------------------------------------------*/
+
+th {
+    color: black;
+    font-size: 12pt;
+    text-transform: uppercase;
+    height: 35px;
+    background-color: #fbfcfd;
+}
+
+td {
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 14pt;
+    padding: 5px;
+    font-weight: 550;
+    text-shadow: 0px 0px 3px rgb(193, 191, 191);
+}
+
+tr:nth-child(even) {
+    background-color: #e3e1e1;
+}
+
+table {
+    width: 98%;
+    height: 50%;
+    max-height: 200px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    border-collapse:separate;
+
+    padding: 5px;
+    /*
+    scroll-snap-type: y mandatory;
+    scroll-snap-align: start;
+    */
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+}
+
+thead:hover,
+.tr:hover,
+.tr {
+    background: none;
+}
+
+tr:hover {
+    background-color: rgb(225, 224, 224);
+}
+
+tr {
+    padding: 0px;
+}
+
+table td .editar  {
+    background-color: #525fd6;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px -1px rgba(0, 0, 0, 0.884);
+}
+table td .editar:nth-child(2){
+    background-color: rgb(180, 23, 23);
+}
+
+
+/* -----------------------------------------------------------------------------------------*/
+/* CSS PARA EMBAÇAR O FUNDO 
+/* -----------------------------------------------------------------------------------------
+
+.fundo-registrar {
+    width: 100%;
+    min-width: 200px;
+    height: 100%;
+    min-height: 200px;
+    position: fixed;
+    backdrop-filter: blur(25px);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1d1e2032;
+
+    display: none;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* CADASTRAR UM NOVO PRODUTO
+/* -----------------------------------------------------------------------------------------
+
+#modal-entrada {
+    width: 450px;
+    height: auto;
+    border-radius: 6px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.854);
+    box-shadow: 0px 0px 30px 1px rgba(11, 11, 11, 0.426);
+    display: none;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* CSS PADRAO DO HEADER 
+/* -----------------------------------------------------------------------------------------*/
+
+.header-cadastro {
+    height: 60px;
+    width: 100%;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10pt;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+.header-cadastro .img-fechar {
+    width: 20px;
+    height: 100%;
+    background: none;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* SECTION DO CADASTRO DE UM NOVO PRODUTO
+/* -----------------------------------------------------------------------------------------*/
+
+
+/* -----------------------------------------------------------------------------------------*/
+/* CATEGORIA E FORNECEDORES (SELECT DA PAGINA DOS PRODUTOS)
+/* -----------------------------------------------------------------------------------------*/
+
+.div-categoria-fornecedor {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.div-categoria-fornecedor .label-fornecedor select {
+    width: 100%;
+}
+
+.div-categoria-fornecedor .label-categoria select {
+    width: 100%;
+}
+
+.section-cadastro .select {
+    height: 35px;
+    width: 83%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 13pt;
+}
+.botoes-submit{
+    width: 100%;
+    height: auto;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+ .botoes-submit .botao1, .botoes-submit .botao2{
+    width: 100px;
+    height: 35px;
+    color: rgb(255, 255, 255);
+    font-size: 10pt;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.47);
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+ .botoes-submit .botao1{
+    background-color: var(--azul);
+}
+ .botoes-submit .botao2{
+    background-color: rgb(164, 24, 24);
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* FUNDO PRA REGISTRAR NOVA CATEGORIA
+/* -----------------------------------------------------------------------------------------*/
+
+.fundo-registrar-categoria,
+.fundo-registrar-fornecedor {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    position: fixed;
+    backdrop-filter: blur(10px);
+    top: 0;
+    left: 0;
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    background-color: #1d1e2096;
+}
+
+.label-categoria select {
+    width: 100%;
+}
+
+.registrar-fornecedor {
+    position: absolute;
+}
+
+.fundo-registrar-categoria .registrar-categoria,
+.registrar-fornecedor {
+    width: 450px;
+    height: 180px;
+    border-radius: 2px;
+    background-color: rgb(254, 254, 254);
+    box-shadow: 0px 0px 20px rgb(58, 57, 57);
+
+    display: none;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2000;
+}
+
+.header-cadastro h1 {
+    margin: 15px;
+}
+
+.fundo-registrar-categoria .registrar-categoria .img-fechar {
+    width: 25px;
+    height: 27px;
+    background: none;
+    top: 0;
+    right: 0;
+    margin: 15px;
+    position: absolute;
+}
+
+.fundo-registrar-categoria .registrar-categoria input {
+    width: 90%;
+    margin: 12px;
+    height: 30px;
+    outline: none;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    border: 1px solid rgba(50, 49, 49, 0.592);
+}
+
+.fundo-registrar-categoria .registrar-categoria button {
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* PÁGINA EDITAR CATEGORIA 
+/* -----------------------------------------------------------------------------------------*/
+
+.section-editar-categoria {
+    max-width: 600px;
+}
+
+.section-secundaria-editar-categoria {
+    display: block;
+}
+
+section .input_editar {
+    width: 90%;
+    margin: 10px auto 5px auto;
+    height: 50px;
+    border-radius: 5px;
+    outline: #525fd6;
+    margin: auto;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.label-titulo {
+    font-size: 12pt;
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* BARRA LATERAL
+/* -----------------------------------------------------------------------------------------*/
+
+.barra-lateral {
+    min-height: 100%;
+    width: 18%;
+    background-color: #101010;
+    max-width: 300px;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.barra-lateral header {
+    text-align: center;
+    margin: 20px auto 20px auto;
+    font-size: 10pt;
+}
+
+.barra-lateral section {
+    float: left;
+    width: 100%;
+}
+
+.barra-lateral a {
+    justify-content: left;
+    padding-left: 50px;
+    text-decoration: none;
+    font-weight: 200;
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    font-size: 20pt;
+}
+
+.barra-lateral a:hover {
+    background-color: #f98b465c;
+}
+
+.selecionado {
+    /*background-color: #151515;*/
+    background-color: #FF731D;
+}
+
+.barra-lateral span {
+    font-size: 14pt;
+    margin-left: 5px;
+
+}
+
+.barra-lateral .imagem {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto 0px auto;
+}
+/* -----------------------------------------------------------------------------------------*/
+/* MSG
+/* -----------------------------------------------------------------------------------------*/
+    .msg{
+        width: 40%;
+        height: 70px;
+        background-color: rgb(58, 88, 165);
+        border-radius: 7px;
+        box-sizing: border-box;
+        box-shadow: 1px 1px 5px rgb(66, 66, 66);
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        left: 30%;
+        margin: 10px auto 0px auto;
+        z-index: 101;
+        color: white;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size: 8pt;
+        text-transform: uppercase;
+        font-weight: 400;
+        display: flex;
+        top: -100px;
+        transition: 0.5s;
+    }
+
+/* -----------------------------------------------------------------------------------------*/
+/* FOOTER
+/* -----------------------------------------------------------------------------------------*/
+
+footer {
+    width: 100%;
+    background-color: var(--laranja);
+    height: 55px;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 12pt;
+    box-shadow: 3px 3px 12px -2px #101010c5;
+}
+
+/* -----------------------------------------------------------------------------------------*/
+/* RESPONSIVIDADE
+/* -----------------------------------------------------------------------------------------*/
+
+@media screen and (max-width: 720px) {
+    .titulo-section {
+        background-color: rgba(255, 255, 255, 0);
+        color: white;
+        font-size: 22pt;
+        height: 70px;
+        justify-content: center;
+        text-shadow: 0px 0px 2px rgb(136, 135, 135);
+
+    }
+
+    .section-principal {
+        margin: 0;
+        width: 100%;
+    }
+
+    /* botoes principais*/
+    .botoes-principais {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        min-width: 10px;
+        width: 100%;
+    }
+
+    .div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: auto 0 8px auto;
+        margin-left: 0;
+
+    }
+
+    .div-pesquisar {
+        position: relative;
+        margin-top: 15px;
+    }
+
+    .btn-pesquisar {
+        min-width: 40px;
+        margin-left: 5px;
+    }
+
+    .botao {
+        width: 90%;
+        height: 120px;
+        position: relative;
+        min-width: 300px;
+        margin: 0;
+        font-size: 24pt;
+    }
+
+    .pesquisar {
+        width: 80%;
+        position: relative;
+        margin: 3px;
+    }
+
+    /* section que vai conter os produtos */
+
+    .section-produtos table {
+        width: 80%;
+        left: 0;
+        margin: 3px;
+    }
+
+}
+
+/* registrar produto*/
+@media screen and (max-width: 720px) {
+    .fundo-registrar {
+        width: 100%;
+        min-width: 200px;
+        position: absolute;
+        height: 100%;
+    }
+
+    #modal-entrada {
+
+        width: 100%;
+        height: 100%;
+        min-height: 620px;
+        position: absolute;
+        display: block;
+    }
+
+    .header-cadastro {
+        margin: 0;
+        width: 100%;
+        height: 70px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .header-cadastro h1 {
+        margin: 15px;
+    }
+
+    #modal-entrada {
+        width: 100%;
+        display: block;
+
+    }
+
+    #modal-entrada .section-cadastro input {
+        width: 95%;
+    }
+
+    .header-cadastro .img-fechar {
+        width: 25px;
+        height: 27px;
+        background: none;
+        top: 0;
+        right: 0;
+        margin: 20px;
+        position: absolute;
+
+    }
+
+    label {
+        display: block;
+    }
+
+    .section-cadastro .label-titulo {
+        font-size: 25pt;
+    }
+}
