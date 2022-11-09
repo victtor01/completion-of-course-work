@@ -601,13 +601,13 @@ section .input_editar {
 
 footer {
     width: 100%;
-    background-color: var(--laranja);
+    background-color: var(--branco);
     height: 55px;
     border-radius: 5px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 12pt;
-    box-shadow: 3px 3px 12px -2px #101010c5;
+    box-shadow: 3px 3px 12px -2px #787777c5;
 }
 
 /* -----------------------------------------------------------------------------------------*/
