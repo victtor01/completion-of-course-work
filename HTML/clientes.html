@@ -1,0 +1,130 @@
+<?php
+include('../PHP/conexao.PHP');
+include_once('../PHP/produto.php');
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <script src="../JS/script.js"></script>
+    <script src="../modal/modal.js"></script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../modal/modal.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <title>Produtos</title>
+
+</head>
+<body>
+    <div class="msg" id="msg2" style="background-color: red;">
+        <h2> Algo deu errado</h2>
+    </div>
+    <div class="msg" id="msg1">
+        <h2>Ação conluída com sucesso!</h2>
+    </div>
+
+    <header class="header-titulo titulo-principal">
+        <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
+            <a href="painel.html" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
+                <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px;">
+                <h1 style="margin-right: 50px;"> Controle de Estoque </h1>
+            </a>
+            <div style="right: 0; position: absolute; color: #FF731D; display: flex;">
+                <h2> Ola, admin! </h2>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="barra-lateral">
+            <header>
+                <div class="imagem">
+                    <img src="../imagens/admin.png" width="150" height="150">
+                </div>
+                <h1> Admin</h1>
+            </header>
+            <section>
+                <a href="painel.html">
+                    <ion-icon name="desktop-outline"></ion-icon> <span> Home </span>
+                </a>
+                <a href="produtos.php">
+                    <ion-icon name="bag-outline"></ion-icon> <span> Produtos </span>
+                </a>
+                <a href="categoria.php">
+                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categorias </span>
+                </a>
+                <a href="fornecedores.php">
+                    <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
+                </a>
+                <a href="#">
+                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
+                </a>
+                <button class="clientes-funcionarios">
+                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                    <ion-icon name="chevron-forward-outline"></ion-icon>    
+                </button>
+                <a href="#" class="sair">
+                    <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
+                </a>
+            </section>
+        </div>
+
+        <section class="section-principal">
+            <header class="header-titulo titulo-section">
+                <h1>
+                    Produtos
+                </h1>
+            </header>
+
+            <div class="botoes-principais">
+                <div class="div">
+                    <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
+                        <ion-icon name="enter-outline" style="width: 30px; height: 100%;"></ion-icon>
+                        Entrada
+                    </button>
+                </div>
+                <div class="div-pesquisar div">
+                    <input type="text" placeholder="Pesquise..." class="pesquisar">
+                    <button type="button" class="btn-pesquisar" style="border: none; background: none;">
+                        <img src="../imagens/lupa.png" width="25px" height="25px">
+                    </button>
+                </div>
+
+                <form action="../PHP/produto.php" method="post">
+
+                    <div class="div">
+                        <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
+                            <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
+                            Saída
+                        </button>
+                    </div>
+            </div>
+
+            <section class="section-produtos">
+                <table>
+                    <?php
+
+                    $produto = new produto;
+                    $produto->mostrar_produtos();
+
+                    ?>
+                </table>
+            </section>
+
+            <footer style='margin-top: 15px;'>
+            </footer>
+
+        </section>
+
+        </form>
+    </main>
+
+</body>

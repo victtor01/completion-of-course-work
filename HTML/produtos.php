@@ -43,14 +43,11 @@ include_once('../PHP/produto.php');
     <header class="header-titulo titulo-principal">
         <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
             <a href="painel.html" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
-                <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px">
+                <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px;">
                 <h1 style="margin-right: 50px;"> Controle de Estoque </h1>
             </a>
             <div style="right: 0; position: absolute; color: #FF731D; display: flex;">
                 <h2> Ola, admin! </h2>
-                <button>
-                    Sair
-                </button>
             </div>
         </div>
     </header>
@@ -71,18 +68,19 @@ include_once('../PHP/produto.php');
                     <ion-icon name="bag-outline"></ion-icon> <span> Produtos </span>
                 </a>
                 <a href="categoria.php">
-                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categoria </span>
+                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categorias </span>
                 </a>
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
                 <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Caixa </span>
+                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Adicionar </span>
-                </a>
-                <a href="#">
+                <button class="clientes-funcionarios">
+                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                    <ion-icon name="chevron-forward-outline"></ion-icon>    
+                </button>
+                <a href="#" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
             </section>
@@ -103,9 +101,9 @@ include_once('../PHP/produto.php');
                     </button>
                 </div>
                 <div class="div-pesquisar div">
-                    <input type="text" placeholder="pesquisar produto..." class="pesquisar">
+                    <input type="text" placeholder="Pesquise..." class="pesquisar">
                     <button type="button" class="btn-pesquisar" style="border: none; background: none;">
-                        <img src="../imagens/lupa.png" width="30px" height="30px">
+                        <img src="../imagens/lupa.png" width="25px" height="25px">
                     </button>
                 </div>
 
@@ -131,8 +129,7 @@ include_once('../PHP/produto.php');
             </section>
 
             <footer style='margin-top: 15px;'>
-
-            </footer>;
+            </footer>
 
         </section>
 
@@ -260,7 +257,7 @@ include_once('../PHP/produto.php');
         <header class="header-cadastro">
             <h1>Saída dos produtos</h1>
             <button type="button" style="background: none; border: none;" onclick="fecharmodal('button-saida-fechar')">
-                <img src="../imagens/fechar.png" class="img-fechar">
+            <ion-icon style="width: 40px; height: 40px;"name="close-outline"></ion-icon>
             </button>
         </header>
 

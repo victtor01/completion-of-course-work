@@ -1,6 +1,6 @@
 <?php
 include('../PHP/conexao.php');
-include('../PHP/index.php');
+include('../PHP/fornecedor.php');
 ?>
 
 <!DOCTYPE html>

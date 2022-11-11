@@ -44,26 +44,6 @@ function drawChart() {
 
 // estilo com JS 
 
-function clicar() {
-  let fundo = document.getElementById("fundo-registrar")
-  let registro = document.getElementById("registrar-produto")
-
-  fundo.style.display = "flex";
-  registro.style.display ="block";
-
-}
-
-function fechar() {
-var contar = 0;
-
-let fundo = document.getElementById("fundo-registrar")
-let registro = document.getElementById("registrar-produto")
-
-fundo.style.display = "none";
-registro.style.display ="none";
-
-}
-
 function clicar_categoria(){
   let fundo1 = document.getElementById("fundo-registrar-categoria");
   let registro = document.getElementById("registrar-categoria");
@@ -86,20 +66,4 @@ function clicar_fornecedor() {
   let registro = document.getElementById("registrar-fornecedor");
   fundo.style.display = "flex";
   registro.style.display = "block";
-}
-
-function formatarMoeda() {
-  var elemento = window.document.getElementById('fornecedor');
-  var valor = elemento.value;
-  valor = valor + '';
-  valor = parseInt(valor.replace(/[\D]+/g, ''));
-  valor = valor + '';
-  valor = valor.replace(/([0-9]{2})$/g, ",$1");
-
-  if (valor.length > 6) {
-      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
-  }
-
-  elemento.value = valor;
-  if(valor == 'NaN') elemento.value = '';
 }

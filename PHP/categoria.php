@@ -44,6 +44,11 @@ class categoria{
             echo "<tr>";
             echo "<td>" . $user_data['id_categoria'] . "</td>";
             echo "<td>" . $user_data['nome'] . "</td>";
+            if($user_data['descricao'] == null || $user_data['descricao'] == ' '){
+                echo "<td> Não há descrição da categoria </td>";
+            }else{
+                echo "<td>" . $user_data['descricao']. "</td>";
+            }
 
             echo "<td style=";
             if ($soma == 0) {
@@ -55,7 +60,7 @@ class categoria{
 
             // BOTOES PARA EDITAR E EXCLUIR
             echo " 
-                    <td style='max-width: 30px;'>
+                    <td style='min-width: 35px;'>
                     <button class='editar' type='button'>
                         <a style='width: 40px; height: 40px;'name='id_categoria' href='editar.php?id_categoria=$user_data[id_categoria]&nome=$user_data[nome]'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
@@ -90,7 +95,6 @@ class categoria{
         header('Location: ../HTML/categoria.php');
         die();
     }
-   
 }
 
 if(isset($_POST['nome']) && isset($_POST['obs'])){

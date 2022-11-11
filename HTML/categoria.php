@@ -89,6 +89,7 @@ include('../PHP/categoria.php');
                         <tr class="tr">
                             <th> ID </th>
                             <th> Nome </th>
+                            <th> Descrição </th>
                             <th> Quantidade de Itens</th>
                             <th> Ações</th>
                         </tr>

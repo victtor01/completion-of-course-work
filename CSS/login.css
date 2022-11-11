@@ -1,0 +1,115 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+html{
+    min-height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.525), rgba(0, 0, 0, 0.667)), url(../imagens/fundo_login_5.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(30px);
+}
+#main{
+    width: 460px;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 25px 10px rgba(45, 45, 45, 0.4);
+    padding: 15px;
+    background-color: rgba(18, 18, 18, 0.603);
+    border-radius: 10px;
+}
+#header{
+    width: 100%;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+#header h1{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 1.6em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+#section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 25px;
+}
+#section form label{
+    margin-top: 15px;
+    width: 100%;
+}
+#section form label span{
+    color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+#section form input{
+    border: none;
+    width: 100%;
+    background: none;
+    outline: none;
+    font-size: 14pt;
+}
+.div-input::placeholder{
+    color: rgb(131, 131, 131);
+    font-size: 12pt;
+}
+.div-input{
+    width: 100%;
+    height: 40px;
+    border-radius: 25px;
+    border: none;
+    padding-left: 11px;
+    font-size: 14pt;
+    background-color: rgb(189, 188, 188);
+    margin-top: 3px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    margin: 5px auto 15px auto;
+}
+.div-input ion-icon{
+    z-index: 2;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+    left: 0;
+}
+#acessar{
+    width: 100%;
+    margin-top: 50px;
+    height: 40px;
+    border-radius: 20px;
+    color: aliceblue;
+    background-color: rgb(34, 33, 33);  
+    border: none;
+    cursor: pointer;
+    font-size: 13pt;
+    transition: 0.4s;
+}
+#acessar:hover{
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 1px rgb(55, 55, 55);
+}
+#footer{
+    position: absolute;
+    bottom: 0;
+    color: aliceblue;
+}
