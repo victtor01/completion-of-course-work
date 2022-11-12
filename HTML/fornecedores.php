@@ -44,7 +44,7 @@ include('../PHP/fornecedor.php');
                 <h1> Admin</h1>
             </header>
             <section>
-                <a href="painel.html">
+                <a href="painel.php">
                     <ion-icon name="desktop-outline"></ion-icon> <span> Home </span>
                 </a>
                 <a href="produtos.php">

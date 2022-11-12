@@ -100,7 +100,7 @@
 
                 <button class="acao" id="fornecedores">
     
-                   <p> Total de <?php ?>fornecedores </p>
+                   <p> Total de <?php ?> fornecedores </p>
                    <div class="link_acao" id="link_fornecedores">
                     <a href="fornecedores.php">Fornecedores</a>
                     </div>
