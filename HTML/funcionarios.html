@@ -1,8 +1,3 @@
-<?php
-include('../PHP/conexao.PHP');
-include_once('../PHP/produto.php');
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -33,13 +28,6 @@ include_once('../PHP/produto.php');
         <h2>Ação conluída com sucesso!</h2>
     </div>
 
-    <?php
-    if (!empty($_GET['msg'])) {
-        include('../php/mensagem.php');
-        mensagem($_GET['msg']);
-    }
-    ?>
-
     <header class="header-titulo titulo-principal">
         <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
             <a href="painel.html" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
@@ -61,10 +49,10 @@ include_once('../PHP/produto.php');
                 <h1> Admin</h1>
             </header>
             <section>
-                <a href="painel.php">
+                <a href="painel.html">
                     <ion-icon name="desktop-outline"></ion-icon> <span> Home </span>
                 </a>
-                <a class="selecionado">
+                <a href="produtos.php">
                     <ion-icon name="bag-outline"></ion-icon> <span> Produtos </span>
                 </a>
                 <a href="categoria.php">
@@ -79,13 +67,13 @@ include_once('../PHP/produto.php');
 
                 <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                     <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta"></ion-icon>    
+                    <ion-icon name="chevron-forward-outline"></ion-icon>    
                 </button>
-                <div class="href-clientes-funcionarios">
+                <div class="href-clientes-funcionarios" style="display: block;">
                     <a href="#">
                         <span> Clientes </span>
                     </a>
-                    <a href="funcionarios.html">
+                    <a href="funcionarios.html" class="selecionado">
                         <span> Funcionários </span>
                     </a>
                 </div>
@@ -99,15 +87,14 @@ include_once('../PHP/produto.php');
         <section class="section-principal">
             <header class="header-titulo titulo-section">
                 <h1>
-                    Produtos
+                    funcionários
                 </h1>
             </header>
 
             <div class="botoes-principais">
                 <div class="div">
                     <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
-                        <ion-icon name="enter-outline" style="width: 30px; height: 100%;"></ion-icon>
-                        Entrada
+                        <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon>
                     </button>
                 </div>
                 <div class="div-pesquisar div">
@@ -117,24 +104,12 @@ include_once('../PHP/produto.php');
                     </button>
                 </div>
 
-                <form action="../PHP/produto.php" method="post">
 
-                    <div class="div">
-                        <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
-                            <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
-                            Saída
-                        </button>
-                    </div>
             </div>
 
             <section class="section-produtos">
                 <table>
-                    <?php
-
-                    $produto = new produto;
-                    $produto->mostrar_produtos();
-
-                    ?>
+                    
                 </table>
             </section>
 
@@ -142,11 +117,9 @@ include_once('../PHP/produto.php');
             </footer>
 
         </section>
-
-        </form>
+        
     </main>
 
-    <!-- modals -->
     <dialog id="modal-entrada" class="modal">
         <header class="header-cadastro">
             <!-- titulo da parte de registro de produto -->
@@ -160,95 +133,73 @@ include_once('../PHP/produto.php');
 
         <section class="section-cadastro">
             <form method="POST" action="../PHP/produto.php">
-                <!--nome do produto -->
+                <!--    Nome
+                        Idade
+                        Foto 
+                        Salario
+                        Cargo
+                        CPF
+                        Contato
+                        Email
+                        -->
+                    <!-- Nome -->
                 <label>
-                    <label class="label-titulo"> Nome do produto: *</label>
-                    <input name="nome" type="text" class="input-registro" placeholder="Biquini Vermelho" autocomplete="off">
+                    <label class="label-titulo"> Nome do Funcionário: * </label>
+                    <input name="nome" type="text" class="input-registro" placeholder="João" autocomplete="off" required>
                 </label>
 
-                <!-- quantidade e tamanho do produto -->
+                <!-- Idade - Cargo-->
                 <div class="div-quantidade-tamanho">
-                    <!-- qunatidade -->
                     <label class="label-quantidade">
-                        <label class="label-titulo"> Quantidade: *</label>
+                        <label class="label-titulo"> Idade: </label>
                         <input name="quantidade" type="number" class="input-registro" placeholder="Unidades">
                     </label>
-                    <!-- tamanho do produto-->
+
                     <label class="label-tamanho">
-                        <label class="label-titulo">Tamanho *</label>
+                        <label class="label-titulo"> Cargo: *</label>
                         <select id="tamanho" name="tamanho" class="select">
-                            <option value='1'>PP</option>
-                            <option value='2'>P</option>
-                            <option value='3'>M</option>
-                            <option value='4'>G</option>
-                            <option value='5'>GG</option>
+                            <option value='1'>Gerente</option>
+                            <option value='2'>Faxineiro</option>
+                            <option value='3'>Recepcionista</option>
+                            <option value='4'>Vendedor</option>
                         </select>
                     </label>
                 </div>
 
-                <!-- data do produto -->
+                <!--  -->
                 <div class="div-quantidade-tamanho">
                     <label class="label-data">
-                        <label class="label-titulo"> Data: *</label>
+                        <label class="label-titulo"> Data de Nascimento: * </label>
                         <input name="data" type="date" class="input-registro">
                     </label>
                     <label>
-                        <label class="label-titulo"> Valor Unidades *</label>
+                        <label class="label-titulo"> Foto:  *</label>
                         <input class="file-image" name="valor_unidade" type="file">
                     </label>
                 </div>
-                
 
-                <!-- categoria e fornecedor -->
-                <div class="div-categoria-fornecedor">
-
-                    <!-- categoria -->
-                    <label class="label-categoria">
-
-                        <label class="label-titulo"> Categoria: </label>
-                        <select id="categoria" name="categoria" class="select">
-                            <option value="nenhum"> Nenhum </option>
-                            <?php
-                            $sql = "SELECT * FROM categoria";
-                            $result = $conexao->query($sql);
-                            while ($user_data = mysqli_fetch_assoc($result)) {
-                                echo "<option value=" . $user_data['id_categoria'] . ">";
-                                echo $user_data['nome'] . "</option>";
-                            }
-                            ?>
-                        </select>
-
-                    </label>
-
-                    <!-- forncedor-->
-                    <label class="label-fornecedor">
-                        <label class="label-titulo"> Fornecedor: </label>
-                        <select id="fornecedor" name="fornecedor" class="select">
-                            <option value="nenhum"> Nenhum </option>
-                            <?php
-                            $sql = "SELECT * FROM fornecedor";
-                            $result = $conexao->query($sql);
-                            while ($user_data = mysqli_fetch_assoc($result)) {
-                                echo "<option value='" . $user_data['id_fornecedor'] . "'>";
-                                echo $user_data['nome'] . "</option>";
-                            }
-                            ?>
-
-                        </select>
-
-                    </label>
-
-                </div>
-
-                <!-- valor de investimento -->
+                <!-- Salário -->
                 <div class="div-investimento-lucro">
                     <label class="label-numero">
-                        <label class="label-titulo"> Valor do investimento: *</label>
-                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
+                        <label class="label-titulo"> Salário: *</label>
+                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="1000.00">
                     </label>
                     <label class="label-numero">
-                        <label class="label-titulo"> Lucro (%): *s</label>
+                        <label class="label-titulo"> Contato: *</label>
                         <input name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off">
+                    </label>
+                </div>
+                
+                <div>
+                    <label class="label-numero">
+                        <label class="label-titulo"> Email: *</label>
+                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="1000.00">
+                    </label>
+                </div>
+                <div>
+                    <label class="label-numero">
+                        <label class="label-titulo"> Senha: *</label>
+                        <input name="lucro" type="text" class="input-registro" placeholder="•••••••••" autocomplete="off">
                     </label>
                 </div>
 
@@ -261,36 +212,4 @@ include_once('../PHP/produto.php');
         </section>
 
     </dialog>
-
-    <dialog id="modal-saida" class="modal">
-
-        <header class="header-cadastro">
-            <h1>Saída dos produtos</h1>
-            <button type="button" style="background: none; border: none;" onclick="fecharmodal('button-saida-fechar')">
-            <ion-icon style="width: 40px; height: 40px;"name="close-outline"></ion-icon>
-            </button>
-        </header>
-
-        <section id="modal-saida-select">
-            <form action="../PHP/produto.php" method="POST">
-                <?php
-                if (!empty($_GET['pesquisa'])) {
-                    $pesquisa = $_GET['pesquisa'];
-                    $produto = new produto;
-                    $produto->modal_produtos_selecionados($pesquisa);
-                }
-                ?>
-                <div class="botoes-submit">
-                    <button type="reset" class="botao2"> Limpar </button>
-                    <label for=""> <span>Desconto do valor total</span><input type="number"> </label>
-                    <button type="submit" class="botao1" name="retirar-produto"> Concluir </button>
-                </div>
-                <form>
-        </section>
-
-    </dialog>
-
-
 </body>
-
-</html>

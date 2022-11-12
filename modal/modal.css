@@ -17,45 +17,41 @@
     box-shadow: 0px 0px 25px rgb(110, 109, 109);
     box-sizing: border-box;
     margin: 50px auto 0px auto;
-    background-color: rgba(91, 90, 90, 0.808);
+    background-color: rgb(255, 255, 255);
     border: none;
 }
 
 #modal-saida #modal-saida-select {
-    overflow: hidden;
+    overflow: visible;
     width: 100%;
     height: auto;
     padding: 15px;
     box-sizing: border-box;
-
-}
-
-#modal-saida #modal-saida-submit {
-    visibility: hidden;
+    height: 88%;
 }
 
 #modal-saida .modal-saida-select-result {
     display: flex;
-    background-color: rgba(255, 255, 255, 0.867);
+    background-color: rgb(255, 255, 255);
     margin-bottom: 10px;
     border-radius: 10px;
     box-sizing: border-box;
     padding: 10px;
-    box-shadow: 0px 0px 10px -2px rgb(66, 66, 66);
+    box-shadow: 0px 0px 10px -2px rgb(148, 148, 148);
     font-size: 10pt;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
 }
 
 /*
---------------------------------
---------[modal de entrada]------
---------------------------------
+----------------------------------
+--------[modal de entrada]--------
+----------------------------------
 */
 
 #modal-entrada {
     position: absolute;
-    width: 450px;
+    width: 600px;
     height: 90%;
     border-radius: 6px;
     border: none;
@@ -83,6 +79,7 @@
     padding: 5px;
     font-size: 12pt;
     background-color: #ffffff44;
+    border: none;
 }
 
 input:hover {

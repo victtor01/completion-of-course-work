@@ -1,3 +1,16 @@
+<?php
+    include_once('../PHP/conexao.php');
+    $sql = "SELECT SUM(quantidade) as SOMA FROM produto";
+    $query = mysqli_query($conexao, $sql);
+    $row = $query->fetch_assoc();
+    $SUM = $row['SOMA'];
+
+    $sql =  "SELECT COUNT(*) as CONTAGEM FROM produto ";
+    $query = mysqli_query($conexao, $sql);
+    $row = $query->fetch_assoc();
+    $COUNT = $row['CONTAGEM'];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -36,13 +49,39 @@
                 </div>
                 <h1> Admin</h1>
             </header>
-            <section>        
-                <a class="selecionado"><ion-icon name="desktop-outline"></ion-icon> <span> Home </span></a>     
-                <a href="produtos.php"><ion-icon name="bag-outline"></ion-icon> <span> Produtos </span></a>          
-                <a href="categoria.php"><ion-icon name="bookmark-outline"></ion-icon> <span> Categoria </span></a>           
-                <a href="fornecedores.php"><ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span></a>
-                <a href="#"><ion-icon name="cash-outline"></ion-icon> <span> Caixa </span></a>
-                <a href="#"><ion-icon name="person-add-outline"></ion-icon> <span> Adicionar </span></a>
+            <section>
+                <a class="selecionado">
+                    <ion-icon name="desktop-outline"></ion-icon> <span> Home </span>
+                </a>
+                <a href="produtos.php">
+                    <ion-icon name="bag-outline"></ion-icon> <span> Produtos </span>
+                </a>
+                <a href="categoria.php">
+                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categorias </span>
+                </a>
+                <a href="fornecedores.php">
+                    <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
+                </a>
+                <a href="#">
+                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
+                </a>
+
+                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta"></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios">
+                    <a href="#">
+                        <span> Clientes </span>
+                    </a>
+                    <a href="funcionarios.html">
+                        <span> Funcionários </span>
+                    </a>
+                </div>
+
+                <a href="#" class="sair">
+                    <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
+                </a>
             </section>
         </div>
         
@@ -51,8 +90,8 @@
             <div class="principais-acoes">
                 <button class="acao" id="produtos">
 
-                    <p> Produtos Cadastrados</p>
-                    <p> Itens no estoque    </p>
+                    <p> <?php echo $COUNT ?> Produtos Cadastrados</p>
+                    <p> <?php echo $SUM ?> Itens no estoque    </p>
                     <div class="link_acao" id="link_produtos"> 
                     <a href="produtos.php">Produtos</a>
                     </div>
@@ -61,9 +100,9 @@
 
                 <button class="acao" id="fornecedores">
     
-                   <p> Total de N fornecedores </p>
+                   <p> Total de <?php ?>fornecedores </p>
                    <div class="link_acao" id="link_fornecedores">
-                    <a href="">Fornecedores</a>
+                    <a href="fornecedores.php">Fornecedores</a>
                     </div>
 
                 </button>
@@ -72,7 +111,7 @@
 
                 <p> financeiro </p>
                     <div class="link_acao link-acao-3">
-                        <a href="">financeiro</a>
+                        <a href="#">Financeiro</a>
                     </div>
                 </button>
             </div>

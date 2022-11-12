@@ -11,6 +11,7 @@
     padding: 0;
 }
 html{
+    /*
     width: 100%;
     height: 100%;
     background-color: #e0e0e06b;
@@ -18,24 +19,25 @@ html{
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
 }
-body{
+
+body {
+    scroll-snap-type: y mandatory;
     min-height: 100vh;
+    overflow:visible;
 }
 main{
+    min-height: 100%;
     width: 100%;
-    height: 100%;
     display: flex;
-    background-color: #e0e0e06b;
-    flex: 1 0 auto;
-
+    background-color: white;
 }
 .header-titulo 
     {
     width: 100%;
     min-width: 300px;
-    height: 65px;
+    height: 10vh;
     background: linear-gradient(to right, rgb(0, 0, 0), var(--preto));
     display: flex;
     align-items: center;
@@ -135,6 +137,7 @@ button:hover{
     position: relative;
     overflow: hidden;
     box-shadow:  5px 5px 30px #ffffff, -22px -22px 44px #ffffff00;
+    border-radius: 7px;
 }
 
 .link_acao {
@@ -182,23 +185,27 @@ button:hover{
     justify-content: space-evenly;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    border: 15px;
 }
 .titulo_grafico {
     margin-top: 6px;
     color: #262626;
-    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: white;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.titulo_grafico h2{
+    font-weight: 500;
 }
 .entrada_saida {
-    width:50%;
+    width:100%;
     height: 300px;
     min-height: none;
     margin: 0px 15px 0px 15px;
     box-sizing: border-box;
-    box-shadow: 2px 2px 40px -10px rgb(214, 213, 213);
-    box-shadow: 2px 2px 40px -10px rgb(235, 235, 235) inset;
+    box-shadow: 0px 0px 20px rgb(154, 153, 153);
     display: block;
-    background-color: white;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -210,11 +217,11 @@ button:hover{
 }
 #curve_chart, #chart_div{
     width: 100%; 
-    height: 90%;
+    height: 85%;
     bottom: 0;
     display: flex;
     justify-content: center;
-    background-color: white;
+    background: none;
 }
 
 
@@ -245,52 +252,95 @@ a {
 /* BARRA LATERAL
 /* -----------------------------------------------------------------------------------------*/    
 
-.barra-lateral{
-    height: 100%;
-    min-height: 100vh;
-    width: 30%;
+.barra-lateral {
+    height: 90vh;
+    width: 18%;
     background-color: #101010;
-    max-width: 300px;
+    max-width: 250px;
+    min-width: 230px;
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
-    overflow: hidden;
+    box-shadow: 0px 5px 14px rgb(64, 63, 63);
+    overflow: scroll;
+    overflow-x: hidden;
 }
-.barra-lateral header{
+.barra-lateral::-webkit-scrollbar-thumb{
+    background-color: #101010;
+    border-radius: 20px;
+    border: 3px solid #403f3f;
+    scrollbar-width: thin;
+}
+.barra-lateral::-webkit-scrollbar {
+    width: 12px;            
+}
+  
+.barra-lateral::-webkit-scrollbar-track {
+    background: #101010;
+  }
+  
+.barra-lateral::-webkit-scrollbar-thumb {
+    background-color: #403f3f;
+    border-radius: 20px;      
+    border: 3px solid #101010; 
+  }
+
+.barra-lateral header {
     text-align: center;
     margin: 20px auto 20px auto;
     font-size: 10pt;
 }
+
 .barra-lateral section {
     float: left;
     width: 100%;
 }
-.barra-lateral a{
-    justify-content:left;
+.barra-lateral .clientes-funcionarios{
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    flex-direction: row;
+}
+.barra-lateral .clientes-funcionarios{
+    box-shadow: none;
+}
+.barra-lateral a , 
+.barra-lateral .clientes-funcionarios{
+    justify-content: left;
     padding-left: 50px;
     text-decoration: none;
-    font-weight: 50;
+    font-weight: 200;
     width: 100%;
-    height: 70px;
+    height: 60px;
     box-sizing: border-box;
-    transition: 0.5s;
+    transition: 0.25s;
+    font-size: 15pt;
+    color: white;
+}
+.barra-lateral .clientes-funcionarios #ion-icon-seta{
+    transition: 0.2s;
+    margin-left: 20px;
+}
+.barra-lateral a:hover, 
+.barra-lateral .clientes-funcionarios:hover, 
+.barra-lateral .clientes-funcionarios .href-clientes-funcionarios a:hover{
+    background-color: #f98b465c;
     font-size: 20pt;
 }
-.barra-lateral a:hover{
-    background-color: #f98b465c;
-}
 .selecionado{
-    background-color: #FF731D;
+    background-color: #b3561c;
 }
-.selecionado a{
-    transform: scale(1.1);
+.barra-lateral .selecionado span{
+    font-size: 13pt;
 }
-.barra-lateral span{
-    font-size: 14pt;
+
+.barra-lateral span {
+    font-size: 12pt;
     margin-left: 5px;
-    
+
 }
-.barra-lateral .imagem{
+
+.barra-lateral .imagem {
     width: 130px;
     height: 130px;
     border-radius: 50%;
@@ -298,6 +348,13 @@ a {
     align-items: center;
     justify-content: center;
     margin: 10px auto 0px auto;
+}
+.barra-lateral section .sair:hover{
+    background-color: rgb(139, 35, 35);
+}
+.barra-lateral .href-clientes-funcionarios{
+    display: none;
+    font-size: 10pt;
 }
 
 footer{

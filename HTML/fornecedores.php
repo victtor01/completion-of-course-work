@@ -69,10 +69,12 @@ include('../PHP/fornecedor.php');
             
         </div>
 
-        <section class="section-principal section-fornecedor" style="margin-top: 60px; height: auto;">
+        <section class="section-principal section-fornecedor">
             <!-- TITULO DA SECTION -->
             <header class="header-titulo titulo-section">
-                <h1> Fornecedores </h1>
+                <h1>
+                    Produtos
+                </h1>
             </header>
 
             <!-- BOTOES PRINCIPAIS DE ADICIONAR UM NOVO FORNECEDOR  -->
