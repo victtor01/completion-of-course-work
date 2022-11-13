@@ -218,7 +218,7 @@ a {
 }
 
 /* -----------------------------------------------------------------------------------------*/
-/* CSS DAS TABELAS
+/* ESTILOS DAS TABELAS
 /* -----------------------------------------------------------------------------------------*/
 
 th {
@@ -314,11 +314,6 @@ table td .editar:hover{
     height: 100%;
     background: none;
 }
-
-/* -----------------------------------------------------------------------------------------*/
-/* SECTION DO CADASTRO DE UM NOVO PRODUTO
-/* -----------------------------------------------------------------------------------------*/
-
 
 /* -----------------------------------------------------------------------------------------*/
 /* CATEGORIA E FORNECEDORES (SELECT DA PAGINA DOS PRODUTOS)
@@ -550,15 +545,12 @@ section .input_editar {
     font-size: 15pt;
     color: white;
 }
-.barra-lateral .clientes-funcionarios #ion-icon-seta{
-    transition: 0.2s;
-    margin-left: 20px;
-}
+
 .barra-lateral a:hover, 
 .barra-lateral .clientes-funcionarios:hover, 
 .barra-lateral .clientes-funcionarios .href-clientes-funcionarios a:hover{
     background-color: #f98b465c;
-    font-size: 20pt;
+    font-size: 18pt;
 }
 .selecionado{
     background-color: #b3561c;
@@ -587,7 +579,20 @@ section .input_editar {
 }
 .barra-lateral .href-clientes-funcionarios{
     display: none;
-    font-size: 10pt;
+    font-size: 12pt;
+}
+.barra-lateral .href-clientes-funcionarios a{
+    height: 45px;
+}
+.barra-lateral .clientes-funcionarios #ion-icon-seta{
+    transition: 0.1s;
+    margin-left: 30px;
+    width: 15px;
+    height: 15px;
+}
+.barra-lateral .href-clientes-funcionarios a span{
+    font-size: 12pt;
+    margin-left: 30px;
 }
 /* -----------------------------------------------------------------------------------------*/
 /* MSG

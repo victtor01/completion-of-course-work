@@ -121,6 +121,7 @@
     </main>
 
     <dialog id="modal-entrada" class="modal">
+
         <header class="header-cadastro">
             <!-- titulo da parte de registro de produto -->
             <h1>cadastrar produto</h1>
@@ -132,32 +133,22 @@
         </header>
 
         <section class="section-cadastro">
-            <form method="POST" action="../PHP/produto.php">
-                <!--    Nome
-                        Idade
-                        Foto 
-                        Salario
-                        Cargo
-                        CPF
-                        Contato
-                        Email
-                        -->
-                    <!-- Nome -->
-                <label>
+            <form method="POST" action="../PHP/funcionarios.php" enctype="multipart/form-data">
+                <label class="informacoes">
                     <label class="label-titulo"> Nome do Funcionário: * </label>
                     <input name="nome" type="text" class="input-registro" placeholder="João" autocomplete="off" required>
                 </label>
 
                 <!-- Idade - Cargo-->
-                <div class="div-quantidade-tamanho">
+                <div class="div-informacoes">
                     <label class="label-quantidade">
-                        <label class="label-titulo"> Idade: </label>
-                        <input name="quantidade" type="number" class="input-registro" placeholder="Unidades">
+                        <label class="label-titulo"> CPF </label>
+                        <input name="CPF" type="text" class="input-registro" placeholder="000.000.000-00">
                     </label>
 
                     <label class="label-tamanho">
                         <label class="label-titulo"> Cargo: *</label>
-                        <select id="tamanho" name="tamanho" class="select">
+                        <select id="cargo" name="cargo" class="select">
                             <option value='1'>Gerente</option>
                             <option value='2'>Faxineiro</option>
                             <option value='3'>Recepcionista</option>
@@ -166,46 +157,53 @@
                     </label>
                 </div>
 
-                <!--  -->
-                <div class="div-quantidade-tamanho">
+                <!--  Data - Foto-->
+                <div class="div-informacoes">
                     <label class="label-data">
                         <label class="label-titulo"> Data de Nascimento: * </label>
                         <input name="data" type="date" class="input-registro">
                     </label>
                     <label>
                         <label class="label-titulo"> Foto:  *</label>
-                        <input class="file-image" name="valor_unidade" type="file">
+                        <input class="foto" name="foto" type="file">
                     </label>
                 </div>
 
-                <!-- Salário -->
-                <div class="div-investimento-lucro">
+                <!-- Salário - Contato -->
+                <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Salário: *</label>
-                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="1000.00">
+                        <input id="salario" name="salario" type="text" class="input-registro" placeholder="1000.00">
                     </label>
                     <label class="label-numero">
                         <label class="label-titulo"> Contato: *</label>
-                        <input name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off">
+                        <input name="contato" type="text" class="input-registro" placeholder="(99)9999-9999" autocomplete="off">
                     </label>
                 </div>
                 
-                <div>
+                <!-- Email -->
+                <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Email: *</label>
-                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="1000.00">
+                        <input id="valor_fornecedor" name="email" type="email" class="input-registro" placeholder="example@gmail.com">
                     </label>
                 </div>
-                <div>
+
+                <!-- Senha - Confirmar senha -->
+                <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Senha: *</label>
-                        <input name="lucro" type="text" class="input-registro" placeholder="•••••••••" autocomplete="off">
+                        <input name="senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off">
+                    </label>
+                    <label>
+                        <label class="label-titulo"> Confirmar senha: *</label>
+                        <input name="confirmar_senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off">                       
                     </label>
                 </div>
 
                 <!-- butao (submit) para enviar o produto para o banco de dados-->
                 <div class="botoes-submit">
-                    <button type="submit" name="submit-produto" class="botao1"> cadastrar</button>
+                    <button type="submit" name="inserir" class="botao1"> cadastrar</button>
                     <button type="reset" class="botao2"> Limpar </button>
                 </div>
             </form>

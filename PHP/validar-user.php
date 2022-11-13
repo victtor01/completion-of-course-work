@@ -1,22 +1,23 @@
 <?php
 if(isset($_POST['acessar']) && isset($_POST['email']) && isset($_POST['senha'])){
-    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    include('conexao.PHP');
+    //echo $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    include_once('conexao.PHP');
-    $sql_code = "SELECT * FROM senhas WHERE email = '$email' LIMIT 1";
-    $sql_execute = mysqli_query($coenxao, $sql_code);
-    $user = mysqli_fetch_assoc($sql_execute);
+    $sql_code = "SELECT * FROM funcionarios WHERE email = '$email' LIMIT 1";
+    $query = mysqli_query($conexao, $sql_code);
+    $usuario = $query->fetch_assoc();
 
-    if(password_verify($senha, $usario['senha'])){
-        header('../HTML/painel.html');
+    if(password_verify($senha , $usuario['senha']))
+    {
+        header('Location: ../HTML/painel.php');
         die();
     }   
     else{
         header('Location: ../login.html');
         die();
     }
-    //$senha = password_hash( $_POST['senha'], PASSWORD_DEFAULT);
 }
 
 ?>

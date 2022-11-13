@@ -79,14 +79,14 @@ include_once('../PHP/produto.php');
 
                 <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                     <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta"></ion-icon>    
+                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios">
-                    <a href="#">
-                        <span> Clientes </span>
-                    </a>
                     <a href="funcionarios.html">
                         <span> Funcionários </span>
+                    </a>
+                    <a href="#">
+                        <span> Clientes </span>
                     </a>
                 </div>
 

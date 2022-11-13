@@ -60,18 +60,15 @@
                 $resto = (intval($quantidade_atual) - intval($quantidade_retirada));
 
                 if($resto < 0){
-                    header("Location: ../HTML/produtos.php?msg=2");
+                    exit;
                 }else{
                     $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
                     $query = mysqli_query($conexao, $sql_update);
                     $produto = new produto;
                     $produto->saida($nome, $preco, $data, $tamanho, $categoria, $fornecedor, $quantidade_retirada, $valor_total);
-                    header('location: ../HTML/produtos.php?msg=1');
-                    die();
                 }
             }
-
-            
+            header('Location: ../HTML/produtos.php');            
         }
         private function entrada($nome, $valor, $data, $tamanho, $categoria, $fornecedor)
         {
