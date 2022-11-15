@@ -1,6 +1,13 @@
 <?php
+session_start();
+if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
 include('../PHP/conexao.PHP');
 include_once('../PHP/produto.php');
+}else{
+    header('Location: ../login.html');
+    die();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +97,7 @@ include_once('../PHP/produto.php');
                     </a>
                 </div>
 
-                <a href="#" class="sair">
+                <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
             </section>

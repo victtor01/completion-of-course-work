@@ -1,210 +1,211 @@
 <?php
+include 'links.php';
+class produto extends links
+{
+    public function inserir()
+    {
 
-    class produto{
-        public function inserir()
-        {
+        include('conexao.PHP');
+
+        $nome =  $_POST['nome'];
+        $categoria =  $_POST['categoria'];
+        $quantidade =  $_POST['quantidade'];
+        $fornecedor =  $_POST['fornecedor'];
+        $valor_investido =  $_POST['investimento'];
+        $lucro_esperado = $_POST['lucro'];
+        $data_produto = $_POST['data'];
+        $tamanho = $_POST['tamanho'];
+        $inserir_produto  = "INSERT INTO
+        produto (nome, categoria, quantidade, fornecedor,
+        valor_investido, lucro_esperado, data_produto, tamanho)
+        VALUES ('$nome', $categoria, '$quantidade',
+        $fornecedor, '$valor_investido', '$lucro_esperado', '$data_produto',
+        '$tamanho')";
+
+        $query_result = mysqli_query($conexao, $inserir_produto);
+
+        $msg = $query_result? 1 : 0;
+
+        header('Location: '. $this->link_produtos . '?msg=' . $msg);
+    }
+    function retirar()
+    {
+        include('conexao.PHP');
+        $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        foreach ($produtos['id'] as $chave => $id) {
+
+            $id_produto = $produtos['id'][$chave];
+            $nome = $produtos['nome'][$chave];
+            $quantidade_retirada = $produtos['quantidade'][$chave];
+            $preco = $produtos['preco'][$chave];
+            $categoria = $produtos['categoria'][$chave];
+            $fornecedor = $produtos['fornecedor'][$chave];
+            $data = $produtos['data'];
+            $tamanho = $produtos['tamanho'][$chave];
+            $valor_total = (intval($quantidade_retirada) * intval($preco));
+
+            $sql_quantidade_atual = "SELECT quantidade FROM produto WHERE id_produto=$id_produto";
+            $query = mysqli_query($conexao, $sql_quantidade_atual);
+
+            $quant = mysqli_fetch_assoc($query);
+            $quantidade_atual = $quant['quantidade'];
+
+            $resto = (intval($quantidade_atual) - intval($quantidade_retirada));
+
+        if ($resto <= 0) 
+            exit;
         
-            include('conexao.PHP');
-     
-            $nome =  $_POST['nome'] ;
-            $categoria =  $_POST['categoria'];
-            $quantidade =  $_POST['quantidade'];
-            $fornecedor =  $_POST['fornecedor'];
-            $valor_investido =  $_POST['investimento'];
-            $lucro_esperado = $_POST['lucro'];
-            $data_produto = $_POST['data'];
-            $tamanho = $_POST['tamanho'];
-            $inserir_produto  = "INSERT INTO
-            produto (nome, categoria, quantidade, fornecedor,
-            valor_investido, lucro_esperado, data_produto, tamanho)
-            VALUES ('$nome', $categoria, '$quantidade',
-            $fornecedor, '$valor_investido', '$lucro_esperado', '$data_produto',
-            '$tamanho')";
-        
-            $query_result = mysqli_query($conexao, $inserir_produto);
+        $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
+        $query = mysqli_query($conexao, $sql_update);
+        $produto = new produto;
+        $produto->saida($nome, $preco, $data, $tamanho, $categoria, $fornecedor, $quantidade_retirada, $valor_total);
 
-            if(!$query_result){
-                $msg = false;
-                return $msg;
-            }
-            else{
-                $msg = true;
-                return $msg;
-            }
-
-            
         }
-        function retirar()
-        {
-            include('conexao.PHP');
-            $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-            foreach($produtos['id'] as $chave => $id){
-
-                $id_produto = $produtos['id'][$chave];
-                $nome = $produtos['nome'][$chave];
-                $quantidade_retirada = $produtos['quantidade'][$chave];
-                $preco = $produtos['preco'][$chave];
-                $categoria = $produtos['categoria'][$chave];
-                $fornecedor = $produtos['fornecedor'][$chave];
-                $data = $produtos['data'];
-                $tamanho = $produtos['tamanho'][$chave];
-                $valor_total = (intval($quantidade_retirada) * intval($preco));
-                
-                $sql_quantidade_atual = "SELECT quantidade FROM produto WHERE id_produto=$id_produto"; 
-                $query = mysqli_query($conexao, $sql_quantidade_atual);
-                
-                $quant = mysqli_fetch_assoc($query);
-                $quantidade_atual = $quant['quantidade'];              
-
-                $resto = (intval($quantidade_atual) - intval($quantidade_retirada));
-
-                if($resto < 0){
-                    exit;
-                }else{
-                    $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
-                    $query = mysqli_query($conexao, $sql_update);
-                    $produto = new produto;
-                    $produto->saida($nome, $preco, $data, $tamanho, $categoria, $fornecedor, $quantidade_retirada, $valor_total);
-                }
-            }
-            header('Location: ../HTML/produtos.php');            
-        }
-        private function entrada($nome, $valor, $data, $tamanho, $categoria, $fornecedor)
-        {
-            include('conexao.PHP');
-            $sql = "INSERT INTO entrada(quantidade, valor, tamanho, nome, data_entrada)
+        header('Location: '. $this->link_produtos);
+    
+    }
+    private function entrada($nome, $valor, $data, $tamanho, $categoria, $fornecedor)
+    {
+        include('conexao.PHP');
+        $sql = "INSERT INTO entrada(quantidade, valor, tamanho, nome, data_entrada)
             VALUES ('$quantidade', '$valor', '$tamanho', '$nome', '$data')";
 
-            $result = mysqli_query($conexao, $sql);
+        $result = mysqli_query($conexao, $sql);
 
-            if($result){
-                header('Location: ../HTML/produtos.php');
-            }else{
-                echo "algo deu errado!";
-            }
+        if ($result) {
+            header('Location: ../HTML/produtos.php');
+        } else {
+            echo "algo deu errado!";
         }
-        private function saida($nome, $valor, $data, $tamanho, $categoria, $fornecedor, $quantidade, $valor_total)
-        {
-            include('conexao.PHP');
-            $sql = "INSERT INTO saida(quantidade, valor_produto, nome_produto,
+    }
+    private function saida($nome, $valor, $data, $tamanho, $categoria, $fornecedor, $quantidade, $valor_total)
+    {
+        include('conexao.PHP');
+        $sql = "INSERT INTO saida(quantidade, valor_produto, nome_produto,
             data_saida, tamanho, categoria, fornecedor, valor_total) 
             VALUES ('$quantidade', '$valor', '$nome', '$data', '$tamanho', '$categoria', '$fornecedor', '$valor_total')";
 
-            $query = mysqli_query($conexao, $sql);
+        $query = mysqli_query($conexao, $sql);
+    }
+    public function delete($id)
+    {
+        include_once('conexao.PHP');
+
+        $sql = "DELETE FROM produto WHERE id_produto=$id";
+        $query_result = mysqli_query($conexao, $sql);
+
+        $msg = $query_result? 1 : 0;
+        header('Location: '. $this->link_produtos . "?msg=" . $msg);
+    }
+    public function validar($dados)
+    {
+        include_once('conexao.PHP');
+
+        if (!empty($dados['checkbox_id'])) {
+            $pesquisa = implode(", ", $dados['checkbox_id']);
+            header("Location: ../HTML/produtos.php?pesquisa=" . $pesquisa);
+        } else {
+            header("Location: ../HTML/produtos.php");
         }
-        public function delete($id)
-        {
-            include_once('conexao.PHP');
+    }
+    function modal_produtos_selecionados($pesquisa)
+    {
 
-            $sql = "DELETE FROM produto WHERE id_produto=$id";
-            $query_result = mysqli_query($conexao, $sql);
+        include('conexao.PHP');
+        $sql = "SELECT * FROM produto WHERE id_produto IN ($pesquisa)";
+        $result = mysqli_query($conexao, $sql);
 
-        }
-        public function validar($dados)
-        {
-            include_once('conexao.PHP');
-
-            if(!empty($dados['checkbox_id'])){
-                $pesquisa = implode(", ", $dados['checkbox_id']);
-                header("Location: ../HTML/produtos.php?pesquisa=" . $pesquisa);          
-            }
-            else{
-                header("Location: ../HTML/produtos.php");
-            }
-        }
-        function modal_produtos_selecionados($pesquisa)
-        {
-
-            include('conexao.PHP');
-            $sql = "SELECT * FROM produto WHERE id_produto IN ($pesquisa)";
-            $result = mysqli_query($conexao, $sql);
-
-            if(mysqli_num_rows($result) > 0){
-            echo" 
+        if (mysqli_num_rows($result) > 0) {
+            echo " 
 
             <script>
                 var modal_ = window.document.getElementById('modal-saida');
                 modal_.showModal();
             </script>";
 
-            while($user_data = mysqli_fetch_assoc($result)){
-                $id = $user_data['id_produto'];
-                $nome = $user_data['nome'];
-                $categoria = $user_data['categoria'];
-                $tamanho = $user_data['tamanho'];
-                $quantidade = $user_data['quantidade'];
-                $fornecedor = $user_data['fornecedor'];
-                
-                echo"<div class='modal-saida-select-result'>
-                            <input type='hidden' name='id[]' value='$id'>
+            while ($user_data = mysqli_fetch_assoc($result)) {
 
-                            <label style='width: 100%; display: flex; flex-direction: column; '>
-                                <span style=' width: 100%;'> nome: </span>
-                                <span>" . $nome . " </span>
-                                <input name='nome[]' type='hidden' value='". $nome ."'>
-                            </label>
+            $id = $user_data['id_produto'];
+            $nome = $user_data['nome'];
+            $categoria = $user_data['categoria'];
+            $tamanho = $user_data['tamanho'];
+            $quantidade = $user_data['quantidade'];
+            $fornecedor = $user_data['fornecedor'];
 
-                            <label style='width: 100%; display: flex;flex-direction: column;'>
-                                <span style=' width: 100%;'> categoria: </span>
-                                <span> " . $categoria . "</span>
-                                <input name='categoria[]' type='hidden' value='". $categoria ."'>
-                            </label>
+            echo
 
-                            <label style='width: 100%; display: flex;flex-direction: column;'>
-                                <span style=' width: 100%;'> tamanho: </span>
-                                <span > ";
-                                    switch($tamanho) {
-                                        case 1:
-                                            echo "P";
-                                            break;
-                                        case 2:
-                                            echo "PP";
-                                            break;
-                                        case 3:
-                                            echo "M";
-                                            break;
-                                        case 4:
-                                            echo "G";
-                                            break;
-                                        case 5:
-                                            echo "GG";
-                                            break;
-                                    } 
-                                echo "</span>
-                                <input type='hidden' name='tamanho[]' value='$tamanho'>
-                            </label>
+            "<div class='modal-saida-select-result'>
+                <input type='hidden' name='id[]' value='$id'>
 
-                            <label style='width: 100%; display: flex;flex-direction: column;'>
-                                <span style=' width: 100%;'> quantidade: </span>
-                                <input name='quantidade[]' type='number' max=". $quantidade .">
-                            </label>
+                <label style='width: 100%; display: flex; flex-direction: column; '>
+                    <span style=' width: 100%;'> nome: </span>
+                    <span>" . $nome . " </span>
+                    <input name='nome[]' type='hidden' value='" . $nome . "'>
+                </label>
 
-                            <label style='width: 100%; display: flex;flex-direction: column;'>
-                                <span style=' width: 100%;'> valor: </span>
-                                <input name='preco[]' type='text'>
-                            </label>
+                <label style='width: 100%; display: flex;flex-direction: column;'>
+                    <span style=' width: 100%;'> categoria: </span>
+                    <span> " . $categoria . "</span>
+                    <input name='categoria[]' type='hidden' value='" . $categoria . "'>
+                </label>
 
-                            <input type='hidden' name='fornecedor[]' value=.$fornecedor.>
-
-                    </div>";
-
+                <label style='width: 100%; display: flex;flex-direction: column;'>
+                    <span style=' width: 100%;'> tamanho: </span>
+                    <span > ";
+            switch ($tamanho) {
+                case 1:
+                    echo "P";
+                    break;
+                case 2:
+                    echo "PP";
+                    break;
+                case 3:
+                    echo "M";
+                    break;
+                case 4:
+                    echo "G";
+                    break;
+                case 5:
+                    echo "GG";
+                    break;
             }
 
-            echo"<label style='width: 100%; display: flex;flex-direction: column;'>
-                    <span style=' width: 100%;'> data: </span>
-                    <input name='data' type='date' required>
-                </label>";
-            }
+            echo "</span>
+
+            <input type='hidden' name='tamanho[]' value='$tamanho'>
+            </label>
+
+            <label style='width: 100%; display: flex;flex-direction: column;'>
+                <span style=' width: 100%;'> quantidade: </span>
+                <input name='quantidade[]' type='number' max=" . $quantidade . ">
+            </label>
+
+            <label style='width: 100%; display: flex;flex-direction: column;'>
+                <span style=' width: 100%;'> valor: </span>
+                <input name='preco[]' type='text'>
+            </label>
+
+            <input type='hidden' name='fornecedor[]' value=.$fornecedor.>
+
+            </div>";
         }
-        function mostrar_produtos()
-        {
-            include('conexao.PHP');
-            $sql = "SELECT * FROM produto ORDER BY data_produto ASC";
-            $result = mysqli_query($conexao, $sql);
 
-            if(mysqli_num_rows($result) > 0){
-                echo" 
+        echo "<label style='width: 100%; display: flex;flex-direction: column;'>
+                <span style=' width: 100%;'> data: </span>
+                <input name='data' type='date' required>
+            </label>";
+        }
+    }
+    function mostrar_produtos()
+    {
+        include('conexao.PHP');
+        $sql = "SELECT * FROM produto ORDER BY data_produto ASC";
+        $result = mysqli_query($conexao, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo " 
                 <thead>
                     <tr class='tr'>
                         <th></th>
@@ -217,75 +218,79 @@
                     </tr>
                 </thead>";
 
-                while ($user_data = mysqli_fetch_assoc($result)) {
-                    $id = $user_data['id_produto'];
-                    $nome = $user_data['nome'];
-                    $categoria = $user_data['categoria'];
-                    $quantidade = $user_data['quantidade'];
-                    $fornecedor = $user_data['fornecedor'];
-                    $valor_investido = $user_data['valor_investido'];
-                    $lucro_esperado = $user_data['lucro_esperado'];
-                    $data_produto = $user_data['data_produto'];
-                    $tamanho = $user_data['tamanho'];
-                    $data = $user_data['data_produto'];
+            while ($user_data = mysqli_fetch_assoc($result)) {
+                $id = $user_data['id_produto'];
+                $nome = $user_data['nome'];
+                $categoria = $user_data['categoria'];
+                $quantidade = $user_data['quantidade'];
+                $fornecedor = $user_data['fornecedor'];
+                $valor_investido = $user_data['valor_investido'];
+                $lucro_esperado = $user_data['lucro_esperado'];
+                $data_produto = $user_data['data_produto'];
+                $tamanho = $user_data['tamanho'];
+                $data = $user_data['data_produto'];
 
-                    $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
-                    $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+                $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+                $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
 
-                    if (mysqli_num_rows($result_fornecedor) > 0) {
-                        while ($rowData = mysqli_fetch_assoc($result_fornecedor)) {
-                            $fornecedor_nome = $rowData["nome"];
-                        }
+                if (mysqli_num_rows($result_fornecedor) > 0) {
+                    while ($rowData = mysqli_fetch_assoc($result_fornecedor)) {
+                        $fornecedor_nome = $rowData["nome"];
                     }
+                }
 
-                    $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
-                    $result_categoria = mysqli_query($conexao, $sql_categoria);
+                $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
+                $result_categoria = mysqli_query($conexao, $sql_categoria);
 
-                    if (mysqli_num_rows($result_categoria) > 0) {
-                        while ($rowData = mysqli_fetch_assoc($result_categoria)) {
-                            $categoria_nome = $rowData["nome"];
-                        }
+                if (mysqli_num_rows($result_categoria) > 0) {
+                    while ($rowData = mysqli_fetch_assoc($result_categoria)) {
+                        $categoria_nome = $rowData["nome"];
                     }
-                    
-                    echo "<tr> <td>";
-                    echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 'name='checkbox_id[$id]' value='" . $id . "'>";
-                    echo"</td>";
+                }
 
-                    echo "<td style='max-width: 120px; '>";
-                    echo $nome;
-                    echo "</td>";
-                    echo "<td style='max-width: 120px; '>";
-                    echo $categoria_nome;
-                    echo "</td>";
-                    echo "<td>";
-                    switch ($tamanho) {
-                        case 1:
-                            echo "P";
-                            break;
-                        case 2:
-                            echo "PP";
-                            break;
-                        case 3:
-                            echo "M";
-                            break;
-                        case 4:
-                            echo "G";
-                            break;
-                        case 5:
-                            echo "GG";
-                            break;
-                    }
-                    echo "</td>";
-                    echo "<td style='color: "; 
-                    if($quantidade > 5){echo "green;'>";}
-                    elseif($quantidade > 0){ echo "blue;'>"; }
-                    else { echo "red;'>";}
+                echo "<tr> <td>";
+                echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 'name='checkbox_id[$id]' value='" . $id . "'>";
+                echo "</td>";
 
-                    echo $quantidade . "</td>";
-                    
-                    echo "<td>" . $data ."</td>";
+                echo "<td style='max-width: 120px; '>";
+                echo $nome;
+                echo "</td>";
+                echo "<td style='max-width: 120px; '>";
+                echo $categoria_nome;
+                echo "</td>";
+                echo "<td>";
+                switch ($tamanho) {
+                    case 1:
+                        echo "P";
+                        break;
+                    case 2:
+                        echo "PP";
+                        break;
+                    case 3:
+                        echo "M";
+                        break;
+                    case 4:
+                        echo "G";
+                        break;
+                    case 5:
+                        echo "GG";
+                        break;
+                }
+                echo "</td>";
+                echo "<td style='color: ";
+                if ($quantidade > 5) {
+                    echo "green;'>";
+                } elseif ($quantidade > 0) {
+                    echo "blue;'>";
+                } else {
+                    echo "red;'>";
+                }
 
-                    echo "<td style='max-width: 60px; min-width: 50px;'>
+                echo $quantidade . "</td>";
+
+                echo "<td>" . $data . "</td>";
+
+                echo "<td style='max-width: 60px; min-width: 50px;'>
 
                             <button class='editar' type='button'>
                                 <a style='width: 35px; height: 35px;name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]'>
@@ -313,34 +318,34 @@
                     
                         </td>";
 
-                    echo "</tr>";
-
-                }
+                echo "</tr>";
             }
-            else{
-                echo "Nenhum produto cadastrado";
-            }
+        } else {
+            echo "Nenhum produto cadastrado";
         }
     }
+}
 
-    $produto = new produto;
+$produto = new produto;
 
-        if(isset($_POST['submit-produto'])){
-            $msg = $produto->inserir();
-            if($msg){  header('Location: ../HTML/produtos.php?msg=1'); }
-            else{  header('Location: ../HTML/produtos.php?msg=0');}
-        }
-        elseif(!empty($_GET['id_produto']) && !empty($_GET['delete']) ){
-            if($_GET['delete'] == 'on'){
-                $id = $_GET['id_produto'];
-                $msg = $produto->delete($id);
-                header('Location: ../HTML/produtos.php?msg=1');
-            }
-        }
-        elseif(isset($_POST['submit-saida-produto'])){
-            $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-            $produto->validar($dados);
-        }
-        elseif(isset($_POST['retirar-produto'])){
-        $produto->retirar();
+if (isset($_POST['submit-produto'])) {
+    $produto->inserir();
+} 
+
+elseif (!empty($_GET['id_produto']) && !empty($_GET['delete'])) 
+{
+    if ($_GET['delete'] == 'on') {
+        $id = $_GET['id_produto'];
+        $produto->delete($id);
+    }
+} 
+
+elseif (isset($_POST['submit-saida-produto'])) 
+{
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $produto->validar($dados);
+} 
+
+elseif (isset($_POST['retirar-produto'])) {
+    $produto->retirar();
 }

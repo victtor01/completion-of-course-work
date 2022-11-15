@@ -41,6 +41,7 @@
     </header>
 
     <main>
+
         <div class="barra-lateral">
             <header>
                 <div class="imagem">
@@ -49,7 +50,7 @@
                 <h1> Admin</h1>
             </header>
             <section>
-                <a href="painel.html">
+                <a href="painel.php">
                     <ion-icon name="desktop-outline"></ion-icon> <span> Home </span>
                 </a>
                 <a href="produtos.php">
@@ -65,20 +66,16 @@
                     <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
 
-                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                <button class="clientes-funcionarios selecionado" id="botao-contas" onclick="ClientesFuncionarios()">
                     <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
                     <ion-icon name="chevron-forward-outline"></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios" style="display: block;">
-                    <a href="#">
-                        <span> Clientes </span>
-                    </a>
-                    <a href="funcionarios.html" class="selecionado">
-                        <span> Funcionários </span>
-                    </a>
+                    <a href="funcionarios.html"> <span> Funcionários </span></a>
+                    <a href="clientes.html"> <span> Clientes </span> </a>
                 </div>
 
-                <a href="#" class="sair">
+                <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
             </section>

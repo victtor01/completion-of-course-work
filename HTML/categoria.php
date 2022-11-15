@@ -36,8 +36,7 @@ include('../PHP/categoria.php');
     <!-- PRINCIPAL -->
     <main>
 
-        <div class="barra-lateral">
-
+    <div class="barra-lateral">
             <header>
                 <div class="imagem">
                     <img src="../imagens/admin.png" width="150" height="150">
@@ -52,18 +51,29 @@ include('../PHP/categoria.php');
                     <ion-icon name="bag-outline"></ion-icon> <span> Produtos </span>
                 </a>
                 <a class="selecionado">
-                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categoria </span>
+                    <ion-icon name="bookmark-outline"></ion-icon> <span> Categorias </span>
                 </a>
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
                 <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Caixa </span>
+                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Adicionar </span>
-                </a>
-                <a href="#">
+
+                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios">
+                    <a href="funcionarios.html">
+                        <span> Funcionários </span>
+                    </a>
+                    <a href="#">
+                        <span> Clientes </span>
+                    </a>
+                </div>
+
+                <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
             </section>

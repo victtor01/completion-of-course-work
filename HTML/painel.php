@@ -1,14 +1,27 @@
 <?php
-    include_once('../PHP/conexao.php');
-    $sql = "SELECT SUM(quantidade) as SOMA FROM produto";
-    $query = mysqli_query($conexao, $sql);
-    $row = $query->fetch_assoc();
-    $SUM = $row['SOMA'];
+    session_start();
 
-    $sql =  "SELECT COUNT(*) as CONTAGEM FROM produto ";
-    $query = mysqli_query($conexao, $sql);
-    $row = $query->fetch_assoc();
-    $COUNT = $row['CONTAGEM'];
+    if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
+        include_once('../PHP/conexao.php');
+        $sql = "SELECT SUM(quantidade) as SOMA FROM produto";
+        $query = mysqli_query($conexao, $sql);
+        $row = $query->fetch_assoc();
+        $SUM = $row['SOMA'];
+
+        $sql =  "SELECT COUNT(*) as CONTAGEM FROM produto ";
+        $query = mysqli_query($conexao, $sql);
+        $row = $query->fetch_assoc();
+        $COUNT = $row['CONTAGEM'];
+
+        $sql = "SELECT COUNT(*) as CONTAGEM_FOR FROM fornecedor";
+        $query = $conexao->query($sql);
+        $row = $query->fetch_assoc();
+        $COUNT_FOR = $row['CONTAGEM_FOR'];
+    }
+    else{
+        header('Location: ../login.html');
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +113,7 @@
 
                 <button class="acao" id="fornecedores">
     
-                   <p> Total de <?php ?> fornecedores </p>
+                   <p> Total de <?php echo $COUNT_FOR ?> fornecedores </p>
                    <div class="link_acao" id="link_fornecedores">
                     <a href="fornecedores.php">Fornecedores</a>
                     </div>

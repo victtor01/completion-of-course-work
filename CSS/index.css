@@ -125,12 +125,17 @@ a {
 .section-principal {
     width: 80%;
     min-width: 300px;
-    height: 550px;
+    height: 90%;
+    max-height: 500px;
     margin: 20px auto 10px auto;
     border-radius: 5px;
     background: none;
     box-shadow: 0px 0px 6px rgba(242, 239, 239, 0.853);
     background: none;
+    overflow: scroll;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 20px;
 }
 
 /* -----------------------------------------------------------------------------------------*/
@@ -246,11 +251,10 @@ tr:nth-child(even) {
 table {
     width: 98%;
     height: 50%;
-    max-height: 200px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     border-collapse:separate;
-
+    overflow: scroll;
     padding: 5px;
     /*
     scroll-snap-type: y mandatory;
@@ -545,10 +549,8 @@ section .input_editar {
     font-size: 15pt;
     color: white;
 }
-
 .barra-lateral a:hover, 
-.barra-lateral .clientes-funcionarios:hover, 
-.barra-lateral .clientes-funcionarios .href-clientes-funcionarios a:hover{
+.barra-lateral .clientes-funcionarios:hover{
     background-color: #f98b465c;
     font-size: 18pt;
 }
@@ -574,8 +576,33 @@ section .input_editar {
     justify-content: center;
     margin: 10px auto 0px auto;
 }
+.barra-lateral section .sair{
+    background-color: rgb(87, 32, 32);
+    margin: 20px auto 20px auto;
+    height: 50px;
+    width: 150px;
+    font-size: 14pt;
+    border-radius: 15px;
+    position:relative;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: 0.3s;
+}
 .barra-lateral section .sair:hover{
-    background-color: rgb(139, 35, 35);
+    transform: scale(1.05);
+    background-color: rgb(145, 43, 43);
+}
+.barra-lateral .href-clientes-funcionarios a:hover{
+    background-color: rgba(0, 0, 0, 0);
+}
+.barra-lateral .href-clientes-funcionarios a::before{
+    content: '';
+    width: 1px;
+    height: 100%;
+    background-color: #b3561c;
+    margin-left: 5px;
+    position: relative;
 }
 .barra-lateral .href-clientes-funcionarios{
     display: none;
