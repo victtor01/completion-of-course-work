@@ -23,12 +23,15 @@ class produto extends links
         '$tamanho')";
 
         $query_result = mysqli_query($conexao, $inserir_produto);
-
+        if($query_result){
+            $produto = new produto;
+            $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, $tamanho, $categoria, $fornecedor);
+        }
         $msg = $query_result? 1 : 0;
-
         header('Location: '. $this->link_produtos . '?msg=' . $msg);
+        die();
     }
-    function retirar()
+    public function retirar()
     {
         include('conexao.PHP');
         $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -66,21 +69,17 @@ class produto extends links
         header('Location: '. $this->link_produtos);
     
     }
-    private function entrada($nome, $valor, $data, $tamanho, $categoria, $fornecedor)
+    private function entrada($quantidade, $nome, $valor, 
+    $data, $tamanho, $categoria, $fornecedor)
     {
         include('conexao.PHP');
-        $sql = "INSERT INTO entrada(quantidade, valor, tamanho, nome, data_entrada)
-            VALUES ('$quantidade', '$valor', '$tamanho', '$nome', '$data')";
-
+        $sql = "INSERT INTO entrada(quantidade_entrada, valor, tamanho, nome, data_entrada, categoria, fornecedor)
+        VALUES ('$quantidade', '$valor', '$tamanho', '$nome', '$data', '$categoria', $fornecedor)";
         $result = mysqli_query($conexao, $sql);
 
-        if ($result) {
-            header('Location: ../HTML/produtos.php');
-        } else {
-            echo "algo deu errado!";
-        }
     }
-    private function saida($nome, $valor, $data, $tamanho, $categoria, $fornecedor, $quantidade, $valor_total)
+    private function saida($nome, $valor, $data, $tamanho, 
+    $categoria, $fornecedor, $quantidade, $valor_total)
     {
         include('conexao.PHP');
         $sql = "INSERT INTO saida(quantidade, valor_produto, nome_produto,
@@ -213,6 +212,7 @@ class produto extends links
                         <th> Categoria</th>
                         <th> Tamanho</th>
                         <th> Quantidade</th>
+                        <th> Preço </th>
                         <th> Data</th>
                         <th style='min-width: 100px;'> Ações </th>
                     </tr>
@@ -226,7 +226,6 @@ class produto extends links
                 $fornecedor = $user_data['fornecedor'];
                 $valor_investido = $user_data['valor_investido'];
                 $lucro_esperado = $user_data['lucro_esperado'];
-                $data_produto = $user_data['data_produto'];
                 $tamanho = $user_data['tamanho'];
                 $data = $user_data['data_produto'];
 
@@ -249,44 +248,45 @@ class produto extends links
                 }
 
                 echo "<tr> <td>";
-                echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 'name='checkbox_id[$id]' value='" . $id . "'>";
+                    echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 
+                    'name='checkbox_id[$id]' value='" . $id . "'>";
                 echo "</td>";
 
                 echo "<td style='max-width: 120px; '>";
-                echo $nome;
+                    echo $nome;
                 echo "</td>";
+
                 echo "<td style='max-width: 120px; '>";
-                echo $categoria_nome;
+                    echo $categoria_nome;
                 echo "</td>";
+
                 echo "<td>";
-                switch ($tamanho) {
-                    case 1:
-                        echo "P";
-                        break;
-                    case 2:
-                        echo "PP";
-                        break;
-                    case 3:
-                        echo "M";
-                        break;
-                    case 4:
-                        echo "G";
-                        break;
-                    case 5:
-                        echo "GG";
-                        break;
-                }
+                    switch ($tamanho) {
+                        case 1:
+                            echo "P";
+                            break;
+                        case 2:
+                            echo "PP";
+                            break;
+                        case 3:
+                            echo "M";
+                            break;
+                        case 4:
+                            echo "G";
+                            break;
+                        case 5:
+                            echo "GG";
+                            break;
+                    }
                 echo "</td>";
-                echo "<td style='color: ";
-                if ($quantidade > 5) {
-                    echo "green;'>";
-                } elseif ($quantidade > 0) {
-                    echo "blue;'>";
-                } else {
-                    echo "red;'>";
-                }
 
+                echo "<td style='color: "; 
+                    if ($quantidade > 5) { echo "green;'>"; } 
+                    elseif ($quantidade > 0) { echo "blue;'>"; } 
+                    else {echo "red;'>"; }
                 echo $quantidade . "</td>";
+
+                echo "<td> R$ " . $valor_investido ."</td>";
 
                 echo "<td>" . $data . "</td>";
 
@@ -319,6 +319,8 @@ class produto extends links
                         </td>";
 
                 echo "</tr>";
+                
+                
             }
         } else {
             echo "Nenhum produto cadastrado";

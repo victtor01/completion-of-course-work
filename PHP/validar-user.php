@@ -15,7 +15,7 @@ class usuario extends links{
         {
             $_SESSION['id'] = $usuario['id_funcionario']; 
             $_SESSION['nome'] = $usuario['nome'];
-            $_SESSIon['cargo'] = $usuario['cargo'];
+            $_SESSION['cargo'] = $usuario['cargo'];
             header('Location: ' . $this->link_painel);
             die();
         }   

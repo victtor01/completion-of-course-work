@@ -52,7 +52,7 @@
 #modal-entrada {
     position: absolute;
     width: 600px;
-    height: 90%;
+    height: 600px;
     border-radius: 6px;
     border: none;
     background-color: rgba(255, 255, 255, 0.854);

@@ -1,9 +1,10 @@
 <?php
 session_start();
 if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
-include('../PHP/conexao.PHP');
-include_once('../PHP/produto.php');
-}else{
+    include_once '../PHP/conexao.PHP';
+    include_once '../PHP/produto.php';
+}
+else{
     header('Location: ../login.html');
     die();
 }
@@ -42,14 +43,14 @@ include_once('../PHP/produto.php');
 
     <?php
     if (!empty($_GET['msg'])) {
-        include('../php/mensagem.php');
+        include_once('../php/mensagem.php');
         mensagem($_GET['msg']);
     }
     ?>
 
     <header class="header-titulo titulo-principal">
         <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
-            <a href="painel.html" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
+            <a href="painel.php" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
                 <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px;">
                 <h1 style="margin-right: 50px;"> Controle de Estoque </h1>
             </a>
@@ -84,22 +85,25 @@ include_once('../PHP/produto.php');
                     <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
 
-                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
-                </button>
-                <div class="href-clientes-funcionarios">
-                    <a href="funcionarios.html">
-                        <span> Funcionários </span>
-                    </a>
-                    <a href="#">
-                        <span> Clientes </span>
-                    </a>
-                </div>
+                <?php if($_SESSION['cargo'] == 1){ ?>
+                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                        <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                    </button>
+                    <div class="href-clientes-funcionarios">
+                        <a href="funcionarios.php">
+                            <span> Funcionários </span>
+                        </a>
+                        <a href="#">
+                            <span> Clientes </span>
+                        </a>
+                    </div>
+                <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
+                
             </section>
         </div>
 
@@ -166,8 +170,8 @@ include_once('../PHP/produto.php');
         </header>
 
         <section class="section-cadastro">
-            <form method="POST" action="../PHP/produto.php">
-                <!--nome do produto -->
+            <form method="POST" action="../PHP/produto.php" >
+                <!--nome do produto --> 
                 <label>
                     <label class="label-titulo"> Nome do produto: *</label>
                     <input name="nome" type="text" class="input-registro" placeholder="Biquini Vermelho" autocomplete="off">
@@ -254,7 +258,7 @@ include_once('../PHP/produto.php');
                         <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
                     </label>
                     <label class="label-numero">
-                        <label class="label-titulo"> Lucro (%): *s</label>
+                        <label class="label-titulo"> Lucro (%): *</label>
                         <input name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off">
                     </label>
                 </div>
@@ -296,7 +300,6 @@ include_once('../PHP/produto.php');
         </section>
 
     </dialog>
-
 
 </body>
 

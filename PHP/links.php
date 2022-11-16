@@ -15,7 +15,7 @@ class links {
         $this->link_produtos = '../HTML/produtos.php';
         $this->link_categorias = '../HTML/categoria.php';
         $this->link_fornecedores = '../HTML/fornecedores.html';
-        $this->link_funcionarios = '../HTML/funcionarios';
+        $this->link_funcionarios = '../HTML/funcionarios.php';
     }
 
     

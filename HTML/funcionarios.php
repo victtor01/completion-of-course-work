@@ -1,3 +1,21 @@
+<?php
+session_start();
+if(isset($_SESSION['nome']) && isset($_SESSION['id']) && isset($_SESSION['cargo'])){
+
+if($_SESSION['cargo'] != 1){
+    header('Location: painel.php');
+    die();
+}
+
+include_once '../PHP/conexao.php';
+include_once 'funcionarios.php';
+
+}
+else{
+    header('Location: ../login.php');
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 

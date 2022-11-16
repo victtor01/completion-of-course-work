@@ -1,6 +1,14 @@
 <?php
-include('../PHP/conexao.php');
-include('../PHP/categoria.php');
+session_start();
+if(isset($_SESSION['nome']) && isset($_SESSION['id'])){
+    include_once '../PHP/conexao.php';
+    include_once '../PHP/categoria.php';
+}
+else{
+    header('Location: ../login.html');
+    die();
+}
+
 ?>
 
 <!DOCTYPE html>
