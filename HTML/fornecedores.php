@@ -92,7 +92,7 @@ else{
             <!-- TITULO DA SECTION -->
             <header class="header-titulo titulo-section">
                 <h1>
-                    Produtos
+                    Fornecedores
                 </h1>
             </header>
 

@@ -172,7 +172,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 $sql_date = "SELECT DISTINCT YEAR (data_saida) as ano, MONTH (data_saida) as mes, DAY(data_saida) as dia FROM saida 
                 UNION SELECT DISTINCT YEAR (data_entrada) as ano, MONTH(data_entrada) as mes, DAY(data_entrada) as dia FROM entrada 
-                ORDER BY mes DESC LIMIT 10";
+                ORDER BY mes,dia ASC LIMIT 30";
 
                 $query = $conexao->query($sql_date);
 
@@ -197,7 +197,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                     
                 ?>
 
-                ['<?php echo $mes .'-'. $dia ?>',<?php echo $quantidadeEntrada?>,<?php echo $quantidadeSaida?>],
+                ['<?php echo  $dia.'-'. $mes?>',<?php echo $quantidadeEntrada?>,<?php echo $quantidadeSaida?>],
 
                 <?php } ?>
             ]);

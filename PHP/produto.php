@@ -1,4 +1,5 @@
 <?php
+
 include 'links.php';
 class produto extends links
 {
@@ -56,7 +57,7 @@ class produto extends links
 
             $resto = (intval($quantidade_atual) - intval($quantidade_retirada));
 
-        if ($resto <= 0) 
+        if ($resto < 0) 
             exit;
         
         $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
@@ -205,20 +206,22 @@ class produto extends links
 
         if (mysqli_num_rows($result) > 0) {
             echo " 
-                <thead>
-                    <tr class='tr'>
-                        <th></th>
-                        <th> Nome </th>
-                        <th> Categoria</th>
-                        <th> Tamanho</th>
-                        <th> Quantidade</th>
-                        <th> Preço </th>
-                        <th> Data</th>
-                        <th style='min-width: 100px;'> Ações </th>
-                    </tr>
-                </thead>";
 
-            while ($user_data = mysqli_fetch_assoc($result)) {
+            <thead>
+                <tr class='tr'>
+                    <th></th>
+                    <th> Nome </th>
+                    <th> Categoria</th>
+                    <th> Tamanho</th>
+                    <th> Quantidade</th>
+                    <th> Preço </th>
+                    <th> Data</th>
+                    <th style='min-width: 100px;'> Ações </th>
+                </tr>
+            </thead>";
+
+            while ($user_data = mysqli_fetch_assoc($result)){
+
                 $id = $user_data['id_produto'];
                 $nome = $user_data['nome'];
                 $categoria = $user_data['categoria'];
@@ -323,7 +326,7 @@ class produto extends links
                 
             }
         } else {
-            echo "Nenhum produto cadastrado";
+            echo "<h3> Nenhum produto cadastrado </h3>";
         }
     }
 }

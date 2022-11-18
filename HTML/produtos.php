@@ -121,6 +121,7 @@ else{
                         Entrada
                     </button>
                 </div>
+
                 <div class="div-pesquisar div">
                     <input type="text" placeholder="Pesquise..." class="pesquisar">
                     <button type="button" class="btn-pesquisar" style="border: none; background: none;">
@@ -130,12 +131,12 @@ else{
 
                 <form action="../PHP/produto.php" method="post">
 
-                    <div class="div">
-                        <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
-                            <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
-                            Saída
-                        </button>
-                    </div>
+                <div class="div">
+                    <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
+                        <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
+                        Saída
+                    </button>
+                </div>
             </div>
 
             <section class="section-produtos">

@@ -1,20 +1,20 @@
 <?php
+
 session_start();
 if(isset($_SESSION['nome']) && isset($_SESSION['id']) && isset($_SESSION['cargo'])){
-
-if($_SESSION['cargo'] != 1){
-    header('Location: painel.php');
-    die();
-}
-
-include_once '../PHP/conexao.php';
-include_once 'funcionarios.php';
-
+    if($_SESSION['cargo'] != 1){
+        header('Location: painel.php');
+        die();
+    }
 }
 else{
     header('Location: ../login.php');
     die();
 }
+
+include_once '../PHP/conexao.php';
+include_once '../PHP/funcionarios.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -109,9 +109,10 @@ else{
             <div class="botoes-principais">
                 <div class="div">
                     <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
-                        <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon>
+                       <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon> <span>Usuário</span>
                     </button>
                 </div>
+
                 <div class="div-pesquisar div">
                     <input type="text" placeholder="Pesquise..." class="pesquisar">
                     <button type="button" class="btn-pesquisar" style="border: none; background: none;">
@@ -119,17 +120,20 @@ else{
                     </button>
                 </div>
 
+                <div class="div">
+                    <button type="button" class="botao" id="button-saida">
+                       
+                    </button>
+                </div>
 
             </div>
 
-            <section class="section-produtos">
-                <table>
-                    
-                </table>
+            <section class="section-informacoes">
+                <?php
+                    $funcionario = new funcionario;
+                    $funcionario->mostrar_funcionarios();
+                ?>
             </section>
-
-            <footer style='margin-top: 15px;'>
-            </footer>
 
         </section>
         
