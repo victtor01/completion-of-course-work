@@ -1,5 +1,8 @@
 <?php
+if(empty($_SESSION['id'])){
 session_start();
+}
+
 if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
     include_once '../PHP/conexao.PHP';
     include_once '../PHP/produto.php';

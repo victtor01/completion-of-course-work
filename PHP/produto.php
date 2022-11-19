@@ -1,4 +1,12 @@
 <?php
+if(empty($_SESSION['id'])){
+session_start();
+}
+
+if(!isset($_SESSION['nome']) && !isset($_SESSION['id']) && !isset($_SESSION['cargo'])){
+    header('Location: ../login.php');
+    die();
+}
 
 include 'links.php';
 class produto extends links
@@ -16,6 +24,7 @@ class produto extends links
         $lucro_esperado = $_POST['lucro'];
         $data_produto = $_POST['data'];
         $tamanho = $_POST['tamanho'];
+
         $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, fornecedor, valor_investido, lucro_esperado, tamanho, data_produto)
         VALUES ('$nome', $categoria, '$quantidade',
         $fornecedor, '$valor_investido', '$lucro_esperado', '$tamanho',
@@ -25,9 +34,6 @@ class produto extends links
         if($query_result){
             $produto = new produto;
             $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, $tamanho, $categoria, $fornecedor);
-        }
-        else{
-            echo "ok";
         }
 
         $msg = $query_result? 1 : 0;
@@ -39,7 +45,7 @@ class produto extends links
         include('conexao.PHP');
         $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-        foreach ($produtos['id'] as $chave => $id) {
+        foreach ($produtos['id'] as $chave => $id){
 
             $id_produto = $produtos['id'][$chave];
             $nome = $produtos['nome'][$chave];
@@ -59,13 +65,12 @@ class produto extends links
 
             $resto = (intval($quantidade_atual) - intval($quantidade_retirada));
 
-        if ($resto < 0) 
-            exit;
-        
-        $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
-        $query = mysqli_query($conexao, $sql_update);
-        $produto = new produto;
-        $produto->saida($nome, $preco, $data, $tamanho, $categoria, $fornecedor, $quantidade_retirada, $valor_total);
+            if ($resto < 0){ exit; }
+
+            $sql_update = "UPDATE produto SET quantidade = '$resto' WHERE id_produto=$id_produto";
+            $query = mysqli_query($conexao, $sql_update);
+            $produto = new produto;
+            $produto->saida($nome, $preco, $data, $tamanho, $categoria, $fornecedor, $quantidade_retirada, $valor_total);
 
         }
 

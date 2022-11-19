@@ -1,6 +1,15 @@
 <?php
+if(!isset($_SESSION['id'])){
+session_start();
+}
 
-class categoria{
+if(!isset($_SESSION['nome']) && !isset($_SESSION['id']) && !isset($_SESSION['cargo'])){
+    header('Location: ../login.php');
+    die();
+}
+
+include 'links.php';
+class categoria extends links{
 
     function inserir(){
         include('conexao.PHP');
@@ -11,9 +20,8 @@ class categoria{
         $sql_inserir = "INSERT INTO categoria(nome, descricao) VALUES ('$nome', '$obs')";
         $inserir = mysqli_query($conexao, $sql_inserir);
 
-        if($inserir){
-            header('Location: ../HTML/categoria.php');
-        }
+        header('Location:' . $this->link_categorias);
+        
     }
     function deletar(){
         include_once('conexao.php');
@@ -21,12 +29,7 @@ class categoria{
         $sqldelete = "DELETE FROM categoria WHERE id_categoria='$id'";
         $result = mysqli_query($conexao, $sqldelete);
 
-        if($result){
-            header('Location: ../HTML/categoria.php');
-        }
-        else{
-             header('Location: ../HTML/categoria.php');
-        }
+        header('Location:' . $this->link_categorias);
     }
     function mostrar_categoria(){
         include('conexao.PHP');
@@ -92,23 +95,21 @@ class categoria{
         $sqlUpdate = "UPDATE categoria SET nome='$nome' WHERE id_categoria='$id'";
         $result = mysqli_query($conexao, $sqlUpdate); 
         
-        header('Location: ../HTML/categoria.php');
+        header('Location:' . $this->link_categorias);
         die();
     }
 }
 
+$categoria = new categoria;
 if(isset($_POST['nome']) && isset($_POST['obs'])){
-    $categoria = new categoria;
     $categoria->inserir();
 }
 if(!empty($_GET['delete'])){
     if($_GET['delete'] == 'on'){
-        $categoria = new categoria;
         $categoria->deletar();
     }
 }
 if(isset($_POST['update'])){
-    $categoria = new categoria;
     $categoria->editar_categoria();
 }
 

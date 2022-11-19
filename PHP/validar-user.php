@@ -3,15 +3,19 @@ include_once 'links.php';
 class usuario extends links{
     function login(){
         include('conexao.PHP');
-        session_start();
+
+        if(empty(session_start())) {
+            session_start();
+        }
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        $sql_code = "SELECT * FROM funcionarios WHERE email = '$email' LIMIT 1";
+        $sql_code = "SELECT * FROM funcionarios WHERE email = '$email' ";
         $query = mysqli_query($conexao, $sql_code);
         $usuario = $query->fetch_assoc();
+        $hash = $usuario['senha'];
 
-        if(password_verify($senha , $usuario['senha']))
+        if(password_verify($senha , $hash))
         {
             $_SESSION['id'] = $usuario['id_funcionario']; 
             $_SESSION['nome'] = $usuario['nome'];

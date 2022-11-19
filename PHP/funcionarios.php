@@ -51,6 +51,25 @@ class funcionario extends links{
         die();
         
     }
+    function MudarSenhadoFuncionario(){
+        $senha = strval($_POST['senha']);
+        $confirmar_senha = strval($_POST['confirmar_senha']);
+        $id_funcionario = $_POST['id_funcionario'];
+
+        if($senha == $confirmar_senha){
+            include 'conexao.PHP';
+            $criptografy = password_hash($confirmar_senha, PASSWORD_DEFAULT);
+            $sql = "UPDATE funcionarios SET senha='$criptografy' WHERE id_funcionario = '$id_funcionario'";
+            $query = $conexao->query($sql);
+
+            if($query){
+                //header('Location: ' . $this->link_funcionarios);
+                echo "troca de senha concluida com sucesso!";
+            }
+        }
+        
+        
+    }
     public function mostrarFuncionarios(){
 
         include 'conexao.PHP'; 
@@ -141,7 +160,7 @@ class funcionario extends links{
 
         }
     }
-    public function MudarSenhadoFuncionario(){
+    public function ModalMudarSenhadoFuncionario(){
         
         ?>
         
@@ -157,18 +176,19 @@ class funcionario extends links{
 
             <section class="section-password">
                 <form action="../PHP/funcionarios.php" method="post">
+                    <input type="hidden" name="id_funcionario" value="<?php echo $_GET['id_funcionario']?>">
                     <label class="label-password">
                         <span> Nova senha: </span>
-                        <input type="password" class="input">
+                        <input type="password" class="input" name="senha">
                     </label>
                     <label class="label-password">
                         <span> Confirmar nova senha: </span>
-                        <input type="password" class="input">
+                        <input type="password" class="input" name="confirmar_senha">
                     </label>
 
                     <label class="label-password">
-                        <button type="submit" id="button">
-                        Concluído
+                        <button type="submit" id="button" name="submit-update-senha">
+                            Concluído
                         </button>
                     </label>
                     
@@ -260,9 +280,15 @@ class funcionario extends links{
 
 }
 
-if(isset($_POST['nome'])){
 $funcionario = new funcionario;
+
+if(isset($_POST['nome'])){
 $funcionario->inserir();
 }
+
+if(isset($_POST['senha'])){
+$funcionario->MudarSenhadoFuncionario();
+}
+
 
 ?>

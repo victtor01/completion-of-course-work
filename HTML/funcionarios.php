@@ -12,6 +12,7 @@ else{
     die();
 }
 
+
 include_once '../PHP/conexao.php';
 include_once '../PHP/funcionarios.php';
 
@@ -43,7 +44,7 @@ include_once '../PHP/funcionarios.php';
     if(!empty($_GET['id_funcionario'])){
 
         $funcionario = new funcionario;
-        $funcionario->MudarSenhadoFuncionario();
+        $funcionario->ModalMudarSenhadoFuncionario();
 
     }
     ?>
