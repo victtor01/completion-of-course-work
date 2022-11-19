@@ -196,7 +196,7 @@ else{
             </header>
 
             <!-- CADASTRAR NOVO FORNECEDOR -->
-            <form action="PHP/index.php" method="POST">
+            <form action="../PHP/fornecedor.php" method="POST">
                 <input type="text" name="nome_fornecedor" placeholder="nome">
                 <input type="text" name="email_fornecedor" placeholder="email">
                 <input type="text" name="telefone_fornecedor" placeholder="telefone">

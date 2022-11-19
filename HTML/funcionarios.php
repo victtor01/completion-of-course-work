@@ -39,6 +39,15 @@ include_once '../PHP/funcionarios.php';
 
 <body>
 
+    <?php
+    if(!empty($_GET['id_funcionario'])){
+
+        $funcionario = new funcionario;
+        $funcionario->MudarSenhadoFuncionario();
+
+    }
+    ?>
+
     <div class="msg" id="msg2" style="background-color: red;">
         <h2> Algo deu errado</h2>
     </div>
@@ -109,7 +118,7 @@ include_once '../PHP/funcionarios.php';
             <div class="botoes-principais">
                 <div class="div">
                     <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
-                       <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon> <span>Usuário</span>
+                       <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon> <span>Funcionário</span>
                     </button>
                 </div>
 
@@ -122,7 +131,7 @@ include_once '../PHP/funcionarios.php';
 
                 <div class="div">
                     <button type="button" class="botao" id="button-saida">
-                       
+                        <ion-icon style="height: 26px; width: 26px" name="cloud-done-outline"></ion-icon> <span> Guardar </span>
                     </button>
                 </div>
 
@@ -131,7 +140,7 @@ include_once '../PHP/funcionarios.php';
             <section class="section-informacoes">
                 <?php
                     $funcionario = new funcionario;
-                    $funcionario->mostrar_funcionarios();
+                    $funcionario->mostrarFuncionarios();
                 ?>
             </section>
 
@@ -162,7 +171,7 @@ include_once '../PHP/funcionarios.php';
                 <div class="div-informacoes">
                     <label class="label-quantidade">
                         <label class="label-titulo"> CPF </label>
-                        <input name="CPF" type="text" class="input-registro" placeholder="000.000.000-00">
+                        <input name="CPF" type="text" class="input-registro" placeholder="000.000.000-00" autocomplete="off" required>
                     </label>
 
                     <label class="label-tamanho">
@@ -180,7 +189,7 @@ include_once '../PHP/funcionarios.php';
                 <div class="div-informacoes">
                     <label class="label-data">
                         <label class="label-titulo"> Data de Nascimento: * </label>
-                        <input name="data" type="date" class="input-registro">
+                        <input name="data" type="date" class="input-registro" autocomplete="off" required>
                     </label>
                     <label>
                         <label class="label-titulo"> Foto:  *</label>
@@ -192,11 +201,11 @@ include_once '../PHP/funcionarios.php';
                 <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Salário: *</label>
-                        <input id="salario" name="salario" type="text" class="input-registro" placeholder="1000.00">
+                        <input id="salario" name="salario" type="text" class="input-registro" placeholder="1000.00" autocomplete="off" required>
                     </label>
                     <label class="label-numero">
                         <label class="label-titulo"> Contato: *</label>
-                        <input name="contato" type="text" class="input-registro" placeholder="(99)9999-9999" autocomplete="off">
+                        <input name="contato" type="text" class="input-registro" placeholder="(99)9999-9999" autocomplete="off" required>
                     </label>
                 </div>
                 
@@ -204,7 +213,7 @@ include_once '../PHP/funcionarios.php';
                 <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Email: *</label>
-                        <input id="valor_fornecedor" name="email" type="email" class="input-registro" placeholder="example@gmail.com">
+                        <input id="valor_fornecedor" name="email" type="email" class="input-registro" placeholder="example@gmail.com" autocomplete="off" required>
                     </label>
                 </div>
 
@@ -212,11 +221,11 @@ include_once '../PHP/funcionarios.php';
                 <div class="div-informacoes">
                     <label class="label-numero">
                         <label class="label-titulo"> Senha: *</label>
-                        <input name="senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off">
+                        <input name="senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off" required>
                     </label>
                     <label>
                         <label class="label-titulo"> Confirmar senha: *</label>
-                        <input name="confirmar_senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off">                       
+                        <input name="confirmar_senha" type="password" class="input-registro" placeholder="•••••••••" autocomplete="off" required>                       
                     </label>
                 </div>
 

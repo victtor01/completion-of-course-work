@@ -205,7 +205,7 @@ else{
                         <input name="data" type="date" class="input-registro">
                     </label>
                     <label>
-                        <label class="label-titulo"> Valor Unidades *</label>
+                        <label class="label-titulo"> Foto: </label>
                         <input class="file-image" name="valor_unidade" type="file">
                     </label>
                 </div>
@@ -255,7 +255,7 @@ else{
                 <!-- valor de investimento -->
                 <div class="div-investimento-lucro">
                     <label class="label-numero">
-                        <label class="label-titulo"> Valor do investimento: *</label>
+                        <label class="label-titulo"> Valor da Unidade: *</label>
                         <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
                     </label>
                     <label class="label-numero">

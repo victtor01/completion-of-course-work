@@ -73,7 +73,7 @@ else{
                     <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios">
-                    <a href="funcionarios.html">
+                    <a href="funcionarios.php">
                         <span> Funcionários </span>
                     </a>
                     <a href="#">

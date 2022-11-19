@@ -51,8 +51,8 @@
 
 #modal-entrada {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 550px;
+    height: 500px;
     border-radius: 6px;
     border: none;
     background-color: rgba(255, 255, 255, 0.854);
@@ -136,4 +136,11 @@ select:hover {
 
 .section-cadastro .label-data {
     width: 100%;
+}
+.modal-password{
+    width: 40%;
+    height: 200px;
+    background-color: white;
+    position: absolute;
+    margin: 100px auto 0px auto;
 }

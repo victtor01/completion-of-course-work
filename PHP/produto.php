@@ -16,18 +16,20 @@ class produto extends links
         $lucro_esperado = $_POST['lucro'];
         $data_produto = $_POST['data'];
         $tamanho = $_POST['tamanho'];
-        $inserir_produto  = "INSERT INTO
-        produto (nome, categoria, quantidade, fornecedor,
-        valor_investido, lucro_esperado, data_produto, tamanho)
+        $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, fornecedor, valor_investido, lucro_esperado, tamanho, data_produto)
         VALUES ('$nome', $categoria, '$quantidade',
-        $fornecedor, '$valor_investido', '$lucro_esperado', '$data_produto',
-        '$tamanho')";
+        $fornecedor, '$valor_investido', '$lucro_esperado', '$tamanho',
+        '$data_produto')";
 
         $query_result = mysqli_query($conexao, $inserir_produto);
         if($query_result){
             $produto = new produto;
             $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, $tamanho, $categoria, $fornecedor);
         }
+        else{
+            echo "ok";
+        }
+
         $msg = $query_result? 1 : 0;
         header('Location: '. $this->link_produtos . '?msg=' . $msg);
         die();
@@ -74,8 +76,8 @@ class produto extends links
     $data, $tamanho, $categoria, $fornecedor)
     {
         include('conexao.PHP');
-        $sql = "INSERT INTO entrada(quantidade_entrada, valor, tamanho, nome, data_entrada, categoria, fornecedor)
-        VALUES ('$quantidade', '$valor', '$tamanho', '$nome', '$data', '$categoria', $fornecedor)";
+        $sql = "INSERT INTO entrada(nome, categoria, fornecedor, quantidade_entrada, tamanho, valor, data_entrada)
+        VALUES ('$nome', '$categoria', '$fornecedor', '$quantidade', '$tamanho', '$valor', '$data')";
         $result = mysqli_query($conexao, $sql);
 
     }
@@ -335,6 +337,7 @@ $produto = new produto;
 
 if (isset($_POST['submit-produto'])) {
     $produto->inserir();
+    echo "teste";
 } 
 
 elseif (!empty($_GET['id_produto']) && !empty($_GET['delete'])) 

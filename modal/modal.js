@@ -13,6 +13,10 @@ function fecharmodal(modal){
         var modal_ = window.document.getElementById("modal-entrada");
         modal_.close();
     }
+    else if(modal == 'modal-password'){
+        var modal_ = window.document.getElementById('modal-password');
+        modal_.close();
+    }
     else if(modal == 'button-saida-fechar'){
         var modal_ = window.document.getElementById("modal-saida");
         modal_.close();

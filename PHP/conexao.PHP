@@ -2,7 +2,7 @@
 
 
 $usuario = "root";
-$bancodedados = "sistema";
+$bancodedados = "controleestoque";
 $senha="";
 $hostname = "localhost";
 
