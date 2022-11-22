@@ -1,5 +1,6 @@
 <?php
 
+
 if(empty($_SESSION['nome'])){
     session_start();
 }
@@ -7,16 +8,41 @@ if(empty($_SESSION['nome'])){
 $_SESSION['cargo'];
 $cargo = intval($_SESSION['cargo']);
 
-if($cargo != 1){
-    header('Location: ../html/funcionarios.php');
-    die();
-}
+
+require_once 'links.php';
+class funcionario extends links_pages{
+    
+    private $id;
+    private $cargo;
+    private $nome;
+    private $foto;
+    private $PrimeiroNome;
+
+    function __construct(){
+        require 'conexao.PHP';
+        $id_funcionario = $_SESSION['id'];
+        $sql = "SELECT * FROM funcionarios WHERE id_funcionario = $id_funcionario";
+        $query = mysqli_query($conexao, $sql);
+        $row = $query->fetch_assoc();
 
 
-include 'links.php';
+        $this->id = $_SESSION['id'];
+        $this->cargo = $_SESSION['cargo'];
+        $this->foto = $row['foto'];
+        $this->nome = $row['nome'];
 
-class funcionario extends links{
-    function inserir(){
+        $tmp = explode(' ' , $this->nome);
+        $this->PrimeiroNome = $tmp[0];
+
+        $this->funcionario = array(
+            "nome" => $this->nome,
+            "foto" => $this->foto, 
+            "PrimeiroNome" => $this->PrimeiroNome,
+        ); 
+
+        
+    }
+    public function inserir(){
 
         $foto = $_FILES['foto'];
         $nome = $_POST['nome'];
@@ -42,7 +68,7 @@ class funcionario extends links{
         if($extensao != 'jpg' &&  $extensao != 'png' ) { header('Location: ../HTML/funcionarios.html'); die(); }
         else{ $patch = $pasta . $imagem . "." . $extensao;  $move = move_uploaded_file($foto["tmp_name"], $patch); }
 
-        include_once 'conexao.PHP';              
+        include 'conexao.PHP';              
         $sql = "INSERT INTO funcionarios(nome, CPF, cargo, data_nascimento, foto, salario, contato, email, senha) 
         VALUES ('$nome', '$CPF', '$cargo', '$data_nascimento', '$patch', '$salario', '$contato', '$email', '$criptografy')";
         $conexao->query($sql); 
@@ -51,29 +77,42 @@ class funcionario extends links{
         die();
         
     }
-    function MudarSenhadoFuncionario(){
-        $senha = strval($_POST['senha']);
-        $confirmar_senha = strval($_POST['confirmar_senha']);
-        $id_funcionario = $_POST['id_funcionario'];
+    public function getFuncionario(){
+        return $this->funcionario;
+    }
+    public function Deletarfuncionario(){
 
-        if($senha == $confirmar_senha){
-            include 'conexao.PHP';
-            $criptografy = password_hash($confirmar_senha, PASSWORD_DEFAULT);
-            $sql = "UPDATE funcionarios SET senha='$criptografy' WHERE id_funcionario = '$id_funcionario'";
-            $query = $conexao->query($sql);
+        if($this->cargo == 1){
+            if($this->id != $_GET['id_funcionario']){
+                if($_GET['id_funcionario'] != 1){
+                    
+                    $id = $_GET['id_funcionario'];
+                    include 'conexao.php';
+                    $sql = "SELECT foto FROM funcionarios WHERE id_funcionario = $id";
+                    $query = mysqli_query($conexao, $sql);
+                    $row = $query->fetch_assoc();
+                    $patch = $row['foto'];
 
-            if($query){
-                //header('Location: ' . $this->link_funcionarios);
-                echo "troca de senha concluida com sucesso!";
+                    $delete = "DELETE FROM funcionarios WHERE id_funcionario = $id";
+                    $query = mysqli_query($conexao, $delete);
+                    
+                    if($query){
+                        if(is_file($patch)){
+                            unlink($patch);
+                            header('Location: '.$this->link_funcionarios);
+                            die();
+                        }
+                    }
+                }
             }
         }
-        
-        
+        header('Location: ' . $this->link_funcionarios);
+        die();
     }
     public function mostrarFuncionarios(){
 
         include 'conexao.PHP'; 
-        $sql = "SELECT * FROM funcionarios WHERE id_funcionario > 0";
+        $sql = "SELECT * FROM funcionarios WHERE id_funcionario";
         $query = mysqli_query($conexao, $sql);
 
         while($user_data = mysqli_fetch_assoc($query)){
@@ -87,78 +126,94 @@ class funcionario extends links{
         $salario = $user_data['salario'];
         $contato = $user_data['contato'];
         $email = $user_data['email'];
+        
+        ?>
+        <div class="div-info-geral">
 
-            echo"<div class='div-info-geral'>
+        <div class="div-foto">
+            <img src=" <?php echo $foto ?> " alt=" " width="100%" height="100%">
+        </div>
 
-            <div class='div-foto'>
-                <img src='". $foto ."' alt=''  width=100% height='100%'>
+        <div class="div-informacoes">
+
+            <div>
+
+                <label class="label-info">
+                    <span> Nome: </Span>
+                    <input type="text" name="nome" value=" <?php echo $nome ?>">
+                </label>
+                <label class="label-info">
+                    <span> Email: </span>
+                    <input type="text" name="Email" value=" <?php echo $email ?>">
+                </label>
+                <label class="label-info">
+                    <span> Contato: </span>
+                    <input type="text" name="Contato" value=" <?php echo $contato ?>">
+                </label>
+                <label class="label-info">
+                    <span> CPF: </span>
+                    <input type="text" name="CPF" value=" <?php echo $CPF ?>">
+                </label>
+
+            </div>
+            <div>
+            
+                <label class="label-info" >
+                    <span> Cargo: </span>
+                    <select name="cargo" class="select">
+                        <option value="1" <?php if($cargo == 1){ echo "selected"; } ?>>Gerente</option>
+                        <option value="2" <?php if($cargo == 2){ echo "selected"; } ?> >Faxineiro</option>
+                        <option value="3" <?php if($cargo == 3){ echo "selected"; }  ?>>Recepcionista</option>
+                        <option value="4" <?php if($cargo == 4){ echo "selected";} ?>>Vendedor</option>
+                    </select>
+                </label>
+                <label class="label-info" >
+                    <span> Nascimento: </span>
+                    <input type="text" name="Data_de_nascimento" value=" <?php echo $data_nascimento ?>">
+                </label>
+                <label class="label-info" >
+                    <span> Salario: </span>
+                    <input type="text" name="Salario" value="R$ <?php echo $salario ?>">
+                </label>
+
             </div>
 
-            <div class='div-informacoes'>
-
-                <div>
-
-                    <label class='label-info'>
-                        <span> Nome: </Span>
-                        <input type='text' name'nome' value='$nome'>
-                    </label>
-                    <label class='label-info'>
-                        <span> Email: </span>
-                        <input type='text' name'Email' value='$email'>
-                    </label>
-                    <label class='label-info'>
-                        <span> Contato: </span>
-                        <input type='text' name'Contato' value='$contato'>
-                    </label>
-                    <label class='label-info>
-                        <span> CPF: </span>
-                        <input type='text' name'CPF' value='$CPF'>
-                    </label>
-
+            <div style="max-width: 35px; height: 100%; display: flex;">
+                    <button class="editar" type="button" style="margin: 5px 0px 5px 0px; height: 50%; background-color: black;">
+                        <a style="width: 35px; height: 35px;" name="#" href="?id_funcionario=<?php echo $id ?>">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </a>
+                    </button> 
+        
+        
+                    <button name="deletar" class="editar" type="button" style="margin: 5px 0px 5px 0px; height: 50%;">
+                        <a style="width: 35px; height: 35px;" name="#" href="../PHP/funcionarios.php?id_funcionario=<?php echo $id ?>&&delete=1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </a>
+                    </button>
                 </div>
-                <div>
-                
-                    <label class='label-info' >
-                        <span> Cargo: </span>
-                        <select name='cargo' class='select'>
-                            <option value='1' "; if($cargo == 1){ echo 'selected'; } echo">Gerente</option>
-                            <option value='2'"; if($cargo == 2){ echo 'selected'; }  echo">Faxineiro</option>
-                            <option value='3'"; if($cargo == 3){echo 'selected'; }  echo">Recepcionista</option>
-                            <option value='4'"; if($cargo == 4){ echo 'selected';} echo">Vendedor</option>
-                        </select>
-                    </label>
-                    <label class='label-info' >
-                        <span> Nascimento: </span>
-                        <input type='text' name='Data_de_nascimento' value='$data_nascimento'>
-                    </label>
-                    <label class='label-info' >
-                        <span> Salario: </span>
-                        <input type='text' name='Salario' value='R$ $salario'>
-                    </label>
-
-                </div>
-
-                <div style='max-width: 35px; height: 100%; display: flex;'>
-                        <button class='editar' type='button' style='margin: 5px 0px 5px 0px; height: 50%; background-color: black;'>
-                            <a style='width: 35px; height: 35px; name='#' href='?id_funcionario=$id'>
-                                <ion-icon name='lock-closed-outline'></ion-icon>
-                            </a>
-                        </button> 
-            
-            
-                        <button class='editar' type='button' style='margin: 5px 0px 5px 0px; height: 50%;'>
-                            <a style='width: 35px; height: 35px;' name='#' href='#'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>
-                                <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>
-                                <path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>
-                                </svg>
-                            </a>
-                        </button>
-                    </div>
-                </div>
-            </div>";
-
+            </div>
+        </div>
+        <?php
         }
+    }
+    public function MudarSenhadoFuncionario(){
+        $senha = strval($_POST['senha']);
+        $confirmar_senha = strval($_POST['confirmar_senha']);
+        $id_funcionario = $_POST['id_funcionario'];
+
+        if($senha == $confirmar_senha){
+            include 'conexao.PHP';
+            $criptografy = password_hash($confirmar_senha, PASSWORD_DEFAULT);
+            $sql = "UPDATE funcionarios SET senha='$criptografy' WHERE id_funcionario = '$id_funcionario'";
+            $query = $conexao->query($sql);
+        }       
+
+        header('Location: ../HTML/funcionarios.php');
+        die("deu certo");
     }
     public function ModalMudarSenhadoFuncionario(){
         
@@ -277,7 +332,6 @@ class funcionario extends links{
         <?php
         
     }
-
 }
 
 $funcionario = new funcionario;
@@ -288,6 +342,10 @@ $funcionario->inserir();
 
 if(isset($_POST['senha'])){
 $funcionario->MudarSenhadoFuncionario();
+}
+
+if(isset($_GET['delete'])){
+$funcionario->Deletarfuncionario();
 }
 
 

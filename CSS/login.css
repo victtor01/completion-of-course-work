@@ -84,12 +84,13 @@ body{
     display: flex;
     overflow: hidden;
     margin: 5px auto 15px auto;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .div-input ion-icon{
     z-index: 2;
     width: 25px;
     height: 25px;
-    margin: auto;
+    margin: 0px 10px 0px 10px ;
     left: 0;
 }
 #acessar{
@@ -105,8 +106,10 @@ body{
     transition: 0.4s;
 }
 #acessar:hover{
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 1px rgb(55, 55, 55);
+    transform: scale(1.1);
+    background-color: aliceblue;
+    border: 2px solid black;
+    color: black;
 }
 #footer{
     position: absolute;

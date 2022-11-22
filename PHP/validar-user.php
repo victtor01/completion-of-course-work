@@ -1,6 +1,7 @@
 <?php
 include_once 'links.php';
-class usuario extends links{
+
+class usuario extends links_pages{
     function login(){
         include('conexao.PHP');
 

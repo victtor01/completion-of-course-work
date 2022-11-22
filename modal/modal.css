@@ -11,10 +11,10 @@
 
 #modal-saida {
     position: absolute;
-    width: 50%;
-    height: 600px;
+    width: 600px;
+    height: auto;
     border-radius: 6px;
-    box-shadow: 0px 0px 25px rgb(110, 109, 109);
+    /*box-shadow: 0px 0px 25px rgb(110, 109, 109);*/
     box-sizing: border-box;
     margin: 50px auto 0px auto;
     background-color: rgb(255, 255, 255);
@@ -22,7 +22,6 @@
 }
 
 #modal-saida #modal-saida-select {
-    overflow: visible;
     width: 100%;
     height: auto;
     padding: 15px;
@@ -51,15 +50,17 @@
 
 #modal-entrada {
     position: absolute;
-    width: 550px;
-    height: 500px;
+    width: 500px;
+    max-height: 600px;
     border-radius: 6px;
     border: none;
     background-color: rgba(255, 255, 255, 0.854);
-    box-shadow: 0px 0px 30px 1px rgba(11, 11, 11, 0.426);
     margin: 50px auto 0px auto;
     box-sizing: border-box;
     padding: 10px;
+    overflow: hidden;
+    transform: scale(0);
+    transition: 0.2s;
 }
 
 #modal-entrada .section-cadastro {
@@ -74,20 +75,21 @@
     margin: 1px auto 8px auto;
     outline: none;
     border-radius: 4px;
-    box-shadow: 0px 0px 10px rgb(181, 181, 181);
+    box-shadow: 0px 0px 10px rgb(211, 211, 211);
     box-sizing: border-box;
     padding: 5px;
     font-size: 12pt;
     background-color: #ffffff44;
     border: none;
+    transition: 0.5S;
 }
 
-input:hover {
-    background-color: #ccccd113;
+#modal-entrada .section-cadastro input:hover {
+    box-shadow: 0px 0px 10px rgb(188, 188, 188);
 }
 
-input:focus {
-    background-color: #ccccd113;
+#modal-entrada .section-cadastro input:focus {
+    box-shadow: 0px 0px 10px rgb(156, 156, 156);
 }
 
 #modal-entrada .section-cadastro div {

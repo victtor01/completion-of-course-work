@@ -1,16 +1,21 @@
 <?php
-session_start();
-if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
-include('../PHP/conexao.php');
-include('../PHP/fornecedor.php');
-$nome = $_SESSION['nome'];
-$id = $_SESSION['id'];
+
+if(empty($_SESSION['id'])){
+    session_start();
 }
-else{
+
+if(!isset($_SESSION['id']) || !isset($_SESSION['nome'])){
     header('Location: ../login.html');
     die();
 }
 
+include_once '../PHP/conexao.php';
+include_once '../PHP/fornecedor.php';
+require_once '../php/produto.php';
+require_once '../PHP/funcionarios.php';
+
+$funcionario = new funcionario;
+$funcionario = $funcionario->getFuncionario();
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +53,9 @@ else{
     <div class="barra-lateral">
             <header>
                 <div class="imagem">
-                    <img src="../imagens/admin.png" width="150" height="150">
+                    <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
                 </div>
-                <h1> Admin</h1>
+                <h2 style="margin-top: 10px;"> <?php echo $funcionario['nome']?></h2>
             </header>
             <section>
                 <a href="painel.php">
@@ -69,22 +74,25 @@ else{
                     <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
 
-                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
-                </button>
-                <div class="href-clientes-funcionarios">
-                    <a href="funcionarios.html">
-                        <span> Funcionários </span>
-                    </a>
-                    <a href="#">
-                        <span> Clientes </span>
-                    </a>
-                </div>
+                <?php if($_SESSION['cargo'] == 1){ ?>
+                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                        <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                    </button>
+                    <div class="href-clientes-funcionarios">
+                        <a href="funcionarios.php">
+                            <span> Funcionários </span>
+                        </a>
+                        <a href="#">
+                            <span> Clientes </span>
+                        </a>
+                    </div>
+                <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
+                
             </section>
         </div>
 

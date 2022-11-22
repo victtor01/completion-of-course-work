@@ -1,5 +1,6 @@
 <?php
 
+
 session_start();
 if(isset($_SESSION['nome']) && isset($_SESSION['id']) && isset($_SESSION['cargo'])){
     if($_SESSION['cargo'] != 1){
@@ -15,6 +16,9 @@ else{
 
 include_once '../PHP/conexao.php';
 include_once '../PHP/funcionarios.php';
+
+$funcionario = new funcionario;
+$funcionario = $funcionario->getFuncionario();
 
 ?>
 <!DOCTYPE html>
@@ -40,15 +44,6 @@ include_once '../PHP/funcionarios.php';
 
 <body>
 
-    <?php
-    if(!empty($_GET['id_funcionario'])){
-
-        $funcionario = new funcionario;
-        $funcionario->ModalMudarSenhadoFuncionario();
-
-    }
-    ?>
-
     <div class="msg" id="msg2" style="background-color: red;">
         <h2> Algo deu errado</h2>
     </div>
@@ -70,12 +65,12 @@ include_once '../PHP/funcionarios.php';
 
     <main>
 
-        <div class="barra-lateral">
+    <div class="barra-lateral">
             <header>
                 <div class="imagem">
-                    <img src="../imagens/admin.png" width="150" height="150">
+                    <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
                 </div>
-                <h1> Admin</h1>
+                <h2 style="margin-top: 10px;"> <?php echo $funcionario['nome']?></h2>
             </header>
             <section>
                 <a href="painel.php">
@@ -94,18 +89,25 @@ include_once '../PHP/funcionarios.php';
                     <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
 
-                <button class="clientes-funcionarios selecionado" id="botao-contas" onclick="ClientesFuncionarios()">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline"></ion-icon>    
-                </button>
-                <div class="href-clientes-funcionarios" style="display: block;">
-                    <a href="funcionarios.html"> <span> Funcionários </span></a>
-                    <a href="clientes.html"> <span> Clientes </span> </a>
-                </div>
+                <?php if($_SESSION['cargo'] == 1){ ?>
+                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                        <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                    </button>
+                    <div class="href-clientes-funcionarios">
+                        <a>
+                            <span> Funcionários </span>
+                        </a>
+                        <a href="#">
+                            <span> Clientes </span>
+                        </a>
+                    </div>
+                <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
+                
             </section>
         </div>
 
@@ -239,4 +241,14 @@ include_once '../PHP/funcionarios.php';
         </section>
 
     </dialog>
+
+    <?php
+    if(!empty($_GET['id_funcionario'])){
+
+        $funcionario = new funcionario;
+        $funcionario->ModalMudarSenhadoFuncionario();
+
+    }
+    ?>
+
 </body>

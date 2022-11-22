@@ -1,16 +1,19 @@
 <?php
+
 if(empty($_SESSION['id'])){
 session_start();
 }
-
-if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
-    include_once '../PHP/conexao.PHP';
-    include_once '../PHP/produto.php';
-}
-else{
+if(!isset($_SESSION['id']) && !isset($_SESSION['nome'])){
     header('Location: ../login.html');
     die();
 }
+
+require_once '../PHP/conexao.php';
+require_once '../php/produto.php';
+require_once '../PHP/funcionarios.php';
+
+$funcionario = new funcionario;
+$funcionario = $funcionario->getFuncionario();
 
 ?>
 
@@ -43,7 +46,6 @@ else{
     <div class="msg" id="msg1">
         <h2>Ação conluída com sucesso!</h2>
     </div>
-
     <?php
     if (!empty($_GET['msg'])) {
         include_once('../php/mensagem.php');
@@ -67,9 +69,9 @@ else{
         <div class="barra-lateral">
             <header>
                 <div class="imagem">
-                    <img src="../imagens/admin.png" width="150" height="150">
+                    <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
                 </div>
-                <h1> Admin</h1>
+                <h2 style="margin-top: 10px;"> <?php echo $funcionario['nome']?></h2>
             </header>
             <section>
                 <a href="painel.php">
@@ -152,9 +154,6 @@ else{
                     ?>
                 </table>
             </section>
-
-            <footer style='margin-top: 15px;'>
-            </footer>
 
         </section>
 

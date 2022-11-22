@@ -18,6 +18,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     $query = $conexao->query($sql);
     $row = $query->fetch_assoc();
     $COUNT_FOR = $row['CONTAGEM_FOR'];
+    
+
+    require_once '../PHP/funcionarios.php';
+    $funcionario = new funcionario;
+    $funcionario = $funcionario->getFuncionario();
+
 } else {
     header('Location: ../login.html');
     die();
@@ -44,24 +50,26 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
 <body>
 
-    <header class="header-titulo titulo-principal">
-        <div style="width: 98%; height: 100%; align-items: center; display: flex; position: relative;">
-            <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px">
-            <h1 style="margin-right: 50px;"> Controle de Estoque </h1>
-            <div style="right: 0; position: absolute; color: #FF731D;">
-                <h2> Ola, admin! </h2>
+<header class="header-titulo titulo-principal">
+        <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
+            <a href="painel.php" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
+                <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px;">
+                <h1 style="margin-right: 50px;"> Controle de Estoque </h1>
+            </a>
+            <div style="right: 0; position: absolute; color: #FF731D; display: flex;">
+                <h2> Ola,  <?php echo $funcionario['PrimeiroNome']?>!</h2>
             </div>
         </div>
     </header>
 
     <main>
 
-        <div class="barra-lateral">
+    <div class="barra-lateral">
             <header>
                 <div class="imagem">
-                    <img src="../imagens/admin.png" width="150" height="150">
+                    <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
                 </div>
-                <h1> Admin</h1>
+                <h2 style="margin-top: 10px;"> <?php echo $funcionario['nome']; ?> </h2> 
             </header>
             <section>
                 <a class="selecionado">
@@ -79,32 +87,33 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                 <a href="#">
                     <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
                 </a>
-                
-                <?php if($_SESSION['cargo'] == 1){?>
-                <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
-                    <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                    <ion-icon name="chevron-forward-outline" id="ion-icon-seta"></ion-icon>
-                </button>
-                <div class="href-clientes-funcionarios">
-                    <a href="#">
-                        <span> Clientes </span>
-                    </a>
-                    <a href="funcionarios.php">
-                        <span> Funcionários </span>
-                    </a>
-                </div>
-                <?php } ?>
 
-                <a href="#" class="sair">
+                <?php if($_SESSION['cargo'] == 1){ ?>
+                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                        <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
+                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                    </button>
+                    <div class="href-clientes-funcionarios">
+                        <a href="funcionarios.php">
+                            <span> Funcionários </span>
+                        </a>
+                        <a href="#">
+                            <span> Clientes </span>
+                        </a>
+                    </div>
+                <?php }?>
+
+                <a href="../PHP/validar-user.php?logout=1" class="sair">
                     <ion-icon name="exit-outline"></ion-icon> <span> Sair </span>
                 </a>
+                
             </section>
         </div>
 
         <section class="section-principal">
 
             <div class="principais-acoes">
-                <button class="acao" id="produtos">
+                <button class="acao button" id="produtos">
 
                     <p> <?php echo $COUNT ?> Produtos Cadastrados</p>
                     <p> <?php echo $SUM ?> Itens no estoque </p>
@@ -114,7 +123,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 </button>
 
-                <button class="acao" id="fornecedores">
+                <button class="acao button" id="fornecedores">
 
                     <p> Total de <?php echo $COUNT_FOR ?> fornecedores </p>
                     <div class="link_acao" id="link_fornecedores">
@@ -123,7 +132,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 </button>
 
-                <button class="acao acao-3">
+                <button class="acao acao-3 button">
 
                     <p> financeiro </p>
                     <div class="link_acao link-acao-3">
@@ -235,7 +244,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
             let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
             chart.draw(data, options);
+            
         }
+
 
     </script>
 

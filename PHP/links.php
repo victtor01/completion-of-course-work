@@ -1,5 +1,6 @@
 <?php
-class links {
+
+class links_pages{
 
     public $link_painel;
     public $link_produtos;

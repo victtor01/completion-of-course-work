@@ -9,7 +9,7 @@ if(!isset($_SESSION['nome']) && !isset($_SESSION['id']) && !isset($_SESSION['car
 }
 
 include 'links.php';
-class categoria extends links{
+class categoria extends links_pages{
 
     function inserir(){
         include('conexao.PHP');

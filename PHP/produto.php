@@ -3,13 +3,13 @@ if(empty($_SESSION['id'])){
 session_start();
 }
 
-if(!isset($_SESSION['nome']) && !isset($_SESSION['id']) && !isset($_SESSION['cargo'])){
+if(!isset($_SESSION['nome']) || !isset($_SESSION['id']) || !isset($_SESSION['cargo'])){
     header('Location: ../login.php');
     die();
 }
 
-include 'links.php';
-class produto extends links
+include_once 'links.php';
+class produto extends links_pages
 {
     public function inserir()
     {
@@ -99,12 +99,21 @@ class produto extends links
     public function delete($id)
     {
         include_once('conexao.PHP');
+        $sql = "SELECT quantidade FROM produto WHERE id_produto = $id LIMIT 1";
+        $query = mysqli_query($conexao, $sql);
+        $row = $query->fetch_array();
 
-        $sql = "DELETE FROM produto WHERE id_produto=$id";
-        $query_result = mysqli_query($conexao, $sql);
+        
+        if($tmp['quantidade'] > 0) {
+            header('Location: '. $this->link_produtos . "?msg=2");
+            die();
+        }else{
+            $sql = "DELETE FROM produto WHERE id_produto = $id ";
+            $query = mysqli_query($conexao, $sql);
+            header('Location: '. $this->link_produtos . "?msg=1");
+        }
 
-        $msg = $query_result? 1 : 0;
-        header('Location: '. $this->link_produtos . "?msg=" . $msg);
+
     }
     public function validar($dados)
     {
@@ -117,7 +126,7 @@ class produto extends links
             header("Location: ../HTML/produtos.php");
         }
     }
-    function modal_produtos_selecionados($pesquisa)
+    public function modal_produtos_selecionados($pesquisa)
     {
 
         include('conexao.PHP');
@@ -205,14 +214,14 @@ class produto extends links
             </label>";
         }
     }
-    function mostrar_produtos()
+    public function mostrar_produtos()
     {
         include('conexao.PHP');
         $sql = "SELECT * FROM produto ORDER BY data_produto ASC";
         $result = mysqli_query($conexao, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-            echo " 
+        ?>
 
             <thead>
                 <tr class='tr'>
@@ -225,113 +234,109 @@ class produto extends links
                     <th> Data</th>
                     <th style='min-width: 100px;'> Ações </th>
                 </tr>
-            </thead>";
+            </thead>
 
-            while ($user_data = mysqli_fetch_assoc($result)){
+        <?php
+        while ($user_data = mysqli_fetch_assoc($result)){
 
-                $id = $user_data['id_produto'];
-                $nome = $user_data['nome'];
-                $categoria = $user_data['categoria'];
-                $quantidade = $user_data['quantidade'];
-                $fornecedor = $user_data['fornecedor'];
-                $valor_investido = $user_data['valor_investido'];
-                $lucro_esperado = $user_data['lucro_esperado'];
-                $tamanho = $user_data['tamanho'];
-                $data = $user_data['data_produto'];
+            $id = $user_data['id_produto'];
+            $nome = $user_data['nome'];
+            $categoria = $user_data['categoria'];
+            $quantidade = $user_data['quantidade'];
+            $fornecedor = $user_data['fornecedor'];
+            $valor_investido = $user_data['valor_investido'];
+            $lucro_esperado = $user_data['lucro_esperado'];
+            $tamanho = $user_data['tamanho'];
+            $data = $user_data['data_produto'];
 
-                $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
-                $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+            $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+            $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+            $row = $result_fornecedor->fetch_assoc();
+            $fornecedor_nome = $row["nome"];
 
-                if (mysqli_num_rows($result_fornecedor) > 0) {
-                    while ($rowData = mysqli_fetch_assoc($result_fornecedor)) {
-                        $fornecedor_nome = $rowData["nome"];
-                    }
+            $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
+            $result_categoria = mysqli_query($conexao, $sql_categoria);
+            $row = $result_categoria->fetch_assoc();
+            $categoria_nome = $row["nome"];
+
+
+            echo "<tr> <td>";
+                echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 
+                'name='checkbox_id[$id]' value='" . $id . "'>";
+            echo "</td>";
+
+            echo "<td style='max-width: 120px; '>";
+                echo $nome;
+            echo "</td>";
+
+            echo "<td style='max-width: 120px; '>";
+                echo $categoria_nome;
+            echo "</td>";
+
+            echo "<td>";
+                switch ($tamanho) {
+                    case 1:
+                        echo "P";
+                        break;
+                    case 2:
+                        echo "PP";
+                        break;
+                    case 3:
+                        echo "M";
+                        break;
+                    case 4:
+                        echo "G";
+                        break;
+                    case 5:
+                        echo "GG";
+                        break;
                 }
+            echo "</td>";
 
-                $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
-                $result_categoria = mysqli_query($conexao, $sql_categoria);
+            echo "<td style='color: "; 
+                if ($quantidade > 5) { echo "green;'>"; } 
+                elseif ($quantidade > 0) { echo "blue;'>"; } 
+                else {echo "red;'>"; }
+            echo $quantidade . "</td>";
 
-                if (mysqli_num_rows($result_categoria) > 0) {
-                    while ($rowData = mysqli_fetch_assoc($result_categoria)) {
-                        $categoria_nome = $rowData["nome"];
-                    }
-                }
+            echo "<td> R$ " . $valor_investido ."</td>";
 
-                echo "<tr> <td>";
-                    echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 
-                    'name='checkbox_id[$id]' value='" . $id . "'>";
-                echo "</td>";
+            echo "<td>" . $data . "</td>";
 
-                echo "<td style='max-width: 120px; '>";
-                    echo $nome;
-                echo "</td>";
+            echo 
+            "<td style='max-width: 60px; min-width: 50px;'>
 
-                echo "<td style='max-width: 120px; '>";
-                    echo $categoria_nome;
-                echo "</td>";
+                <button class='editar' type='button'>
+                    <a style='width: 35px; height: 35px;name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                        <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
+                        </svg>
+                    </a>
+                </button> 
+    
+    
+                <button class='editar' type='button'>
+                    <a style='width: 35px; height: 35px;' name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]&delete=on'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>
+                        <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>
+                        <path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>
+                        </svg>
+                    </a>
+                </button>
 
-                echo "<td>";
-                    switch ($tamanho) {
-                        case 1:
-                            echo "P";
-                            break;
-                        case 2:
-                            echo "PP";
-                            break;
-                        case 3:
-                            echo "M";
-                            break;
-                        case 4:
-                            echo "G";
-                            break;
-                        case 5:
-                            echo "GG";
-                            break;
-                    }
-                echo "</td>";
-
-                echo "<td style='color: "; 
-                    if ($quantidade > 5) { echo "green;'>"; } 
-                    elseif ($quantidade > 0) { echo "blue;'>"; } 
-                    else {echo "red;'>"; }
-                echo $quantidade . "</td>";
-
-                echo "<td> R$ " . $valor_investido ."</td>";
-
-                echo "<td>" . $data . "</td>";
-
-                echo "<td style='max-width: 60px; min-width: 50px;'>
-
-                            <button class='editar' type='button'>
-                                <a style='width: 35px; height: 35px;name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
-                                    <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
-                                    </svg>
-                                </a>
-                            </button> 
+                <button class='editar' type='button' style='background-color: yellow'>
+                <a style='width: 35px; height: 35px; color: black;' name='id_produto' >
+                    <ion-icon name='information-circle-outline' style='width: 20px; height: 20px;'></ion-icon>
+                </a>
+                </button>
                 
-                
-                            <button class='editar' type='button'>
-                                <a style='width: 35px; height: 35px;' name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]&delete=on'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>
-                                    <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>
-                                    <path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>
-                                    </svg>
-                                </a>
-                            </button>
+            </td>";
 
-                            <button class='editar' type='button' style='background-color: yellow'>
-                            <a style='width: 35px; height: 35px; color: black;' name='id_produto' >
-                                <ion-icon name='information-circle-outline' style='width: 20px; height: 20px;'></ion-icon>
-                            </a>
-                            </button>
-                    
-                        </td>";
-
-                echo "</tr>";
-                
-                
-            }
+            echo 
+            "</tr>";
+            
+            
+        }
         } else {
             echo "<h3> Nenhum produto cadastrado </h3>";
         }
