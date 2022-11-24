@@ -4,6 +4,9 @@
 if(empty($_SESSION['nome'])){
     session_start();
 }
+if(empty($_SESSION['id']) || !isset($_SESSION['id'])){
+    header('Location: ../login.html');
+}
 
 $_SESSION['cargo'];
 $cargo = intval($_SESSION['cargo']);

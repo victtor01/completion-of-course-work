@@ -145,17 +145,15 @@ $funcionario = $funcionario->getFuncionario();
             </div>
 
             <section class="section-produtos">
-                <table>
-                    <?php
-
-                    $produto = new produto;
-                    $produto->mostrar_produtos();
-
-                    ?>
-                </table>
+                <?php
+                $produto = new produto;
+                $produto->mostrar_produtos();
+                ?>             
+                
             </section>
 
         </section>
+        
 
         </form>
     </main>

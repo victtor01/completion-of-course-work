@@ -1,5 +1,7 @@
 <?php
+if(empty($_SESSION[''])){
 session_start();
+}
 
 if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     include_once('../PHP/conexao.php');

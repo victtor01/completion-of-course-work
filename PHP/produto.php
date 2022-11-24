@@ -216,13 +216,18 @@ class produto extends links_pages
     }
     public function mostrar_produtos()
     {
-        include('conexao.PHP');
-        $sql = "SELECT * FROM produto ORDER BY data_produto ASC";
+        include 'conexao.PHP';
+        include 'LimitPages.php';
+        $pagina = Paginas("produto");
+        $pagina['inicio'];
+        $pagina['num_paginas'];
+
+        $sql = "SELECT * FROM produto LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
         $result = mysqli_query($conexao, $sql);
 
         if (mysqli_num_rows($result) > 0) {
         ?>
-
+            <table>
             <thead>
                 <tr class='tr'>
                     <th></th>
@@ -334,12 +339,35 @@ class produto extends links_pages
 
             echo 
             "</tr>";
-            
-            
         }
-        } else {
-            echo "<h3> Nenhum produto cadastrado </h3>";
-        }
+        echo "</table>";
+        ?>
+        <footer class="footer">
+        <nav  class="paginacao">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#"></a>
+            </li>
+
+            <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
+
+                <li class="page-item">
+                <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
+                </li>
+
+            <?php } ?>
+
+            <li class="page-item">
+                <a class="page-link" href="#"></a>
+            </li>
+
+        </ul>
+        </nav>
+        </footer>
+        <?php
+        } 
+        else { echo "<h3> Nenhum produto cadastrado </h3>"; }
+        
     }
 }
 
