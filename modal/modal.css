@@ -69,7 +69,7 @@
 }
 
 #modal-entrada .section-cadastro input,
-#modal-entrada .section-cadastro select {
+#modal-entrada .section-cadastro select{
     width: 100%;
     height: 35px;
     margin: 1px auto 8px auto;
@@ -145,4 +145,104 @@ select:hover {
     background-color: white;
     position: absolute;
     margin: 100px auto 0px auto;
+}
+
+/*
+----------------------------------
+--------[modal de editar]---------
+----------------------------------
+*/
+#modal-editar{
+    position: absolute;
+    width: 800px;
+    height: auto;
+    max-height: 440px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.951);
+    margin: 50px auto 0px auto;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: 0.2s;
+}
+#modal-editar .div-info{
+    display: flex;
+}
+.div-foto{
+    min-width: 200px;
+    min-height: 100%;
+    background-color: #101010;
+    margin: 0px 5px 0px 0px ;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+}
+.div-foto .div-file-foto{
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 6px 9px;
+    margin: 5px;
+    background: #ffffff;
+    position: absolute;
+    transition: 0.5s;
+}
+.div-foto .div-file-foto:hover{
+    background-color: #101010;
+    color: #ffffff;
+}
+.div-foto .div-file-foto input[type='file']{
+    opacity: 0;
+    position: absolute;
+    top: -100%;
+}
+
+#modal-editar .div-info .div-label-info{
+    display: flex;
+    flex-wrap: wrap;
+}
+#modal-editar hr{
+    margin: 20px 5px 10px 5px;
+    border: 0.01px solid rgb(213, 213, 213);
+}
+    
+#modal-editar .div-info .div-label-info .label-info{
+    flex: 1 1 200px;
+    width: 100%;
+}  
+#modal-editar .div-info .div-label-info .label-info input, select{
+    width: 100%;
+    height: 40px;
+    border: none;
+    background: none;
+    box-shadow: 0px 0px 10px rgb(212, 212, 212);
+    outline: none;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14pt;
+    border-radius: 10px;
+    transition: 0.6s;
+    background-color: rgb(255, 255, 255);
+}
+#modal-editar .div-info .div-label-info .label-info input:hover, #modal-editar .div-info .div-label-info .label-info input:focus{
+    box-shadow: 0px 0px 12px rgb(142, 141, 141);
+}
+
+.button-enviar{
+    width: 15%;
+    height: 3rem;
+    box-shadow: 0px 0px 6px rgb(217, 217, 217);
+    font-size: 1em;
+    color: #101010;
+    transition: 0.4s;
+    border-radius: 10px;
+    float: right;
+    margin: 2px 10px 10px 10px ;
+    background-color: white;
+    color: black;
+}
+.button-enviar:hover{
+    box-shadow: 0px 0px 10px rgb(158, 158, 158);
+    transform: scale(1.03);
+    background-color: black;
+    color: white;
 }

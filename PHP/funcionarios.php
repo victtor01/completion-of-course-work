@@ -45,7 +45,7 @@ class funcionario extends links_pages{
 
         
     }
-    public function inserir(){
+    public function Inserir(){
 
         $foto = $_FILES['foto'];
         $nome = $_POST['nome'];
@@ -80,8 +80,35 @@ class funcionario extends links_pages{
         die();
         
     }
-    public function getFuncionario(){
+    public function GetFuncionario(){
         return $this->funcionario;
+    }
+    public function UpdateFuncionarios(){
+        if($this->id != 1){
+            header('Locartion: '. $this->link_funcionarios);
+            die("algo deu errado!");
+        }
+
+        include 'conexao.php';
+        $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        foreach($produtos['id_funcionario'] as $chave => $id){
+            $foto = $produtos['foto'][$chave];
+            $nome = $produtos['nome'][$chave];
+            $email = $produtos['email'][$chave];
+            $CPF = $produtos['CPF'][$chave];
+            $cargo = $produtos['cargo'][$chave];
+            $salario = $produtos['salario'][$chave];
+            $contato = $produtos['contato'][$chave];
+
+
+            $sql = "UPDATE funcionarios SET nome='$nome', foto='$foto', email='$email', CPF='$CPF', cargo='$cargo',
+            salario='$salario', contato='$contato' WHERE id_funcionario = $id";
+            $query = mysqli_query($conexao, $sql);
+
+            header('Location: ../html/funcionarios.php');
+
+        }
+
     }
     public function Deletarfuncionario(){
 
@@ -112,7 +139,7 @@ class funcionario extends links_pages{
         header('Location: ' . $this->link_funcionarios);
         die();
     }
-    public function mostrarFuncionarios(){
+    public function MostrarFuncionarios(){
 
         include 'conexao.PHP'; 
         $sql = "SELECT * FROM funcionarios WHERE id_funcionario";
@@ -129,13 +156,17 @@ class funcionario extends links_pages{
         $salario = $user_data['salario'];
         $contato = $user_data['contato'];
         $email = $user_data['email'];
+        $data_nascimento = date("d-m-Y",strtotime(str_replace('/','-',$data_nascimento)));
         
         ?>
         <div class="div-info-geral">
 
+        <input type="hidden" name="id_funcionario[]" value="<?php echo$id?>">
+
         <div class="div-foto">
             <img src=" <?php echo $foto ?> " alt=" " width="100%" height="100%">
         </div>
+        <input type="hidden" name="foto[]" value="<?php echo $foto?>">
 
         <div class="div-informacoes">
 
@@ -143,19 +174,19 @@ class funcionario extends links_pages{
 
                 <label class="label-info">
                     <span> Nome: </Span>
-                    <input type="text" name="nome" value=" <?php echo $nome ?>">
+                    <input type="text" name="nome[]" value="<?php echo $nome ?>">
                 </label>
                 <label class="label-info">
                     <span> Email: </span>
-                    <input type="text" name="Email" value=" <?php echo $email ?>">
+                    <input type="text" name="email[]" value="<?php echo $email ?>">
                 </label>
                 <label class="label-info">
                     <span> Contato: </span>
-                    <input type="text" name="Contato" value=" <?php echo $contato ?>">
+                    <input type="text" name="contato[]" value="<?php echo $contato ?>">
                 </label>
                 <label class="label-info">
                     <span> CPF: </span>
-                    <input type="text" name="CPF" value=" <?php echo $CPF ?>">
+                    <input type="text" name="CPF[]" value="<?php echo $CPF ?>">
                 </label>
 
             </div>
@@ -163,27 +194,27 @@ class funcionario extends links_pages{
             
                 <label class="label-info" >
                     <span> Cargo: </span>
-                    <select name="cargo" class="select">
+                    <select name="cargo[]" class="select">
                         <option value="1" <?php if($cargo == 1){ echo "selected"; } ?>>Gerente</option>
                         <option value="2" <?php if($cargo == 2){ echo "selected"; } ?> >Faxineiro</option>
                         <option value="3" <?php if($cargo == 3){ echo "selected"; }  ?>>Recepcionista</option>
                         <option value="4" <?php if($cargo == 4){ echo "selected";} ?>>Vendedor</option>
                     </select>
                 </label>
-                <label class="label-info" >
+                <label class="label-info" style="min-height: 60px;">
                     <span> Nascimento: </span>
-                    <input type="text" name="Data_de_nascimento" value=" <?php echo $data_nascimento ?>">
+                    <input type="text" name="Data_de_nascimento[]" value=" <?php echo$data_nascimento; ?>">
                 </label>
                 <label class="label-info" >
                     <span> Salario: </span>
-                    <input type="text" name="Salario" value="R$ <?php echo $salario ?>">
+                    <input type="text" name="salario[]" value="<?php echo$salario;?>">
                 </label>
 
             </div>
 
             <div style="max-width: 35px; height: 100%; display: flex;">
                     <button class="editar" type="button" style="margin: 5px 0px 5px 0px; height: 50%; background-color: black;">
-                        <a style="width: 35px; height: 35px;" name="#" href="?id_funcionario=<?php echo $id ?>">
+                        <a style="width: 35px; height: 35px;" name="#" href="?id_funcionario=<?php echo$id; ?>">
                             <ion-icon name="lock-closed-outline"></ion-icon>
                         </a>
                     </button> 
@@ -339,16 +370,20 @@ class funcionario extends links_pages{
 
 $funcionario = new funcionario;
 
-if(isset($_POST['nome'])){
+if(isset($_POST['nome']) && isset($_POST['inserir'])){
 $funcionario->inserir();
 }
 
-if(isset($_POST['senha'])){
+elseif(isset($_POST['senha'])){
 $funcionario->MudarSenhadoFuncionario();
 }
 
-if(isset($_GET['delete'])){
+elseif(isset($_GET['delete'])){
 $funcionario->Deletarfuncionario();
+}
+
+elseif(isset($_POST['updateFuncionarios'])){
+$funcionario->UpdateFuncionarios();
 }
 
 

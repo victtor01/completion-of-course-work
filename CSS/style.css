@@ -226,11 +226,10 @@ button {
     position: relative;
     overflow: hidden;
     color: var(--preto);
-    padding: 10px;
     border-radius: 5px;
 }
 #curve_chart, #chart_div{
-    width: 100%; 
+    width: 110%; 
     height: 90%;
     display: flex;
     justify-content: center;

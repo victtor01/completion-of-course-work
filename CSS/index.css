@@ -200,7 +200,7 @@ a {
     font-size: 12pt;
     font-weight: 500;
     transition: 0.5s;
-    box-shadow: 0px 0px 4px rgb(177, 177, 177);
+    box-shadow: 0px 0px 4px rgb(236, 236, 236);
     border: 0;
 }
 .pesquisar::placeholder{
@@ -209,7 +209,7 @@ a {
 }
 .pesquisar:focus{
     width: 250px;
-    box-shadow: 0px 2px 14px 4px rgb(180, 177, 177);
+    box-shadow: 0px 0px 14px 0px rgb(190, 190, 190);
 }
 
 /* -----------------------------------------------------------------------------------------*/
@@ -281,6 +281,7 @@ tr:hover {
 
 tr {
     padding: 0px;
+    transition: 0.2s;
 }
 
 .editar  {
@@ -399,17 +400,21 @@ background:none;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     box-sizing: border-box;
-    align-items: center;
     justify-content: space-between;
     font-size: 10pt;
     text-transform: uppercase;
-    padding: 20px;
+    padding: 10px;
+    align-items: center;
+    background-color: white;
+    margin: 3px auto 10px auto;
+    border-radius: 10px;
 }
 
 .header-cadastro .img-fechar {
     width: 20px;
     height: 100%;
     background: none;
+    
 }
 
 /* -----------------------------------------------------------------------------------------*/
@@ -447,20 +452,20 @@ background:none;
     align-items: center;
     bottom: 0;
 }
- .botoes-submit .botao1, .botoes-submit .botao2{
+.botoes-submit .botao1, .botoes-submit .botao2{
     width: 100px;
     height: 35px;
     color: rgb(255, 255, 255);
     font-size: 10pt;
     font-weight: 600;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 2px 10px rgba(163, 163, 163, 0.47);
     border-radius: 5px;
     text-transform: uppercase;
     transition: 0.3s;
 }
-.botoes-submit .botao1, .botoes-submit .botao2{
+.botoes-submit .botao1:hover, .botoes-submit .botao2:hover{
     transform: scale(1.02);
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.60);
+    box-shadow: 2px 2px 10px rgba(172, 172, 172, 0.6);
 }
 .botoes-submit .botao1{
     background-color: var(--azul);
@@ -590,7 +595,7 @@ section .input_editar {
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
-    box-shadow: 0px 5px 14px rgb(64, 63, 63);
+    box-shadow: 0px 2px 14px rgb(163, 163, 163);
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -708,13 +713,14 @@ section .input_editar {
 .barra-lateral .href-clientes-funcionarios{
     display: none;
     font-size: 12pt;
+    transition: 1s;
 }
 .barra-lateral .href-clientes-funcionarios a{
     height: 45px;
     overflow: hidden;
     position: relative;
 }
-.barra-lateral .clientes-funcionarios #ion-icon-seta{
+.barra-lateral .clientes-funcionarios #ion-icon-seta-financeiro, #ion-icon-seta{
     transition: 0.1s;
     margin-left: 30px;
     width: 15px;
@@ -753,18 +759,23 @@ section .input_editar {
 /* -----------------------------------------------------------------------------------------*/
 /* PAGINACAO
 /* -----------------------------------------------------------------------------------------*/
+
 .paginacao{
     margin: 10px auto 10px auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 0px 1px rgba(185, 185, 185, 0.914);
 }
 .paginacao > .pagination{
     display: flex;
     list-style-type: none;
+    
 }
 .paginacao > .pagination > li{
     box-sizing: border-box;
     width: 2.5em;
     height: 2.5em;
-    box-shadow: 0px 0px 1px rgb(201, 201, 201);
+    box-shadow: 0px 0px 0px rgb(136, 136, 136);
 }
 .paginacao > .pagination > li a{
     text-decoration: none;
@@ -774,7 +785,7 @@ section .input_editar {
     transition:0.3s;
 }
 .paginacao > .pagination > li a:hover{
-    box-shadow: 0px 0px 1px rgb(161, 160, 160);
+    box-shadow: 0px 0px 10px rgb(202, 202, 202);
     background-color: #000000;
     color: white;
 }

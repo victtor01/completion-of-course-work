@@ -6,7 +6,7 @@ function Paginas($tabela){
     $query = mysqli_query($conexao, $sql);
 
     $total_produtos = mysqli_num_rows($query);
-    $quantidadePorPagina = 10;
+    $quantidadePorPagina = 12;
 
     $num_paginas = ceil($total_produtos/$quantidadePorPagina);
     $inicio = ($quantidadePorPagina * $pagina)-$quantidadePorPagina;

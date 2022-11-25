@@ -86,16 +86,29 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
-                </a>
+
+                <button class="clientes-funcionarios" id="botao-financeiro" onclick="Financeiro()">
+                    <ion-icon name="cash-outline"></ion-icon></ion-icon> <span> Financeiro </span>
+                    <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios" id="href-financeiro">
+                    <a href="#">
+                        <span> Dashboard </span>
+                    </a>
+                    <a href="#">
+                        <span> Entradas </span>
+                    </a>
+                    <a href="#">
+                        <span> saidas </span>
+                    </a>
+                </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
                     <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                        <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
-                    <div class="href-clientes-funcionarios">
+                    <div class="href-clientes-funcionarios" id="href-clientes-funcionarios">
                         <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>

@@ -65,7 +65,7 @@ $funcionario = $funcionario->getFuncionario();
 
     <main>
 
-    <div class="barra-lateral">
+        <div class="barra-lateral">
             <header>
                 <div class="imagem">
                     <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
@@ -85,17 +85,29 @@ $funcionario = $funcionario->getFuncionario();
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
-                </a>
+                <button class="clientes-funcionarios" id="botao-financeiro" onclick="Financeiro()">
+                    <ion-icon name="cash-outline"></ion-icon></ion-icon> <span> Financeiro </span>
+                    <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios" id="href-financeiro">
+                    <a href="#">
+                        <span> Dashboard </span>
+                    </a>
+                    <a href="#">
+                        <span> Entradas </span>
+                    </a>
+                    <a href="#">
+                        <span> saidas </span>
+                    </a>
+                </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
                     <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                        <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
-                    <div class="href-clientes-funcionarios">
-                        <a>
+                    <div class="href-clientes-funcionarios" id="href-clientes-funcionarios">
+                        <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>
                         <a href="#">
@@ -132,8 +144,10 @@ $funcionario = $funcionario->getFuncionario();
                     </button>
                 </div>
 
+            <form action="../PHP/funcionarios.php" method="post" enctype="multipart/form-data">
+
                 <div class="div">
-                    <button type="button" class="botao" id="button-saida">
+                    <button type="submit" class="botao" id="button-saida" name="updateFuncionarios">
                         <ion-icon style="height: 26px; width: 26px" name="cloud-done-outline"></ion-icon> <span> Guardar </span>
                     </button>
                 </div>
@@ -146,6 +160,8 @@ $funcionario = $funcionario->getFuncionario();
                     $funcionario->mostrarFuncionarios();
                 ?>
             </section>
+            
+            </form>
 
         </section>
         

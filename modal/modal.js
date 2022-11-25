@@ -25,4 +25,8 @@ function fecharmodal(modal){
         var modal_ = window.document.getElementById("modal-saida");
         modal_.close();
     }
+    else if(modal == 'button-update-fechar'){
+        var modal_ = window.document.getElementById("modal-editar");
+        modal_.close();
+    }
 }

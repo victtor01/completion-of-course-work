@@ -41,11 +41,12 @@ $funcionario = $funcionario->getFuncionario();
 <body>
 
     <div class="msg" id="msg2" style="background-color: red;">
-        <h2> Algo deu errado</h2>
+        <h2> Algo deu errado! </h2>
     </div>
     <div class="msg" id="msg1">
         <h2>Ação conluída com sucesso!</h2>
     </div>
+
     <?php
     if (!empty($_GET['msg'])) {
         include_once('../php/mensagem.php');
@@ -86,16 +87,29 @@ $funcionario = $funcionario->getFuncionario();
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
-                </a>
+
+                <button class="clientes-funcionarios" id="botao-financeiro" onclick="Financeiro()">
+                    <ion-icon name="cash-outline"></ion-icon></ion-icon> <span> Financeiro </span>
+                    <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios" id="href-financeiro">
+                    <a href="#">
+                        <span> Dashboard </span>
+                    </a>
+                    <a href="#">
+                        <span> Entradas </span>
+                    </a>
+                    <a href="#">
+                        <span> saidas </span>
+                    </a>
+                </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
                     <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                        <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
-                    <div class="href-clientes-funcionarios">
+                    <div class="href-clientes-funcionarios" id="href-clientes-funcionarios">
                         <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>
@@ -149,7 +163,6 @@ $funcionario = $funcionario->getFuncionario();
                 $produto = new produto;
                 $produto->mostrar_produtos();
                 ?>             
-                
             </section>
 
         </section>
@@ -171,7 +184,7 @@ $funcionario = $funcionario->getFuncionario();
         </header>
 
         <section class="section-cadastro">
-            <form method="POST" action="../PHP/produto.php" >
+            <form method="POST" action="../PHP/produto.php" enctype="multipart/form-data">
                 <!--nome do produto --> 
                 <label>
                     <label class="label-titulo"> Nome do produto: *</label>
@@ -206,7 +219,7 @@ $funcionario = $funcionario->getFuncionario();
                     </label>
                     <label>
                         <label class="label-titulo"> Foto: </label>
-                        <input class="file-image" name="valor_unidade" type="file">
+                        <input class="file-image" name="foto" type="file">
                     </label>
                 </div>
                 
@@ -277,7 +290,7 @@ $funcionario = $funcionario->getFuncionario();
     <dialog id="modal-saida" class="modal">
 
         <header class="header-cadastro">
-            <h1>Saída dos produtos</h1>
+            <h2>Saída dos produtos</h2>
             <button type="button" style="background: none; border: none;" onclick="fecharmodal('button-saida-fechar')">
             <ion-icon style="width: 40px; height: 40px;"name="close-outline"></ion-icon>
             </button>
@@ -297,9 +310,27 @@ $funcionario = $funcionario->getFuncionario();
                     <label for=""> <span>Desconto do valor total</span><input type="number"> </label>
                     <button type="submit" class="botao1" name="retirar-produto"> Concluir </button>
                 </div>
-                <form>
+            </form>
         </section>
 
+    </dialog>
+
+    <dialog id="modal-editar" class="modal">
+        <header class="header-cadastro">
+            <h3>Editar</h3>
+            <button type="button" style="background: none; border: none;" onclick="fecharmodal('button-update-fechar')">
+            <ion-icon style="width: 30px; height: 30px;" name="close-outline"></ion-icon>
+            </button>
+        </header>
+        <section id="modal-saida-select">
+                <?php
+                if (!empty($_GET['id_produto']) && !empty($_GET['button-update-produto'])) {
+                    $id = $_GET['id_produto'];
+                    $produto = new produto;
+                    $produto->ModalEditar();
+                }
+                ?>
+        </section>
     </dialog>
 
 </body>

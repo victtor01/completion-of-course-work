@@ -26,8 +26,13 @@ $funcionario = $funcionario->getFuncionario();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../modal/modal.css">
+
     <script src="../JS/script.js"></script>
+    <script src="../modal/modal.JS"></script>
+
     <title>categorias</title>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -72,16 +77,28 @@ $funcionario = $funcionario->getFuncionario();
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
-                <a href="#">
-                    <ion-icon name="cash-outline"></ion-icon> <span> Financeiro </span>
-                </a>
+                <button class="clientes-funcionarios" id="botao-financeiro" onclick="Financeiro()">
+                    <ion-icon name="cash-outline"></ion-icon></ion-icon> <span> Financeiro </span>
+                    <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
+                </button>
+                <div class="href-clientes-funcionarios" id="href-financeiro">
+                    <a href="#">
+                        <span> Dashboard </span>
+                    </a>
+                    <a href="#">
+                        <span> Entradas </span>
+                    </a>
+                    <a href="#">
+                        <span> saidas </span>
+                    </a>
+                </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
                     <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
-                        <ion-icon name="chevron-forward-outline"id="ion-icon-seta" width='10px'></ion-icon>    
+                        <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
-                    <div class="href-clientes-funcionarios">
+                    <div class="href-clientes-funcionarios" id="href-clientes-funcionarios">
                         <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>
@@ -107,7 +124,7 @@ $funcionario = $funcionario->getFuncionario();
             <!-- PRINCIPAIS BOTOES DA PAGINA -->
             <div class="botoes-principais">
                 <div class="div" style="margin-left: 10px;">
-                    <button type="button" class="botao" onclick="clicar_categoria()"> Adicionar </button>
+                    <button type="button" class="botao" onclick="abrirmodal('button-entrada')"> + Categoria </button>
                 </div>
             </div>
             <!-- SECTION QUE CONTEM AS TABELAS -->
@@ -131,7 +148,7 @@ $funcionario = $funcionario->getFuncionario();
             </section>
             <!-- FOOTER QUE IRÁ TER O RESUMO DA CATEGORIA-->
             <footer>
-                FOOTER
+                
             </footer>
 
         </section>
@@ -139,34 +156,27 @@ $funcionario = $funcionario->getFuncionario();
 
     </main>
 
-    
-    <!-- FUNDO PARA REGISTRAR A CATREGORIA OBS: FICARÁ ESCONDIDA ATÉ QUE O USUÁRIO APERTA PARA CADASTRAR -->
-    <div class="fundo-registrar-categoria" id="fundo-registrar-categoria">
+    <dialog id="modal-entrada" class="modal">
+
+        <header class="header-cadastro">
+            <h2>cadastrar produto</h2>
+            <button type="button" style="background: none;" onclick="fecharmodal('button-entrada-fechar')">
+            <ion-icon style="width: 33px; height: 33px;"name="close-outline"></ion-icon>
+            </button>
+        </header>
 
         <!-- DIV PARA CADASTRAR CATEGORIA-->
-        <div class="registrar-categoria" id="registrar-categoria">
-            <!-- TITULO DA DIV -->
-            <header class="header-cadastro">
-
-                <!-- TITULO -->
-                <h1>cadastrar Categoria</h1>
-
-                <!-- BOTAO PARA FECHAR A DIV -->
-
-                <button type="button" style="background: none; position:static; right: 0; top: 0;" class="button">
-                    <img src="./imagens/fechar.png" class="img-fechar">
-                </button>
-
-            </header>
-            <!-- REGISTRAR DO NOME DA CATEGORIA -->
+        <section class="section-cadastro">
             <form action="../PHP/categoria.php" method="POST">
                 <input type="text" name="nome" placeholder="Digite o nome da categoria aqui">
-                <textarea name="obs" id="obs" cols="30" rows="10"></textarea>
-                <button type="submit"> cadastrar </button>
+                <textarea name="obs" id="obs" cols="30" rows="10" style="width: 100%; border: 0; background-color: #ffffff44; outline: none;" placeholder="Digite a descrição aqui..."></textarea>
+                <div class="botoes-submit">
+                     <button type="submit" class="botao1"> cadastrar </button>
+                </div>
             </form>
-        </div>
+        </section>
 
-    </div>
+    </dialog>
 
 </body>
 
