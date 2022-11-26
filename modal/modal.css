@@ -1,5 +1,5 @@
 .modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.345);
+    background-color: rgba(0, 0, 0, 0.562);
     backdrop-filter: blur(20px);
 }
 
@@ -9,19 +9,19 @@
 --------------------------------
 */
 
-#modal-saida {
+.itens-selecionados {
     position: absolute;
-    width: 600px;
-    height: auto;
-    border-radius: 6px;
-    /*box-shadow: 0px 0px 25px rgb(110, 109, 109);*/
+    width: 700px;
+    border-radius: 3px;
+    max-height: 600px;
     box-sizing: border-box;
-    margin: 50px auto 0px auto;
-    background-color: rgb(255, 255, 255);
+    margin: 100px auto 0px auto;
+    background-color: rgba(255, 255, 255, 0.956);
     border: none;
+    transform: scale(1.05);
 }
 
-#modal-saida #modal-saida-select {
+.itens-selecionados #modal-saida-select {
     width: 100%;
     height: auto;
     padding: 15px;
@@ -29,19 +29,43 @@
     height: 88%;
 }
 
-#modal-saida .modal-saida-select-result {
+.itens-selecionados .modal-saida-select-result {
     display: flex;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.97);
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     box-sizing: border-box;
     padding: 10px;
-    box-shadow: 0px 0px 10px -2px rgb(148, 148, 148);
     font-size: 10pt;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
+    transition: 0.5s;
+    box-shadow: 0px 0px 10px 1px rgb(233, 233, 233);
+    
 }
-
+.itens-selecionados .modal-saida-select-result:hover{
+    transform:scale(1.03);
+    box-shadow: 3px 3px 10px rgb(230, 230, 230);
+}
+.itens-selecionados .modal-saida-select-result input {
+    border: none;
+    box-shadow: 0px 0px 3px rgb(221, 220, 220);
+    height: 25px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff9d;
+    outline: none;
+    width: 100%;
+}
+.itens-selecionados .modal-saida-select-result label span:nth-child(1){
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+}
+.itens-selecionados .modal-saida-select-result label span:nth-child(2){
+    color: rgb(75, 75, 75);
+    font-size: 12;
+    font-weight: 400;
+}
 /*
 ----------------------------------
 --------[modal de entrada]--------
@@ -154,14 +178,14 @@ select:hover {
 */
 #modal-editar{
     position: absolute;
-    width: 800px;
+    max-width: 780px;
     height: auto;
-    max-height: 440px;
+    max-height: 500px;
     border: none;
     background-color: rgba(255, 255, 255, 0.951);
-    margin: 50px auto 0px auto;
-    box-sizing: border-box;
+    margin: 100px auto 0px auto;
     padding: 10px;
+    padding-bottom: 15px;
     transition: 0.2s;
 }
 #modal-editar .div-info{
@@ -202,7 +226,7 @@ select:hover {
 }
 #modal-editar hr{
     margin: 20px 5px 10px 5px;
-    border: 0.01px solid rgb(213, 213, 213);
+    border: 0.01px solid rgb(225, 225, 225);
 }
     
 #modal-editar .div-info .div-label-info .label-info{
@@ -236,9 +260,9 @@ select:hover {
     transition: 0.4s;
     border-radius: 10px;
     float: right;
-    margin: 2px 10px 10px 10px ;
     background-color: white;
     color: black;
+    margin: 10px 10px 0px 10px;
 }
 .button-enviar:hover{
     box-shadow: 0px 0px 10px rgb(158, 158, 158);

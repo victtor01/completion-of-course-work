@@ -125,11 +125,15 @@ class produto extends links_pages
             $sql = "SELECT * FROM produto WHERE id_produto = $id";
             $query = mysqli_query($conexao, $sql);
             $row = $query->fetch_assoc();
-            $foto = $row['foto'];
 
             $sql = "SELECT * FROM fornecedor";
             $queryFornecedor = mysqli_query($conexao, $sql);
-            
+
+            $sql = "SELECT * FROM categoria";
+            $queryCategoria = mysqli_query($conexao, $sql);
+
+            $porcento =  $row['valor_investido'] * ($row['lucro_esperado']/100);
+            $valor_venda = $row['valor_investido'] + $porcento;
 
             ?>
                 <section class="section-cadastro">
@@ -156,7 +160,18 @@ class produto extends links_pages
                                 </label>
                                 <label class="label-info">
                                     <span>Categoria:</span>
-                                    <input type="text" name="categoria" value="<?php echo $row['categoria'] ?>">
+                                    <select name="categoria" id="">
+                                        <option value=''> nenhum</option>
+                                        <?php 
+                                            while($categoria = mysqli_fetch_assoc($queryCategoria)){
+
+                                                echo "<option value='$categoria[id_categoria]'";     
+                                                if($categoria['id_categoria'] == $row['categoria']) { echo "selected"; }
+                                                echo ">" . $categoria['id_categoria'] . " - " . $categoria['nome'] . "</option>";   
+
+                                            }
+                                        ?>
+                                    </select>
                                 </label>
                                 <label class="label-info">
                                     <span>Tamanho:</span>
@@ -174,8 +189,16 @@ class produto extends links_pages
                                     <input type="text" name="quantidade" value="<?php echo $row['quantidade'] ?>">
                                 </label>
                                 <label class="label-info">
-                                    <span>Preço:</span>
+                                    <span>Preço de Compra:</span>
                                     <input type="text" name="preco" value="<?php echo $row['valor_investido'] ?>">
+                                </label>
+                                <label class="label-info">
+                                    <span>Preço de Venda:</span>
+                                    <input type="number" name="#" value="<?php echo $valor_venda?>">
+                                </label>
+                                <label class="label-info">
+                                    <span>Lucro (%):</span>
+                                    <input type="number" name="#" value="<?php echo $row['lucro_esperado']?>">
                                 </label>
                                 <label class="label-info">
                                     <span>Data:</span>
@@ -184,13 +207,13 @@ class produto extends links_pages
                                 <label class="label-info">
                                     <span>Fornecedor:</span>
                                     <select name="fornecedor" id="">
-                                        <option value="0"> nenhum</option>
+                                        <option value=''> nenhum</option>
                                         <?php 
                                             while($fornecedor = mysqli_fetch_assoc($queryFornecedor)){
 
                                                 echo "<option value='$fornecedor[id_fornecedor]'";     
                                                 if($fornecedor['id_fornecedor'] == $row['fornecedor']) { echo "selected"; }
-                                                echo ">" . $fornecedor['nome'] . "</option>";   
+                                                echo ">" . $fornecedor['id_fornecedor'] . " - " . $fornecedor['nome'] . "</option>";   
 
                                             }
                                         ?>
@@ -209,18 +232,7 @@ class produto extends links_pages
                 
             <?php
         }
-    }
-    public function validar($dados)
-    {
-        include_once('conexao.PHP');
-
-        if (!empty($dados['checkbox_id'])) {
-            $pesquisa = implode(", ", $dados['checkbox_id']);
-            header("Location: ../HTML/produtos.php?pesquisa=" . $pesquisa);
-        } else {
-            header("Location: ../HTML/produtos.php");
-        }
-    }
+    } 
     public function EditarProduto()
     {
         
@@ -239,7 +251,7 @@ class produto extends links_pages
         $data = $_POST['data'];
         $fornecedor = $_POST['fornecedor'];
         $foto = $_FILES['foto'];
-        
+
         if($foto['size'] == 0){
             $foto = $row['foto'];
             $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
@@ -265,12 +277,6 @@ class produto extends links_pages
             $query = mysqli_query($conexao, $sql);
         }
 
-        $quantidade = ($quantidade - $tmp);
-        $produto = new produto;
-        if($quantidade > 0){
-            $produto->entrada($quantidade, $nome, $valor, 
-            $data, $tamanho, $categoria, $fornecedor);
-        }
         header('Location: ../html/produtos.php');
     }
     public function mostrar_produtos()
@@ -289,12 +295,14 @@ class produto extends links_pages
             <table>
             <thead>
                 <tr class='tr'>
-                    <th></th>
+                    <th style="min-width: 30px;"></th>
                     <th> Nome </th>
                     <th> Categoria</th>
                     <th> Tamanho</th>
-                    <th> Quantidade</th>
-                    <th> Preço </th>
+                    <th > Quantidade</th>
+                    <th style ="max-width: 40px"> Preço de Compra</th>
+                    <th max-width='40px'> Lucro (%) </th>
+                    <th> Preço de venda: </th>
                     <th> Data</th>
                     <th style='min-width: 100px;'> Ações </th>
                 </tr>
@@ -363,12 +371,19 @@ class produto extends links_pages
                 else {echo "red;'>"; }
             echo $quantidade . "</td>";
 
-            echo "<td> R$ " . $valor_investido ."</td>";
+            echo "<td> R$ " 
+                . $valor_investido .
+                "</td>";
+
+            echo "<td> $lucro_esperado %</td>";
+            $porcento = ($lucro_esperado/100) * $valor_investido;
+            $preco_venda = $valor_investido + $porcento;
+            echo "<td>R$ $preco_venda </td>";
 
             echo "<td>" . $data . "</td>";
 
             echo 
-            "<td style='max-width: 60px; min-width: 50px;'>
+            "<td style='max-width: 50px; min-width: 20px;'>
 
                 <button class='editar' type='button'>
                     <a style='width: 35px; height: 35px;name='id_produto' href='?id_produto=$user_data[id_produto]&button-update-produto=1'>
@@ -386,12 +401,6 @@ class produto extends links_pages
                         <path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>
                         </svg>
                     </a>
-                </button>
-
-                <button class='editar' type='button' style='background-color: yellow'>
-                <a style='width: 35px; height: 35px; color: black;' name='id_produto' >
-                    <ion-icon name='information-circle-outline' style='width: 20px; height: 20px;'></ion-icon>
-                </a>
                 </button>
                 
             </td>";
@@ -430,6 +439,17 @@ class produto extends links_pages
         else { echo "<h3> Nenhum produto cadastrado </h3>"; }
         
     }
+    public function validar($dados, $opcao)
+    {
+        include_once('conexao.PHP');
+
+        if (!empty($dados['checkbox_id'])) {
+            $pesquisa = implode(", ", $dados['checkbox_id']);
+            header("Location: ../HTML/produtos.php?pesquisa=".$pesquisa. "&opcao=" .$opcao);
+        } else {
+            header("Location: ../HTML/produtos.php");
+        }
+    }
     private function entrada($quantidade, $nome, $valor, 
     $data, $tamanho, $categoria, $fornecedor)
     {
@@ -456,9 +476,9 @@ class produto extends links_pages
         $sql = "SELECT * FROM produto WHERE id_produto IN ($pesquisa)";
         $result = mysqli_query($conexao, $sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            echo " 
 
+        if (mysqli_num_rows($result) > 0) {
+            echo" 
             <script>
                 var modal_ = window.document.getElementById('modal-saida');
                 modal_.showModal();
@@ -472,9 +492,9 @@ class produto extends links_pages
             $tamanho = $user_data['tamanho'];
             $quantidade = $user_data['quantidade'];
             $fornecedor = $user_data['fornecedor'];
+            $preco = $user_data['valor_investido'];
 
             echo
-
             "<div class='modal-saida-select-result'>
                 <input type='hidden' name='id[]' value='$id'>
 
@@ -493,40 +513,50 @@ class produto extends links_pages
                 <label style='width: 100%; display: flex;flex-direction: column;'>
                     <span style=' width: 100%;'> tamanho: </span>
                     <span > ";
-            switch ($tamanho) {
-                case 1:
-                    echo "P";
-                    break;
-                case 2:
-                    echo "PP";
-                    break;
-                case 3:
-                    echo "M";
-                    break;
-                case 4:
-                    echo "G";
-                    break;
-                case 5:
-                    echo "GG";
-                    break;
-            }
+                    switch ($tamanho) {
+                        case 1:
+                            echo "P";
+                            break;
+                        case 2:
+                            echo "PP";
+                            break;
+                        case 3:
+                            echo "M";
+                            break;
+                        case 4:
+                            echo "G";
+                            break;
+                        case 5:
+                            echo "GG";
+                            break;
+                    }
+                    echo 
+                    "</span>
+                <input type='hidden' name='tamanho[]' value='$tamanho'>
+                </label>
 
-            echo "</span>
+                <label style='width: 100%; display: flex;flex-direction: column;'>
+                    <span style=' width: 100%;'> quantidade: </span>
+                    <span>" . $quantidade . " </span>
+                </label>
 
-            <input type='hidden' name='tamanho[]' value='$tamanho'>
-            </label>
+                <label style='width: 100%; display: flex;flex-direction: column;'>
+                    <span style=' width: 100%;'> valor (uni): </span>";
+                    if($_GET['opcao'] == 1){
+                        echo "<span type='text' style='text-transform: capitalize;'><strong>R$ $preco</strong></span>";
+                    }
+                    elseif($_GET['opcao'] == 2){
+                        echo "<input name='preco[]' type='text' value='$preco'>";
+                    }
+                echo" 
+                </label>
 
-            <label style='width: 100%; display: flex;flex-direction: column;'>
-                <span style=' width: 100%;'> quantidade: </span>
-                <input name='quantidade[]' type='number' max=" . $quantidade . ">
-            </label>
+                <label style='width: 100%; display: flex;flex-direction: column;'>
+                    <span style=' width: 100%;'> quantidade: </span>
+                    <input name='quantidade[]' type='number' max=" . $quantidade . ">
+                </label>
 
-            <label style='width: 100%; display: flex;flex-direction: column;'>
-                <span style=' width: 100%;'> valor: </span>
-                <input name='preco[]' type='text'>
-            </label>
-
-            <input type='hidden' name='fornecedor[]' value=.$fornecedor.>
+                <input type='hidden' name='fornecedor[]' value=.$fornecedor.>
 
             </div>";
         }
@@ -555,11 +585,18 @@ elseif (!empty($_GET['id_produto']) && !empty($_GET['delete']))
     }
 } 
 
-elseif (isset($_POST['submit-saida-produto'])) 
+elseif (isset($_POST['submit-saida-produto']) || isset($_POST['submit-entrada-produto'])) 
 {
-    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    $produto->validar($dados);
-} 
+        
+    if(isset($_POST['submit-saida-produto'])){
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $produto->validar($dados, 2);
+    }
+    elseif(isset($_POST['submit-entrada-produto'])){
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $produto->validar($dados, 1);
+    }
+}
 
 elseif (isset($_POST['retirar-produto'])) {
     $produto->retirar();
