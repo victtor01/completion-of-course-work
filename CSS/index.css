@@ -316,8 +316,8 @@ tr {
 .section-principal .section-informacoes .div-info-geral{
     width: 48%;
     height: 220px;
-    background-color: rgb(247, 246, 246);
-    box-shadow: 0px 0px 10px rgb(162, 162, 162);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(220, 220, 220);
     border-radius: 15px;
     margin: 6px 10px 6px 10px;
     padding: 10px;
@@ -337,10 +337,7 @@ tr {
 .section-principal .section-informacoes .div-info-geral .div-informacoes{
     width: 90%;
     height: 100%;
-    display: flex;
-
-    
-    
+    display: flex; 
 }
 .section-principal .section-informacoes .div-info-geral .div-informacoes div{
     width: 100%;
@@ -411,7 +408,7 @@ background:none;
     align-items: center;
     background: none;
     margin: 3px auto 10px auto;
-    border-radius: 10px;
+    border-bottom: 1px solid rgb(202, 202, 202);
 }
 
 .header-cadastro .img-fechar {
@@ -419,6 +416,17 @@ background:none;
     height: 100%;
     background: none;
     
+}
+.header-cadastro .button-fechar{
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    background-color: #00000000;
+}
+.header-cadastro .button-fechar:hover{
+    background: #e9e9e9;
 }
 
 /* -----------------------------------------------------------------------------------------*/
@@ -592,10 +600,10 @@ section .input_editar {
 
 .barra-lateral {
     height: 90vh;
-    width: 16%;
+    width: 100%;
     background-color: #060606;
-    max-width: 250px;
-    min-width: 230px;
+    max-width: 220px;
+    min-width: 200px;
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
@@ -646,7 +654,7 @@ section .input_editar {
     text-decoration: none;
     font-weight: 200;
     width: 100%;
-    height: 60px;
+    height: 50px;
     box-sizing: border-box;
     transition: 0.25s;
     font-size: 14pt;

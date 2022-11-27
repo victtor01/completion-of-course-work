@@ -112,7 +112,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                         <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>
-                        <a href="#">
+                        <a href="clientes.php">
                             <span> Clientes </span>
                         </a>
                     </div>

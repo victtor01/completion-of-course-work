@@ -1,5 +1,5 @@
 .modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.562);
+    background-color: rgba(0, 0, 0, 0.708);
     backdrop-filter: blur(20px);
 }
 
@@ -16,9 +16,9 @@
     max-height: 600px;
     box-sizing: border-box;
     margin: 100px auto 0px auto;
-    background-color: rgba(255, 255, 255, 0.956);
+    background-color: rgb(255, 255, 255);
     border: none;
-    transform: scale(1.05);
+    transform: scale(1.05);padding: 10px;
 }
 
 .itens-selecionados #modal-saida-select {
@@ -31,21 +31,20 @@
 
 .itens-selecionados .modal-saida-select-result {
     display: flex;
-    background-color: rgba(255, 255, 255, 0.97);
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     box-sizing: border-box;
     padding: 10px;
     font-size: 10pt;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
-    transition: 0.5s;
-    box-shadow: 0px 0px 10px 1px rgb(233, 233, 233);
+    transition: 0.3s;
     
 }
 .itens-selecionados .modal-saida-select-result:hover{
-    transform:scale(1.03);
-    box-shadow: 3px 3px 10px rgb(230, 230, 230);
+    transform: scale(1.02);
+    box-shadow: 2px 2px 20px 0px rgb(222, 222, 222);
+    background-color: rgb(255, 255, 255);
 }
 .itens-selecionados .modal-saida-select-result input {
     border: none;
@@ -74,11 +73,11 @@
 
 #modal-entrada {
     position: absolute;
-    width: 500px;
-    max-height: 600px;
+    width: 550px;
+    max-height: 550px;
     border-radius: 6px;
     border: none;
-    background-color: rgba(255, 255, 255, 0.854);
+    background-color: rgba(255, 255, 255, 0.955);
     margin: 50px auto 0px auto;
     box-sizing: border-box;
     padding: 10px;
@@ -103,7 +102,7 @@
     box-sizing: border-box;
     padding: 5px;
     font-size: 12pt;
-    background-color: #ffffff44;
+    background-color: #ffffff;
     border: none;
     transition: 0.5S;
 }
@@ -127,30 +126,6 @@ label {
     box-sizing: border-box;
     padding: 3px;
 }
-
-.section-cadastro .label-titulo {
-    font-size: 12pt;
-    font-style: normal;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-}
-
-.label-numero {
-    width: 100%;
-    margin-top: 4px 15px 10px 15px;
-}
-
-.section-cadastro .label-quantidade {
-    width: 100%;
-}
-
-.section-cadastro .div-quantidade-tamanho {
-    width: 100%;
-    box-sizing: border-box;
-    justify-content: center;
-    height: auto;
-}
-
 .section-cadastro .div-quantidade-tamanho .label-tamanho,
 .section-cadastro .div-quantidade-tamanho .label-tamanho select {
     width: 100%;
@@ -176,11 +151,11 @@ select:hover {
 --------[modal de editar]---------
 ----------------------------------
 */
+
 #modal-editar{
     position: absolute;
     max-width: 780px;
-    height: auto;
-    max-height: 500px;
+    max-height: auto;
     border: none;
     background-color: rgba(255, 255, 255, 0.951);
     margin: 100px auto 0px auto;
@@ -225,7 +200,7 @@ select:hover {
     flex-wrap: wrap;
 }
 #modal-editar hr{
-    margin: 20px 5px 10px 5px;
+    margin: 10px 5px 10px 5px;
     border: 0.01px solid rgb(225, 225, 225);
 }
     
@@ -233,7 +208,8 @@ select:hover {
     flex: 1 1 200px;
     width: 100%;
 }  
-#modal-editar .div-info .div-label-info .label-info input, select{
+#modal-editar .div-info .div-label-info .label-info input, 
+#modal-editar .div-info .div-label-info .label-info select{
     width: 100%;
     height: 40px;
     border: none;
@@ -262,7 +238,7 @@ select:hover {
     float: right;
     background-color: white;
     color: black;
-    margin: 10px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
 }
 .button-enviar:hover{
     box-shadow: 0px 0px 10px rgb(158, 158, 158);

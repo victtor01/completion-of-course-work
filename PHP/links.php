@@ -19,7 +19,5 @@ class links_pages{
         $this->link_funcionarios = '../HTML/funcionarios.php';
     }
 
-    
-
 }
 ?>

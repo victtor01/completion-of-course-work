@@ -54,3 +54,28 @@ function Financeiro(){
     'transform: rotate(0deg)';
   }
 }
+
+function LucroPorcentagem(){
+  let valor_unidade = window.document.getElementById('valor_unidade').value;
+  let preco_venda = window.document.getElementById('preco_venda').value;
+
+  var valor = parseFloat(valor_unidade);
+  var preco = parseFloat(preco_venda);
+  console.log(valor);
+
+  
+  let diferenca = (preco - valor);
+  let porcentagem = (diferenca / valor);
+  let subtotal = (porcentagem * 100);
+
+  var total = parseFloat(subtotal);
+  total = round(total);
+
+  let lucro = window.document.getElementById('lucro');
+  lucro.value = total;
+}
+
+function round(num) {
+  var m = Number((Math.abs(num) * 100).toPrecision(15));
+  return Math.round(m) / 100 * Math.sign(num);
+}

@@ -38,6 +38,7 @@ class usuario extends links_pages{
         
     }
 }
+
 if(!empty($_GET['logout']) && $_GET['logout'] == 1){
     $usuario = new usuario;
     $usuario->logout();

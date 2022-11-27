@@ -11,10 +11,26 @@ if(!isset($_SESSION['nome']) || !isset($_SESSION['id']) || !isset($_SESSION['car
 include_once 'links.php';
 class produto extends links_pages
 {
+    public function CosntrutorImagem($foto){
+        $pasta = "../imagens/imagens-pro/";
+        $imagem = uniqid();
+        $imagem_nome = $foto['name'];
+        $extensao = strtolower(pathinfo($imagem_nome, PATHINFO_EXTENSION));
+
+        if($extensao != 'jpg' &&  $extensao != 'png' ) { 
+            header('Location: ../HTML/produtos.php'); 
+            die(); 
+        }
+        else { 
+            $patch = $pasta . $imagem . "." . $extensao;  
+            $move = move_uploaded_file($foto["tmp_name"], $patch); 
+            return $patch;
+        }
+    }
     public function inserir()
     {
-
-        include('conexao.PHP');
+        $produto = new produto;
+        include 'conexao.PHP';
 
         $nome =  $_POST['nome'];
         $categoria =  $_POST['categoria'];
@@ -26,27 +42,18 @@ class produto extends links_pages
         $tamanho = $_POST['tamanho'];
         $foto = $_FILES['foto'];
 
-        $pasta = "../imagens/imagens-pro/";
-        $imagem = uniqid();
-        $imagem_nome = $foto['name'];
-        $extensao = strtolower(pathinfo($imagem_nome, PATHINFO_EXTENSION));
+        $patch = $produto->CosntrutorImagem($foto);
 
-        if($extensao != 'jpg' &&  $extensao != 'png' ) 
-        { header('Location: ../HTML/produtos.php'); die(); }
-        else
-        { $patch = $pasta . $imagem . "." . $extensao;  
-        $move = move_uploaded_file($foto["tmp_name"], $patch); }
-
-
-        $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, fornecedor, valor_investido, lucro_esperado, tamanho, data_produto, foto)
-        VALUES ('$nome', $categoria, '$quantidade',
-        $fornecedor, '$valor_investido', '$lucro_esperado', '$tamanho',
-        '$data_produto', '$patch')";
+        $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, 
+        fornecedor, valor_investido, lucro_esperado, tamanho, data_produto, foto)
+        VALUES ('$nome', $categoria, '$quantidade',$fornecedor, '$valor_investido', 
+        '$lucro_esperado', '$tamanho','$data_produto', '$patch')";
 
         $query_result = mysqli_query($conexao, $inserir_produto);
+
         if($query_result){
-            $produto = new produto;
-            $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, $tamanho, $categoria, $fornecedor);
+            $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, 
+            $tamanho, $categoria, $fornecedor);
         }
 
         $msg = $query_result? 1 : 0;
@@ -287,7 +294,7 @@ class produto extends links_pages
         $pagina['inicio'];
         $pagina['num_paginas'];
 
-        $sql = "SELECT * FROM produto LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
+        $sql = "SELECT * FROM produto ORDER BY data_produto DESC LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
         $result = mysqli_query($conexao, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -417,19 +424,14 @@ class produto extends links_pages
                 <li class="page-item">
                     <a class="page-link" href="#"><ion-icon name="chevron-back-outline"></ion-icon></a>
                 </li>
-
                 <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
-
                     <li class="page-item">
-                    <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
+                        <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
                     </li>
-
                 <?php } ?>
-
                 <li class="page-item">
                     <a class="page-link" href="#"><ion-icon name="chevron-forward-outline"></ion-icon></a>
                 </li>
-
             </ul>
             </nav>
         </footer>
@@ -553,7 +555,7 @@ class produto extends links_pages
 
                 <label style='width: 100%; display: flex;flex-direction: column;'>
                     <span style=' width: 100%;'> quantidade: </span>
-                    <input name='quantidade[]' type='number' max=" . $quantidade . ">
+                    <input name='quantidade[]' type='number' "; if($_GET['opcao'] == 2){ echo "max=$quantidade"; } echo ">
                 </label>
 
                 <input type='hidden' name='fornecedor[]' value=.$fornecedor.>

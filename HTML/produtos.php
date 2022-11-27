@@ -1,13 +1,6 @@
 <?php
 
-if(empty($_SESSION['id'])){
-session_start();
-}
-if(!isset($_SESSION['id']) && !isset($_SESSION['nome'])){
-    header('Location: ../login.html');
-    die();
-}
-
+require_once '../PHP/ValidarSessao.php';
 require_once '../PHP/conexao.php';
 require_once '../php/produto.php';
 require_once '../PHP/funcionarios.php';
@@ -21,8 +14,6 @@ $funcionario = $funcionario->getFuncionario();
 <html lang="pt-BR">
 
 <head>
-    <script src="../JS/script.js"></script>
-    <script src="../modal/modal.js"></script>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,6 +24,8 @@ $funcionario = $funcionario->getFuncionario();
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../JS/script.js"></script>
+    <script src="../modal/modal.js"></script>
 
     <title>Produtos</title>
 
@@ -46,9 +39,9 @@ $funcionario = $funcionario->getFuncionario();
     <div class="msg" id="msg1">
         <h2>Ação conluída com sucesso!</h2>
     </div>
-
     <?php
     if (!empty($_GET['msg'])) {
+        
         include_once('../php/mensagem.php');
         mensagem($_GET['msg']);
     }
@@ -113,7 +106,7 @@ $funcionario = $funcionario->getFuncionario();
                         <a href="funcionarios.php">
                             <span> Funcionários </span>
                         </a>
-                        <a href="#">
+                        <a href="clientes.php">
                             <span> Clientes </span>
                         </a>
                     </div>
@@ -177,11 +170,10 @@ $funcionario = $funcionario->getFuncionario();
         </form>
     </main>
 
-    <!-- modals -->
     <dialog id="modal-entrada" class="modal">
         <header class="header-cadastro">
             <!-- titulo da parte de registro de produto -->
-            <h1>cadastrar produto</h1>
+            <h1 style="font-weight: 400;">cadastrar produto</h1>
             <!-- botao que vai fechar a parte de registor de produto-->
             <button type="button" style="background: none;" onclick="fecharmodal('button-entrada-fechar')">
             <ion-icon style="width: 40px; height: 40px;"name="close-outline"></ion-icon>
@@ -192,10 +184,29 @@ $funcionario = $funcionario->getFuncionario();
         <section class="section-cadastro">
             <form method="POST" action="../PHP/produto.php" enctype="multipart/form-data">
                 <!--nome do produto --> 
-                <label>
-                    <label class="label-titulo"> Nome do produto: *</label>
-                    <input name="nome" type="text" class="input-registro" placeholder="Biquini Vermelho" autocomplete="off">
-                </label>
+                <div>
+                    <label>
+                        <label class="label-titulo"> Nome do produto: *</label>
+                        <input name="nome" type="text" class="input-registro" placeholder="Biquini Vermelho" autocomplete="off">
+                    </label>
+
+                    <label class="label-categoria">
+                        <label class="label-titulo"> Categoria: </label>
+                            <select id="categoria" name="categoria" class="select">
+                                <option value="nenhum"> Nenhum </option>
+                                <?php
+                                $sql = "SELECT * FROM categoria";
+                                $result = $conexao->query($sql);
+                                while ($user_data = mysqli_fetch_assoc($result)) {
+                                    echo "<option value=" . $user_data['id_categoria'] . ">";
+                                    echo $user_data['nome'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </label>
+                    </label>
+                </div>
+                
 
                 <!-- quantidade e tamanho do produto -->
                 <div class="div-quantidade-tamanho">
@@ -233,24 +244,6 @@ $funcionario = $funcionario->getFuncionario();
                 <!-- categoria e fornecedor -->
                 <div class="div-categoria-fornecedor">
 
-                    <!-- categoria -->
-                    <label class="label-categoria">
-
-                        <label class="label-titulo"> Categoria: </label>
-                        <select id="categoria" name="categoria" class="select">
-                            <option value="nenhum"> Nenhum </option>
-                            <?php
-                            $sql = "SELECT * FROM categoria";
-                            $result = $conexao->query($sql);
-                            while ($user_data = mysqli_fetch_assoc($result)) {
-                                echo "<option value=" . $user_data['id_categoria'] . ">";
-                                echo $user_data['nome'] . "</option>";
-                            }
-                            ?>
-                        </select>
-
-                    </label>
-
                     <!-- forncedor-->
                     <label class="label-fornecedor">
                         <label class="label-titulo"> Fornecedor: </label>
@@ -266,7 +259,10 @@ $funcionario = $funcionario->getFuncionario();
                             ?>
 
                         </select>
-
+                    </label>
+                    <label class="label-numero">
+                        <label class="label-titulo"> Valor da Unidade: *</label>
+                        <input onkeyup="LucroPorcentagem()" id="valor_unidade" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
                     </label>
 
                 </div>
@@ -274,19 +270,19 @@ $funcionario = $funcionario->getFuncionario();
                 <!-- valor de investimento -->
                 <div class="div-investimento-lucro">
                     <label class="label-numero">
-                        <label class="label-titulo"> Valor da Unidade: *</label>
-                        <input id="valor_fornecedor" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
+                        <label class="label-titulo"> Preço de venda: *</label>
+                        <input onkeyup="LucroPorcentagem()" id="preco_venda" name="preco_venda" type="text" class="input-registro" placeholder="15" autocomplete="off" value="">
                     </label>
                     <label class="label-numero">
                         <label class="label-titulo"> Lucro (%): *</label>
-                        <input name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off">
+                        <input id="lucro" name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off" value="">
                     </label>
                 </div>
 
                 <!-- butao (submit) para enviar o produto para o banco de dados-->
                 <div class="botoes-submit">
-                    <button type="submit" name="submit-produto" class="botao1"> cadastrar</button>
                     <button type="reset" class="botao2"> Limpar </button>
+                    <button type="submit" name="submit-produto" class="botao1"> cadastrar</button>
                 </div>
             </form>
         </section>
@@ -303,8 +299,8 @@ $funcionario = $funcionario->getFuncionario();
             echo $opcao;
             ?>    
             </h2>
-            <button type="button" style="background: none; border: none;" onclick="fecharmodal('button-saida-fechar')">
-            <ion-icon style="width: 35px; height: 35px;"name="close-outline"></ion-icon>
+            <button class="button-fechar" type="button" style="border: none;" onclick="fecharmodal('button-saida-fechar')">
+                <ion-icon style="width: 35px; height: 35px;"name="close-outline"></ion-icon>
             </button>
         </header>
 

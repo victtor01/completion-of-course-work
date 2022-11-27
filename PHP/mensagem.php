@@ -18,6 +18,7 @@ function mensagem($msg){
                     }, 1000);
             </script>";
         break;
+        
         case 2: 
          echo"<script>
                 let msg = window.document.getElementById('msg2');
