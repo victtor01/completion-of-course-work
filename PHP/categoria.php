@@ -1,13 +1,5 @@
 <?php
-if(!isset($_SESSION['id'])){
-session_start();
-}
-
-if(!isset($_SESSION['nome']) && !isset($_SESSION['id']) && !isset($_SESSION['cargo'])){
-    header('Location: ../login.php');
-    die();
-}
-
+include 'ValidarSessao.php';
 include 'links.php';
 class categoria extends links_pages{
 

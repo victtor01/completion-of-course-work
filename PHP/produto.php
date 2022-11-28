@@ -171,11 +171,9 @@ class produto extends links_pages
                                         <option value=''> nenhum</option>
                                         <?php 
                                             while($categoria = mysqli_fetch_assoc($queryCategoria)){
-
                                                 echo "<option value='$categoria[id_categoria]'";     
                                                 if($categoria['id_categoria'] == $row['categoria']) { echo "selected"; }
                                                 echo ">" . $categoria['id_categoria'] . " - " . $categoria['nome'] . "</option>";   
-
                                             }
                                         ?>
                                     </select>
@@ -188,7 +186,6 @@ class produto extends links_pages
                                         <option value="3" <?php if($row['tamanho'] == 3){echo "selected";}?>> M </option>
                                         <option value="4" <?php if($row['tamanho'] == 4){echo "selected";}?>> G </option>
                                         <option value="5" <?php if($row['tamanho'] == 5){echo "selected";}?>> GG </option>
-                                        <?php if($tamanho == 1){echo "selected";}?>
                                     </select>
                                 </label>
                                 <label class="label-info">
@@ -197,15 +194,15 @@ class produto extends links_pages
                                 </label>
                                 <label class="label-info">
                                     <span>Preço de Compra:</span>
-                                    <input type="text" name="preco" value="<?php echo $row['valor_investido'] ?>">
+                                    <input onkeyup="LucroPorcentagem()" id="preco_compra" type="text" name="preco" value="<?php echo $row['valor_investido'] ?>">
                                 </label>
                                 <label class="label-info">
                                     <span>Preço de Venda:</span>
-                                    <input type="number" name="#" value="<?php echo $valor_venda?>">
+                                    <input onkeyup="LucroPorcentagem()" id="preco_venda_" type="text" name="valor_venda" value="<?php echo $valor_venda ?>">
                                 </label>
                                 <label class="label-info">
                                     <span>Lucro (%):</span>
-                                    <input type="number" name="#" value="<?php echo $row['lucro_esperado']?>">
+                                    <input id="lucro_" type="text" name="lucro" value="<?php echo $row['lucro_esperado']?>">
                                 </label>
                                 <label class="label-info">
                                     <span>Data:</span>
@@ -236,6 +233,37 @@ class produto extends links_pages
                         </div>
                     </form>
                 </section>
+
+                <script>
+
+                    function LucroPorcentagem(){
+
+                    let valor_unidade = window.document.getElementById('preco_compra').value;
+                    let valor_venda = window.document.getElementById('preco_venda_').value;
+
+                    console.log("preco:" + valor_venda);
+                    let valor = parseFloat(valor_unidade);
+                    let preco = parseFloat(valor_venda);
+                    console.log(valor);
+                    console.log(preco);
+                    
+                    let diferenca = (preco - valor);
+                    let porcentagem = (diferenca / valor);
+                    let subtotal = (porcentagem * 100);
+
+                    var total = parseFloat(subtotal);
+                    total = round(total);
+
+                    let lucro = window.document.getElementById('lucro_');
+                    lucro.value = total;
+                    }
+
+                    function round(num) {
+                    var m = Number((Math.abs(num) * 100).toPrecision(15));
+                    return Math.round(m) / 100 * Math.sign(num);
+                    }
+
+                </script>
                 
             <?php
         }
@@ -318,25 +346,25 @@ class produto extends links_pages
         <?php
         while ($user_data = mysqli_fetch_assoc($result)){
 
-            $id = $user_data['id_produto'];
-            $nome = $user_data['nome'];
-            $categoria = $user_data['categoria'];
-            $quantidade = $user_data['quantidade'];
-            $fornecedor = $user_data['fornecedor'];
-            $valor_investido = $user_data['valor_investido'];
-            $lucro_esperado = $user_data['lucro_esperado'];
-            $tamanho = $user_data['tamanho'];
-            $data = $user_data['data_produto'];
+        $id = $user_data['id_produto'];
+        $nome = $user_data['nome'];
+        $categoria = $user_data['categoria'];
+        $quantidade = $user_data['quantidade'];
+        $fornecedor = $user_data['fornecedor'];
+        $valor_investido = $user_data['valor_investido'];
+        $lucro_esperado = $user_data['lucro_esperado'];
+        $tamanho = $user_data['tamanho'];
+        $data = $user_data['data_produto'];
 
-            $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
-            $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
-            $row = $result_fornecedor->fetch_assoc();
-            $fornecedor_nome = $row["nome"];
+        $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+        $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+        $row = $result_fornecedor->fetch_assoc();
+        $fornecedor_nome = $row["nome"];
 
-            $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
-            $result_categoria = mysqli_query($conexao, $sql_categoria);
-            $row = $result_categoria->fetch_assoc();
-            $categoria_nome = $row["nome"];
+        $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
+        $result_categoria = mysqli_query($conexao, $sql_categoria);
+        $row = $result_categoria->fetch_assoc();
+        $categoria_nome = $row["nome"];
 
 
             echo "<tr> <td>";
@@ -486,15 +514,17 @@ class produto extends links_pages
                 modal_.showModal();
             </script>";
 
-            while ($user_data = mysqli_fetch_assoc($result)) {
+            while ($produto_data = mysqli_fetch_assoc($result)) {
 
-            $id = $user_data['id_produto'];
-            $nome = $user_data['nome'];
-            $categoria = $user_data['categoria'];
-            $tamanho = $user_data['tamanho'];
-            $quantidade = $user_data['quantidade'];
-            $fornecedor = $user_data['fornecedor'];
-            $preco = $user_data['valor_investido'];
+            $id = $produto_data['id_produto'];
+            $nome = $produto_data['nome'];
+            $categoria = $produto_data['categoria'];
+            $tamanho = $produto_data['tamanho'];
+            $quantidade = $produto_data['quantidade'];
+            $fornecedor = $produto_data['fornecedor'];
+            $preco = $produto_data['valor_investido'];
+            $lucro_esperado = $produto_data['lucro_esperado'];
+            $preco = $preco + ($preco * ($lucro_esperado/100));
 
             echo
             "<div class='modal-saida-select-result'>

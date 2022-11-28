@@ -275,7 +275,7 @@ $funcionario = $funcionario->getFuncionario();
                     </label>
                     <label class="label-numero">
                         <label class="label-titulo"> Lucro (%): *</label>
-                        <input id="lucro" name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off" value="">
+                        <input onkeyup="ValorVenda(this)" id="lucro" name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off" value="">
                     </label>
                 </div>
 

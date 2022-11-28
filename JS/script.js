@@ -61,9 +61,7 @@ function LucroPorcentagem(){
 
   var valor = parseFloat(valor_unidade);
   var preco = parseFloat(preco_venda);
-  console.log(valor);
 
-  
   let diferenca = (preco - valor);
   let porcentagem = (diferenca / valor);
   let subtotal = (porcentagem * 100);
@@ -71,8 +69,59 @@ function LucroPorcentagem(){
   var total = parseFloat(subtotal);
   total = round(total);
 
+  if(!total){
+    total = 0;
+  }
+
   let lucro = window.document.getElementById('lucro');
   lucro.value = total;
+
+  if(total <= 0){
+    let teste = window.document.getElementById('preco_venda');
+    teste.style.cssText = 
+    'color: red;' +
+    'border: 2px solid red;';
+  } else if(total < 20){
+    let teste = window.document.getElementById('preco_venda');
+    teste.style.cssText = 
+    'color: blue';
+  }
+  else {
+    let teste = window.document.getElementById('preco_venda');
+    teste.style.cssText = 
+    'color: green';
+  }
+}
+function ValorVenda(e){
+  let id = e.id;
+  let lucro = window.document.getElementById(`${id}`);
+  let valor_compra = window.document.getElementById('valor_unidade');
+  let valor = (parseFloat(lucro.value)/100) * parseFloat(valor_compra.value);
+
+  let total = parseFloat(valor_compra.value) + parseFloat(valor);
+  total = parseFloat(total);
+
+  if(!total){
+    total = 0;
+  }
+
+  let valor_venda = window.document.querySelector('#preco_venda');
+  valor_venda.value = total;
+
+  if(lucro.value <= 0){
+    lucro_venda.style.cssText = 
+    'color: red;' +
+    'border: 2px solid red;';
+
+  } else if(lucro.value < 10){
+    valor_venda.style.cssText = 
+    'color: blue';
+  }
+
+  else {
+    valor_venda.style.cssText = 
+    'color: green';
+  }
 }
 
 function round(num) {
