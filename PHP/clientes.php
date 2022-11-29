@@ -87,14 +87,14 @@ class cliente{
                                 .td-cliente input{
                                     width: 80%;
                                     height: 50%;
-                                    font-size: 12t;
+                                    font-size: 12pt;
                                     padding: 10px;
                                     outline: none;
                                     border: none;
                                 }
                                 .td-cliente, #th-foto-cliente{
                                     transition: 0.3s;
-                                    transition-delay: 0.4s;
+                                    transition-delay: 0.6s;
                                 }
                             </style>
                         </tr>

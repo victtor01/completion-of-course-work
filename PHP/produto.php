@@ -285,13 +285,14 @@ class produto extends links_pages
         $preco = $_POST['preco'];
         $data = $_POST['data'];
         $fornecedor = $_POST['fornecedor'];
+        $lucro = $_POST['lucro'];
         $foto = $_FILES['foto'];
 
         if($foto['size'] == 0){
             $foto = $row['foto'];
             $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
             tamanho='$tamanho',  quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
-            fornecedor='$fornecedor', foto='$foto' WHERE id_produto = $id";
+            fornecedor='$fornecedor', foto='$foto', lucro_esperado='$lucro' WHERE id_produto = $id";
             $query = mysqli_query($conexao, $sql);
         }
         else{
@@ -308,7 +309,7 @@ class produto extends links_pages
 
             $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
             tamanho='$tamanho', quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
-            fornecedor='$fornecedor', foto='$patch' WHERE id_produto = $id";
+            fornecedor='$fornecedor', foto='$patch' lucro_esperado='$lucro' WHERE id_produto = $id";
             $query = mysqli_query($conexao, $sql);
         }
 
@@ -318,7 +319,7 @@ class produto extends links_pages
     {
         include 'conexao.PHP';
         include 'LimitPages.php';
-        $pagina = Paginas("produto");
+        $pagina = Paginas("produto", 7);
         $pagina['inicio'];
         $pagina['num_paginas'];
 
@@ -413,7 +414,7 @@ class produto extends links_pages
             echo "<td> $lucro_esperado %</td>";
             $porcento = ($lucro_esperado/100) * $valor_investido;
             $preco_venda = $valor_investido + $porcento;
-            echo "<td>R$ $preco_venda </td>";
+            echo "<td>R$" . intval($preco_venda) ."</td>";
 
             echo "<td>" . $data . "</td>";
 
@@ -606,7 +607,6 @@ $produto = new produto;
 
 if (isset($_POST['submit-produto'])) {
     $produto->inserir();
-    echo "teste";
 } 
 
 elseif (!empty($_GET['id_produto']) && !empty($_GET['delete'])) 

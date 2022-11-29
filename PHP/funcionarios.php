@@ -141,8 +141,10 @@ class funcionario extends links_pages{
     }
     public function MostrarFuncionarios(){
 
+        include 'LimitPages.php';
         include 'conexao.PHP'; 
-        $sql = "SELECT * FROM funcionarios WHERE id_funcionario";
+        $pagina = Paginas("funcionarios", 4);
+        $sql = "SELECT * FROM funcionarios LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
         $query = mysqli_query($conexao, $sql);
 
         while($user_data = mysqli_fetch_assoc($query)){
@@ -206,7 +208,7 @@ class funcionario extends links_pages{
                     <input type="text" name="Data_de_nascimento[]" value=" <?php echo$data_nascimento; ?>">
                 </label>
                 <label class="label-info" >
-                    <span> Salario: </span>
+                    <span> Salário: </span>
                     <input type="text" name="salario[]" value="<?php echo$salario;?>">
                 </label>
 
@@ -231,8 +233,26 @@ class funcionario extends links_pages{
                 </div>
             </div>
         </div>
+
+        <?php } ?>
+        <footer class="footer">
+            <nav  class="paginacao">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#"><ion-icon name="chevron-back-outline"></ion-icon></a>
+                </li>
+                <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
+                    <li class="page-item">
+                        <a class="page-link" href="funcionarios.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
+                    </li>
+                <?php } ?>
+                <li class="page-item">
+                    <a class="page-link" href="#"><ion-icon name="chevron-forward-outline"></ion-icon></a>
+                </li>
+            </ul>
+            </nav>
+        </footer>
         <?php
-        }
     }
     public function MudarSenhadoFuncionario(){
         $senha = strval($_POST['senha']);

@@ -180,7 +180,6 @@ $funcionario = $funcionario->getFuncionario();
             </button>
 
         </header>
-
         <section class="section-cadastro">
             <form method="POST" action="../PHP/produto.php" enctype="multipart/form-data">
                 <!--nome do produto --> 
@@ -189,7 +188,6 @@ $funcionario = $funcionario->getFuncionario();
                         <label class="label-titulo"> Nome do produto: *</label>
                         <input name="nome" type="text" class="input-registro" placeholder="Biquini Vermelho" autocomplete="off">
                     </label>
-
                     <label class="label-categoria">
                         <label class="label-titulo"> Categoria: </label>
                             <select id="categoria" name="categoria" class="select">
@@ -205,17 +203,12 @@ $funcionario = $funcionario->getFuncionario();
                             </select>
                         </label>
                     </label>
-                </div>
-                
-
-                <!-- quantidade e tamanho do produto -->
+                </div>       
                 <div class="div-quantidade-tamanho">
-                    <!-- qunatidade -->
                     <label class="label-quantidade">
                         <label class="label-titulo"> Quantidade: *</label>
                         <input name="quantidade" type="number" class="input-registro" placeholder="Unidades">
                     </label>
-                    <!-- tamanho do produto-->
                     <label class="label-tamanho">
                         <label class="label-titulo">Tamanho *</label>
                         <select id="tamanho" name="tamanho" class="select">
@@ -227,8 +220,6 @@ $funcionario = $funcionario->getFuncionario();
                         </select>
                     </label>
                 </div>
-
-                <!-- data do produto -->
                 <div class="div-quantidade-tamanho">
                     <label class="label-data">
                         <label class="label-titulo"> Data: *</label>
@@ -239,12 +230,7 @@ $funcionario = $funcionario->getFuncionario();
                         <input class="file-image" name="foto" type="file">
                     </label>
                 </div>
-                
-
-                <!-- categoria e fornecedor -->
                 <div class="div-categoria-fornecedor">
-
-                    <!-- forncedor-->
                     <label class="label-fornecedor">
                         <label class="label-titulo"> Fornecedor: </label>
                         <select id="fornecedor" name="fornecedor" class="select">
@@ -257,17 +243,13 @@ $funcionario = $funcionario->getFuncionario();
                                 echo $user_data['nome'] . "</option>";
                             }
                             ?>
-
                         </select>
                     </label>
                     <label class="label-numero">
                         <label class="label-titulo"> Valor da Unidade: *</label>
                         <input onkeyup="LucroPorcentagem()" id="valor_unidade" name="investimento" type="text" class="input-registro" placeholder="R$ 1000,00">
                     </label>
-
                 </div>
-
-                <!-- valor de investimento -->
                 <div class="div-investimento-lucro">
                     <label class="label-numero">
                         <label class="label-titulo"> Preço de venda: *</label>
@@ -278,8 +260,6 @@ $funcionario = $funcionario->getFuncionario();
                         <input onkeyup="ValorVenda(this)" id="lucro" name="lucro" type="text" class="input-registro" placeholder="15" autocomplete="off" value="">
                     </label>
                 </div>
-
-                <!-- butao (submit) para enviar o produto para o banco de dados-->
                 <div class="botoes-submit">
                     <button type="reset" class="botao2"> Limpar </button>
                     <button type="submit" name="submit-produto" class="botao1"> cadastrar</button>

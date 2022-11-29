@@ -172,12 +172,6 @@ $funcionario = $funcionario->getFuncionario();
                                         </svg>
                                     </a>
                                 </button>
-
-                                <button class='editar' type='button' style='background-color: yellow'>
-                                <a style='width: 35px; height: 35px; color: black;' name='id_produto' >
-                                    <ion-icon name='information-circle-outline' style='width: 20px; height: 20px;'></ion-icon>
-                                </a>
-                                </button>
                         
                             </td>";
 

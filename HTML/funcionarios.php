@@ -68,7 +68,7 @@ $funcionario = $funcionario->getFuncionario();
         <div class="barra-lateral">
             <header>
                 <div class="imagem">
-                    <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
+                <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
                 </div>
                 <h2 style="margin-top: 10px;"> <?php echo $funcionario['nome']?></h2>
             </header>
@@ -130,37 +130,31 @@ $funcionario = $funcionario->getFuncionario();
                 </h1>
             </header>
 
-            <div class="botoes-principais">
-                <div class="div">
-                    <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
-                       <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon> <span>Funcionário</span>
-                    </button>
-                </div>
-
-                <div class="div-pesquisar div">
-                    <input type="text" placeholder="Pesquise..." class="pesquisar">
-                    <button type="button" class="btn-pesquisar" style="border: none; background: none;">
-                        <img src="../imagens/lupa.png" width="25px" height="25px">
-                    </button>
-                </div>
-
             <form action="../PHP/funcionarios.php" method="post" enctype="multipart/form-data">
-
-                <div class="div">
-                    <button type="submit" class="botao" id="button-saida" name="updateFuncionarios">
-                        <ion-icon style="height: 26px; width: 26px" name="cloud-done-outline"></ion-icon> <span> Guardar </span>
-                    </button>
+                <div class="botoes-principais">
+                    <div class="div">
+                        <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
+                        <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon> <span>Funcionário</span>
+                        </button>
+                    </div>
+                    <div class="div-pesquisar div">
+                        <input type="text" placeholder="Pesquise..." class="pesquisar">
+                        <button type="button" class="btn-pesquisar" style="border: none; background: none;">
+                            <img src="../imagens/lupa.png" width="25px" height="25px">
+                        </button>
+                    </div>
+                    <div class="div">
+                        <button type="submit" class="botao" id="button-saida" name="updateFuncionarios">
+                            <ion-icon style="height: 26px; width: 26px" name="cloud-done-outline"></ion-icon> <span> Guardar </span>
+                        </button>
+                    </div>
                 </div>
-
-            </div>
-
-            <section class="section-informacoes">
-                <?php
+                <section class="section-informacoes">
+                    <?php
                     $funcionario = new funcionario;
                     $funcionario->mostrarFuncionarios();
-                ?>
-            </section>
-            
+                    ?>
+                </section>
             </form>
 
         </section>

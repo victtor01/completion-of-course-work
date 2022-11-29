@@ -1,7 +1,5 @@
 <?php
-if(empty($_SESSION[''])){
-session_start();
-}
+include '../PHP/ValidarSessao.php';
 
 if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     include_once('../PHP/conexao.php');
@@ -92,7 +90,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                     <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios" id="href-financeiro">
-                    <a href="#">
+                    <a href="dashboard.php">
                         <span> Dashboard </span>
                     </a>
                     <a href="#">
@@ -130,7 +128,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
             <div class="principais-acoes">
                 <button class="acao button" id="produtos">
 
-                    <p> <?php echo $COUNT ?> Produtos Cadastrados</p>
+                    <p> <?php echo $COUNT ?> Produtos cadastrados</p>
                     <p> <?php echo $SUM ?> Itens no estoque </p>
                     <div class="link_acao" id="link_produtos">
                         <a href="produtos.php">Produtos</a>
@@ -149,7 +147,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 <button class="acao acao-3 button">
 
-                    <p> financeiro </p>
+                    <p> Financeiro </p>
                     <div class="link_acao link-acao-3">
                         <a href="#">Financeiro</a>
                     </div>
@@ -161,7 +159,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 <div class="entrada_saida">
                     <div class="titulo_grafico">
-                        <h2> Entrada e saida de produtos</h2>
+                        <h2> Entrada e saída de produtos</h2>
                     </div>
                     <div id="curve_chart"></div>
                 </div>
@@ -169,7 +167,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 <div class="entrada_saida">
                     <div class="titulo_grafico">
-                        <h2> Entrada e saida de caixa</h2>
+                        <h2> Entrada e saída de caixa</h2>
                     </div>
                     <div id="chart_div"></div>
                 </div>
