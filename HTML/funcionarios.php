@@ -165,7 +165,7 @@ $funcionario = $funcionario->getFuncionario();
 
         <header class="header-cadastro">
             <!-- titulo da parte de registro de produto -->
-            <h1>cadastrar produto</h1>
+            <h2 style="font-weight: 450;">cadastrar Funcionário</h2>
             <!-- botao que vai fechar a parte de registor de produto-->
             <button type="button" style="background: none;" onclick="fecharmodal('button-entrada-fechar')">
             <ion-icon style="width: 40px; height: 40px;"name="close-outline"></ion-icon>
@@ -244,8 +244,9 @@ $funcionario = $funcionario->getFuncionario();
 
                 <!-- butao (submit) para enviar o produto para o banco de dados-->
                 <div class="botoes-submit">
-                    <button type="submit" name="inserir" class="botao1"> cadastrar</button>
                     <button type="reset" class="botao2"> Limpar </button>
+                    <button type="submit" name="inserir" class="botao1"> cadastrar</button>
+                    
                 </div>
             </form>
         </section>

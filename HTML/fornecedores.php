@@ -183,11 +183,6 @@ $funcionario = $funcionario->getFuncionario();
                 </table>
 
             </section>
-
-            <!-- FOOTER QUE IRÁ TER O RESUMO DAS INFORMAÇÕES -->
-            <footer>
-                footer
-            </footer>
         </section>
 
     </main>

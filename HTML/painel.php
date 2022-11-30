@@ -28,6 +28,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     header('Location: ../login.html');
     die();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +51,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
 <body>
 
-<header class="header-titulo titulo-principal">
+    <header class="header-titulo titulo-principal">
         <div style="width: 100%; height: 100%; align-items: center; display: flex; position: relative; cursor: pointer;">
             <a href="painel.php" style="text-decoration: none; color: white; display: flex; justify-content: left; font-size: 12pt;">
                 <img src="../imagens/box.png" width="45px" height="45px;" style="margin-right: 30px;">
@@ -64,7 +65,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
     <main>
 
-    <div class="barra-lateral">
+        <div class="barra-lateral">
             <header>
                 <div class="imagem">
                     <img src="<?php echo $funcionario['foto']; ?>" width="150" height="150">
@@ -264,3 +265,4 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     </script>
 
 </body>
+</html>

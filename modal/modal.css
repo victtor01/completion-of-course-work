@@ -81,9 +81,11 @@
     margin: 50px auto 0px auto;
     box-sizing: border-box;
     padding: 10px;
-    overflow: hidden;
+    padding-bottom: 0;
+    overflow: scroll;
     transform: scale(0);
     transition: 0.2s;
+    overflow-x: hidden;
 }
 
 #modal-entrada .section-cadastro {

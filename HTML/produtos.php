@@ -120,54 +120,47 @@ $funcionario = $funcionario->getFuncionario();
         </div>
 
         <section class="section-principal">
-            <header class="header-titulo titulo-section">
-                <h1>
-                    Produtos
-                </h1>
-            </header>
-
-            <div class="botoes-principais">
-                <div class="div">
-                    <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
-                        <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon>
-                        Novo Cadastro
-                    </button>
+            <form action="../PHP/produto.php" method="post">
+                <header class="header-titulo titulo-section">
+                    <h1>
+                        Produtos
+                    </h1>
+                </header>
+                <div class="botoes-principais">
+                    <div class="div">
+                        <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
+                            <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon>
+                            Novo Cadastro
+                        </button>
+                    </div>
+                    <div class="div-pesquisar div">
+                        <input type="text" placeholder="Pesquise..." class="pesquisar">
+                        <button type="button" class="btn-pesquisar" style="border: none; background: none;">
+                            <img src="../imagens/lupa.png" width="25px" height="25px">
+                        </button>
+                    </div>
+                    <div class="div">
+                        <button type="submit" class="botao" id="modalremessa" value="submit-saida-produto" name="submit-entrada-produto">
+                        <ion-icon name="enter-outline" style="width: 30px; height: 100%;"></ion-icon>
+                            Entrada
+                        </button>
+                    </div>
+                    <div class="div">
+                        <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
+                            <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
+                            Saída
+                        </button>
+                    </div>
                 </div>
 
-                <div class="div-pesquisar div">
-                    <input type="text" placeholder="Pesquise..." class="pesquisar">
-                    <button type="button" class="btn-pesquisar" style="border: none; background: none;">
-                        <img src="../imagens/lupa.png" width="25px" height="25px">
-                    </button>
-                </div>
-
-                <form action="../PHP/produto.php" method="post">
-
-                <div class="div">
-                    <button type="submit" class="botao" id="modalremessa" value="submit-saida-produto" name="submit-entrada-produto">
-                    <ion-icon name="enter-outline" style="width: 30px; height: 100%;"></ion-icon>
-                        Entrada
-                    </button>
-                </div>
-                <div class="div">
-                    <button type="submit" class="botao" id="modalsaida" value="submit-saida-produto" name="submit-saida-produto">
-                        <ion-icon name="exit-outline" style="width: 30px; height: 100%;"></ion-icon>
-                        Saída
-                    </button>
-                </div>
-            </div>
-
-            <section class="section-produtos">
-                <?php
-                $produto = new produto;
-                $produto->mostrar_produtos();
-                ?>             
-            </section>
-
+                <section class="section-produtos">
+                    <?php
+                    $produto = new produto;
+                    $produto->mostrar_produtos();
+                    ?>             
+                </section>
+            </form>
         </section>
-        
-
-        </form>
     </main>
 
     <dialog id="modal-entrada" class="modal">
