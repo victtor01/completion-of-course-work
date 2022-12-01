@@ -89,9 +89,9 @@ $funcionario = $funcionario->getFuncionario();
 
         var options = {
             title: "Produtos mais vendidos",
-            width: 350,
-            height: 400,
-            bar: {groupWidth: "85%"},
+            width: 400,
+            height: 220,
+            bar: {groupWidth: "60%"},
             legend: { position: "absolute" },
         };
         var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
@@ -171,139 +171,175 @@ $funcionario = $funcionario->getFuncionario();
     </div>
 
     <section class="section-principal">
-        <form action="../PHP/dashboard.php" method="post">
-            <header class="header-titulo titulo-section">
-                <h1> Dashboard </h1>
-            </header>
-            <div class="dashboard">
-                <div class="div caixa"> 
+        <header class="header-titulo titulo-section">
+            <h1> Dashboard </h1>
+        </header>
+        <section class="dashboard">
+            <div class="div caixa"> 
+                <div class="column">
+                    <span class="real"> R$ 234<span style="font-size: 20pt;">,90</p> </span>
+                </div>    
+            </div>
+            <div class="div valores" style="background-color: #002973">
+                <h3> Dispesas Fixas:</h3> <hr>
+                <div class="row">
                     <div class="column">
-                        <span class="real"> R$ 234<span style="font-size: 20pt;">,90</p> </span>
-                    </div>    
-                </div>
-                <div class="div valores" style="background-color: #002973">
-                    <h3> Dispesas </h3> <hr>
-                    <div class="column">
-                        <label>
-                            <span> Dispesa fixa: </span>
-                            <input style="background:none; box-shadow:none; font-size: 16pt; color: white" type="text" placeholder="dispesa fixa" value="R$ 2390,40">
-                        </label>
-                        <label>
-                            <span> Nova dispesa:</span>
-                            <input type="text" placeholder="R$ 45,00">
-                        </label>               
+                        <span> Dispesa fixa total: </span>
+                        <span> R$ 2300,00 </span>
                     </div>
-                    <button> Salvar </button>
-                </div>
-                <div class="div valores" style="background-color: #fbc107;">
-                    <h3> Nova Entrada de capital </h3> <hr>
-                    <div class="column">
-                        <label for="">
-                            <span>Nova Entrada: </span>
-                            <input type="text" placeholder="R$ 342,34">
-                        </label>
-                    </div>
-                    <button>
-                        Salvar
-                    </button>
                 </div>
             </div>
-            <style>
-                .dashboard{
-                    width: 100%;
-                    width: min(100%, none);
-                    font-family: sans-serif;
-                    height: 200px;
-                    margin: 1% auto 30px auto;
-                    position: relative;
-                    box-sizing: border-box;
-                    justify-content: space-between;
-                    display: flex;
-                    padding: 15px;
-                    color: white;
-                }.dashboard .valores{
-                    position: relative;
-                }
-                .dashboard .valores button {
-                    right: 0;
-                    bottom: 0;
-                    width: 100px;
-                    height: 30px;
-                    background: none;
-                    box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.1);
-                    border-radius: 15px;
-                    margin: 10px 10px 10px 10px;
-                    background-color: white;
-                    position: absolute;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    transition: 0.2s;
-                }
-                .dashboard .valores button:hover{
-                    box-shadow: 0px 0px 10px whitesmoke;
-                    transform: scale(1.01);
-                }
-                .dashboard .div{
-                    width: 37%;
-                    height: 100%;
-                    position: relative;
-                    box-shadow: 0px 2px 10px -4px rgb(220, 220, 220);
-                    padding: 10px;
-                    border-radius: 4px;
-                    color: white;
-                    transition: 0.3s;
-                }
-                .dashboard .div:hover{
-                    transform: scale(1.02);
-                }
-                .dashboard .div input{
-                    width: 100%;
-                    height: 40px;
-                    background-color: white;
-                    outline: none;
-                    margin: 5px 0px 5px 2px;
-                    border: none;
-                    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-                    border-radius: 4px;
-                    padding: 5px;
-                    font-size: 13pt;
-                    transition: 0.4s;
-                }
-                .dashboard .div input:hover{
-                    box-shadow: 0px 0px 10px white;
-                }
-                .dashboard .div input::placeholder{
-                    color: rgba(0, 0, 0, 0.4);
-                }
-                .dashboard .caixa {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: #44b331;
-                    width: 23%;
-                }
-                .dashboard .valores h3{
-                    font-size: 14pt;
-                    font-weight: 450;
-                }
-                .dashboard hr{
-                    margin: 5px auto 5px auto;
-                    background-color: white;
-                    border: 1px solid white;
-                }
-                .dashboard .valores .column{
-                    height: auto;
-                    display: flex;
-                }
-                .dashboard .valores .column span {
-                    font-size: 14pt;
-                    font-weight: 450;
-                }
-                .dashboard .div .real{
-                    font-size: 35pt;
-                }
-            </style>
-        </form>
+            <div class="div valores" style="background-color: #fbc107;">
+                <h3> Dispesas Variáveis </h3> <hr>
+                <div class="row">
+                    <div class="column">
+                        <span> Dispesa fixa total: </span>
+                        <span> R$ 2300,00 </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <style>
+            .dashboard{
+                width: 100%;
+                width: min(100%, none);
+                font-family: sans-serif;
+                height: 150px;
+                margin: 1% auto 10px auto;
+                position: relative;
+                box-sizing: border-box;
+                justify-content: space-between;
+                display: flex;
+                padding: 15px;
+                color: white;
+            }.dashboard .valores{
+                position: relative;
+            }
+            .dashboard .valores button {
+                right: 0;
+                bottom: 0;
+                width: 100px;
+                height: 30px;
+                background: none;
+                box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                margin: 10px 10px 10px 10px;
+                background-color: white;
+                position: absolute;
+                font-weight: 600;
+                text-transform: uppercase;
+                transition: 0.2s;
+            }
+            .dashboard .valores button:hover{
+                box-shadow: 0px 0px 10px whitesmoke;
+                transform: scale(1.01);
+            }
+            .dashboard .div{
+                width: 37%;
+                height: 100%;
+                position: relative;
+                box-shadow: 0px 2px 10px -4px rgb(220, 220, 220);
+                padding: 10px;
+                border-radius: 4px;
+                color: white;
+                transition: 0.3s;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .dashboard .div:hover{
+                transform: scale(1.02);
+            }
+            .dashboard .div input{
+                width: 100%;
+                height: 40px;
+                background-color: white;
+                outline: none;
+                margin: 5px 0px 5px 2px;
+                border: none;
+                box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+                border-radius: 4px;
+                padding: 5px;
+                font-size: 13pt;
+                transition: 0.4s;
+            }
+            .dashboard .div input:hover{
+                box-shadow: 0px 0px 10px white;
+            }
+            .dashboard .div input::placeholder{
+                color: rgba(0, 0, 0, 0.4);
+            }
+            .dashboard .caixa {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #44b331;
+                width: 23%;
+            }
+            .dashboard .valores h3{
+                font-size: 14pt;
+                font-weight: 450;
+            }
+            .dashboard hr{
+                margin: 5px auto 5px auto;
+                background-color: white;
+                border: 1px solid white;
+                width: 100%;
+            }
+            .dashboard .valores .row{
+                height: auto;
+                display: flex;
+            }
+            .dashboard .valores .row span {
+                font-size: 18pt;
+                font-weight: 450;
+            }
+            .dashboard .div .real{
+                font-size: 35pt;
+            }
+            .dashboard .valores .column{
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+
+            <section class="acoes">
+                <form action="../PHP/dashboard.php" method="post">
+                    <div class="div">
+
+                    </div>
+                    <div class="div">
+
+                    </div>
+                    <div class="div">
+
+                    </div>
+                </form>
+            </section>
+
+        <style>
+            .acoes{
+                width: 100%;
+                width: min(100%, none);
+                font-family: sans-serif;
+                height: 150px;
+                margin: 1% auto 10px auto;
+                position: relative;
+                box-sizing: border-box;
+                justify-content: space-between;
+                display: flex;
+                padding: 15px;
+                color: white;
+            }
+            .acoes .div{
+                background-color: blue;
+
+            }
+        </style>
 
         <div class="graficos">
             <div class="entrada_saida">
@@ -316,8 +352,6 @@ $funcionario = $funcionario->getFuncionario();
                 <div id="barchart_values"  style="width: 95%; height: 95%;"></div>
             </div>
         </div>
-        
-
         <style>
             .graficos {
                 width: 100%;
@@ -328,6 +362,13 @@ $funcionario = $funcionario->getFuncionario();
                 box-sizing: border-box;
                 font-family: Arial, Helvetica, sans-serif;
                 padding: 15px;
+                overflow-x: scroll;
+                
+            }
+            .graficos::-webkit-scrollbar
+            {
+            display: none;
+            scrollbar-width: none;
             }
             .titulo_grafico {
                 color: #262626;
@@ -342,11 +383,12 @@ $funcionario = $funcionario->getFuncionario();
             }
             .entrada_saida {
                 width:100%;
-                height: 360px;
-                min-height: 200px;
+                min-width: 400px;
+                height: 240px;
+                min-height: 240px;
                 margin: 0px 10px 0px 10px;
                 box-sizing: border-box;
-                box-shadow: 0px 0px 6px 3px rgba(210, 210, 210, 0.3);
+                box-shadow: 0px 3px 3px -1px rgba(210, 210, 210, 0.6);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -355,12 +397,11 @@ $funcionario = $funcionario->getFuncionario();
                 position: relative;
                 overflow: hidden;
                 color: var(--preto);
-                border-radius: 5px;
+                border-radius: 2px;
                 transition: 0.1s;
             }
         </style>
 
-       
     </section>
 </main>
 
