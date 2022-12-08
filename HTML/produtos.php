@@ -130,7 +130,7 @@ $funcionario = $funcionario->getFuncionario();
                     <div class="div">
                         <button type="button" class="botao" id="button-entrada" onclick="abrirmodal('button-entrada')">
                             <ion-icon name="add-outline" style="width: 30px; height: 100%;"></ion-icon>
-                            Novo Cadastro
+                            Cadastro
                         </button>
                     </div>
                     <div class="div-pesquisar div">

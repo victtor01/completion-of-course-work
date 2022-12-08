@@ -87,6 +87,10 @@
     transition: 0.2s;
     overflow-x: hidden;
 }
+#modal-entrada::-webkit-scrollbar{
+    display: none;
+    scrollbar-width: none;
+    }
 
 #modal-entrada .section-cadastro {
     width: 100%;
