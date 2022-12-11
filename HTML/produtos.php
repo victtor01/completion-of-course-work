@@ -288,10 +288,12 @@ $funcionario = $funcionario->getFuncionario();
                     <button type="reset" class="botao2"> Limpar </button>
                     <label for=""> <span>Desconto do valor total</span><input type="number"> </label>
                     <button type="submit" class="botao1" 
+
                     <?php 
                     if($_GET['opcao'] == 1){echo " name='inserir-produto'";}
                     elseif($_GET['opcao'] == 2){ echo "name='retirar-produto'";}
                     ?>
+                    
                     >Concluir
                     </button>
                 </div>

@@ -210,7 +210,7 @@ $funcionario = $funcionario->getFuncionario();
                 box-sizing: border-box;
                 justify-content: space-between;
                 display: flex;
-                padding: 15px;
+                padding: 5px;
                 color: white;
             }.dashboard .valores{
                 position: relative;
@@ -235,7 +235,7 @@ $funcionario = $funcionario->getFuncionario();
                 transform: scale(1.01);
             }
             .dashboard .div{
-                width: 37%;
+                width: 100%;
                 height: 100%;
                 position: relative;
                 box-shadow: 0px 2px 10px -4px rgb(220, 220, 220);
@@ -247,6 +247,7 @@ $funcionario = $funcionario->getFuncionario();
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                margin: 0px 10px 0px 10px;
             }
             .dashboard .div:hover{
                 transform: scale(1.02);
@@ -275,7 +276,7 @@ $funcionario = $funcionario->getFuncionario();
                 align-items: center;
                 justify-content: center;
                 background-color: #44b331;
-                width: 23%;
+                width: 100%;
             }
             .dashboard .valores h3{
                 font-size: 14pt;
@@ -298,46 +299,140 @@ $funcionario = $funcionario->getFuncionario();
             .dashboard .div .real{
                 font-size: 35pt;
             }
-            .dashboard .valores .column{
-                height: auto;
+            .column{
+                height: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
                 align-items: center;
+                width: 100%;
+                padding: 5px;
             }
         </style>
 
+        <form action="../PHP/dashboard.php" method="post">
             <section class="acoes">
-                <form action="../PHP/dashboard.php" method="post">
                     <div class="div">
-
+                        <div class="column" style="color:rgba(0, 0, 0, 1);">
+                            Registro caixa
+                            <div class="hr"> 
+                                <hr> 
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            nome
+                                        </th>
+                                        <th>
+                                            valor
+                                        </th>
+                                        <th>
+                                            Opcao
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            café
+                                        </td>
+                                        <td>
+                                            R$ 203,34
+                                        </td>
+                                        <td>
+                                            Excluir
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="div">
-
+                        <div class="column" style="color:rgba(0, 0, 0, 1);">
+                            Registro caixa
+                            <div class="hr"> <hr> </div>
+                        </div>
                     </div>
                     <div class="div">
-
+                        <div class="column" style="color:rgba(0, 0, 0, 1);">
+                            Registro caixa
+                            <div class="hr"> <hr> </div>
+                        </div>
                     </div>
-                </form>
+                    <!--
+                    <div class="botao"> 
+                        <button class="botao-acao">
+                            Enviar
+                        </button>
+                    </div>
+                    -->
             </section>
+        </form>
 
         <style>
             .acoes{
                 width: 100%;
                 width: min(100%, none);
                 font-family: sans-serif;
-                height: 150px;
+                height: 270px;
                 margin: 1% auto 10px auto;
                 position: relative;
                 box-sizing: border-box;
                 justify-content: space-between;
                 display: flex;
-                padding: 15px;
+                padding: 5px;
                 color: white;
+                position: relative;
             }
             .acoes .div{
-                background-color: blue;
+                width: 100%;
+                height: 100%;
+                margin: 0px 10px 0px 10px;
+                transition: 0.2s;
+                transition-delay: 0.05s;
+                border-radius: 4px;
+                padding: 5px;
+                display: flex;
+                overflow-y: scroll;
+                position: relative;
+            }
+            .botao{
+                width: 60px;
+                height: 15%;
+                bottom: 0;
+                background: none;
+                margin: 5px auto 5px auto;
+                background-color: black;
+                color: white;
+                position: absolute;
+            }
+            .botao .botao-acao{
+                background: none;
+                color: white;
+            }
+            .acoes .div:hover{
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            }
+        </style>
 
+        <div class="hr"> <hr> <span> Gráficos </span> <hr> </div>
+        <style>
+            .hr{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                opacity: 0.40;
+            }
+            .hr hr{
+                width: 99%;
+                margin: 5px 3px 5px 3px;
+                background-color: rgba(0, 0, 0, 0.5);
+                height: 1px;
+            }
+            .hr span{
+                font-weight: 500;
+                font-family: Arial, Helvetica, sans-serif;
             }
         </style>
 
@@ -362,8 +457,7 @@ $funcionario = $funcionario->getFuncionario();
                 box-sizing: border-box;
                 font-family: Arial, Helvetica, sans-serif;
                 padding: 15px;
-                overflow-x: scroll;
-                
+                overflow-x: scroll !important;
             }
             .graficos::-webkit-scrollbar
             {
@@ -388,7 +482,7 @@ $funcionario = $funcionario->getFuncionario();
                 min-height: 240px;
                 margin: 0px 10px 0px 10px;
                 box-sizing: border-box;
-                box-shadow: 0px 3px 3px -1px rgba(210, 210, 210, 0.6);
+                box-shadow: 1px 3px 1px 1px rgba(220, 220, 220, 1);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -399,7 +493,13 @@ $funcionario = $funcionario->getFuncionario();
                 color: var(--preto);
                 border-radius: 2px;
                 transition: 0.1s;
+                border-radius: 5px;
             }
+            .entrada_saida:hover{
+                transform: scale(1.01);
+                box-shadow: 1px 3px 2px 1px rgba(220, 220, 220, 0.9);
+            }
+
         </style>
 
     </section>

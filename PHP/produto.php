@@ -2,7 +2,6 @@
 if(empty($_SESSION['id'])){
 session_start();
 }
-
 if(!isset($_SESSION['nome']) || !isset($_SESSION['id']) || !isset($_SESSION['cargo'])){
     header('Location: ../login.php');
     die();
@@ -635,5 +634,5 @@ elseif (isset($_POST['retirar-produto'])) {
 }
 
 elseif(isset($_POST['submit-update-produto'])){
-$produto->EditarProduto();
+    $produto->EditarProduto();
 }
