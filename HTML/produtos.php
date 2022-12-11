@@ -26,6 +26,8 @@ $funcionario = $funcionario->getFuncionario();
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="../JS/script.js"></script>
     <script src="../modal/modal.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 
     <title>Produtos</title>
 
@@ -134,7 +136,7 @@ $funcionario = $funcionario->getFuncionario();
                         </button>
                     </div>
                     <div class="div-pesquisar div">
-                        <input type="text" placeholder="Pesquise..." class="pesquisar">
+                        <input onkeyup="buscar()" id="busca" type="text" placeholder="Pesquise..." class="pesquisar">
                         <button type="button" class="btn-pesquisar" style="border: none; background: none;">
                             <img src="../imagens/lupa.png" width="25px" height="25px">
                         </button>
@@ -321,6 +323,14 @@ $funcionario = $funcionario->getFuncionario();
         </section>
     </dialog>
 
+    <script>
+        function buscar(){
+            var busca = window.document.getElementById("busca").value;
+            $.post('../php/produto.php', {busca: busca}, function(data){
+                $("#tabela-produtos").html(data);
+            })
+        }
+    </script>
 </body>
 
 </html>

@@ -327,7 +327,7 @@ class produto extends links_pages
 
         if (mysqli_num_rows($result) > 0) {
         ?>
-            <table>
+            <table id="tabela-produtos">
             <thead>
                 <tr class='tr'>
                     <th style="min-width: 30px;"></th>
@@ -599,7 +599,159 @@ class produto extends links_pages
             </label>";
         }
     }
+    public function buscarUsuario()
+    {
+        include_once('conexao.php');
+        include 'LimitPages.php';
+        
+        $busca = $_POST['busca'];
+        $pagina = Paginas("produto", 7);
+        $pagina['inicio'];
+        $pagina['num_paginas'];
+
+        $sql = "SELECT * FROM produto WHERE nome LIKE '%$busca%' ORDER BY data_produto DESC LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
+        $result = mysqli_query($conexao, $sql);
+
+        ?>
+        <thead>
+            <tr class='tr'>
+                <th style="min-width: 30px;"></th>
+                <th> Nome </th>
+                <th> Categoria</th>
+                <th> Tamanho</th>
+                <th> Quantidade</th>
+                <th style ="max-width: 40px"> Preço de Compra</th>
+                <th max-width='40px'> Lucro (%) </th>
+                <th> Preço de venda: </th>
+                <th> Data</th>
+                <th style='min-width: 100px;'> Ações </th>
+            </tr>
+        </thead>
+
+        <?php
+        while ($user_data = mysqli_fetch_assoc($result)){
+
+            $id = $user_data['id_produto'];
+            $nome = $user_data['nome'];
+            $categoria = $user_data['categoria'];
+            $quantidade = $user_data['quantidade'];
+            $fornecedor = $user_data['fornecedor'];
+            $valor_investido = $user_data['valor_investido'];
+            $lucro_esperado = $user_data['lucro_esperado'];
+            $tamanho = $user_data['tamanho'];
+            $data = $user_data['data_produto'];
+
+            $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+            $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+            $row = $result_fornecedor->fetch_assoc();
+            $fornecedor_nome = $row["nome"];
+
+            $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
+            $result_categoria = mysqli_query($conexao, $sql_categoria);
+            $row = $result_categoria->fetch_assoc();
+            $categoria_nome = $row["nome"];
+
+
+            echo "<tr> <td>";
+                echo "<input type='checkbox' style='width: 70%; height: 70%; border-radius: 5px; 
+                'name='checkbox_id[$id]' value='" . $id . "'>";
+            echo "</td>";
+
+            echo "<td style='max-width: 120px; '>";
+                echo $nome;
+            echo "</td>";
+
+            echo "<td style='max-width: 120px; '>";
+                echo $categoria_nome;
+            echo "</td>";
+
+            echo "<td>";
+                switch ($tamanho) {
+                    case 1:
+                        echo "PP";
+                        break;
+                    case 2:
+                        echo "P";
+                        break;
+                    case 3:
+                        echo "M";
+                        break;
+                    case 4:
+                        echo "G";
+                        break;
+                    case 5:
+                        echo "GG";
+                        break;
+                }
+            echo "</td>";
+
+            echo "<td style='color: "; 
+
+                if ($quantidade > 5) { echo "green;'>"; } 
+                elseif ($quantidade > 0) { echo "blue;'>"; } 
+                else {echo "red;'>"; }
+
+            echo $quantidade . "</td>";
+
+            echo "<td> R$ " 
+                . $valor_investido .
+                "</td>";
+
+            echo "<td> $lucro_esperado %</td>";
+            $porcento = ($lucro_esperado/100) * $valor_investido;
+            $preco_venda = $valor_investido + $porcento;
+            echo "<td>R$" . intval($preco_venda) ."</td>";
+
+            echo "<td>" . $data . "</td>";
+
+            echo 
+            "<td style='max-width: 50px; min-width: 20px;'>
+
+                <button class='editar' type='button'>
+                    <a style='width: 35px; height: 35px;name='id_produto' href='?id_produto=$user_data[id_produto]&button-update-produto=1'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                        <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
+                        </svg>
+                    </a>
+                </button> 
     
+    
+                <button class='editar' type='button'>
+                    <a style='width: 35px; height: 35px;' name='id_produto' href='../PHP/produto.php?id_produto=$user_data[id_produto]&delete=on'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>
+                        <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>
+                        <path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>
+                        </svg>
+                    </a>
+                </button>
+                
+            </td>";
+
+            echo 
+            "</tr>";
+        }
+
+        ?>
+            <footer class="footer">
+                <nav  class="paginacao">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#"><ion-icon name="chevron-back-outline"></ion-icon></a>
+                    </li>
+                    <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
+                        <li class="page-item">
+                            <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php } ?>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><ion-icon name="chevron-forward-outline"></ion-icon></a>
+                    </li>
+                </ul>
+                </nav>
+            </footer>
+        <?php
+
+    }
 }
 
 $produto = new produto;
@@ -635,4 +787,8 @@ elseif (isset($_POST['retirar-produto'])) {
 
 elseif(isset($_POST['submit-update-produto'])){
     $produto->EditarProduto();
+}
+
+elseif(isset($_POST['busca'])){
+    $produto->buscarUsuario();
 }
