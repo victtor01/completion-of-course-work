@@ -136,7 +136,7 @@ $funcionario = $funcionario->getFuncionario();
                         </button>
                     </div>
                     <div class="div-pesquisar div">
-                        <input onkeyup="buscar()" id="busca" type="text" placeholder="Pesquise..." class="pesquisar">
+                        <input onkeyup="buscar()" id="busca" type="text" placeholder="Pesquise..." class="pesquisar" value="<?php if(isset($_GET['buscar'])){ echo $_GET['buscar'];}?>">
                         <button type="button" class="btn-pesquisar" style="border: none; background: none;">
                             <img src="../imagens/lupa.png" width="25px" height="25px">
                         </button>
@@ -155,10 +155,14 @@ $funcionario = $funcionario->getFuncionario();
                     </div>
                 </div>
 
-                <section class="section-produtos">
+                <section class="section-produtos" id="produtos">
                     <?php
                     $produto = new produto;
-                    $produto->mostrar_produtos();
+                    if(isset($_GET['buscar']) && $_GET['buscar'] != ''){
+                        $produto->buscarProduto();
+                    }else{
+                        $produto->mostrar_produtos();
+                    }
                     ?>             
                 </section>
             </form>
@@ -265,44 +269,44 @@ $funcionario = $funcionario->getFuncionario();
     </dialog>
 
     <?php if (!empty($_GET['pesquisa'])) { ?>
-    <dialog id="modal-saida" class="modal itens-selecionados">
+        <dialog id="modal-saida" class="modal itens-selecionados">
 
-        <header class="header-cadastro">
-            <h2 style="font-weight: 450;">
-            <?php
-            $opcao = $_GET['opcao'] == 1? "Nova Remessa" : "Saída";
-            echo $opcao;
-            ?>    
-            </h2>
-            <button class="button-fechar" type="button" style="border: none;" onclick="fecharmodal('button-saida-fechar')">
-                <ion-icon style="width: 35px; height: 35px;"name="close-outline"></ion-icon>
-            </button>
-        </header>
-
-        <section id="modal-saida-select">
-            <form action="../PHP/produto.php" method="POST">
+            <header class="header-cadastro">
+                <h2 style="font-weight: 450;">
                 <?php
-                $pesquisa = $_GET['pesquisa'];
-                $produto = new produto;
-                $produto->modal_produtos_selecionados($pesquisa);
-                ?>
-                <div class="botoes-submit">
-                    <button type="reset" class="botao2"> Limpar </button>
-                    <label for=""> <span>Desconto do valor total</span><input type="number"> </label>
-                    <button type="submit" class="botao1" 
+                $opcao = $_GET['opcao'] == 1? "Nova Remessa" : "Saída";
+                echo $opcao;
+                ?>    
+                </h2>
+                <button class="button-fechar" type="button" style="border: none;" onclick="fecharmodal('button-saida-fechar')">
+                    <ion-icon style="width: 35px; height: 35px;"name="close-outline"></ion-icon>
+                </button>
+            </header>
 
-                    <?php 
-                    if($_GET['opcao'] == 1){echo " name='inserir-produto'";}
-                    elseif($_GET['opcao'] == 2){ echo "name='retirar-produto'";}
+            <section id="modal-saida-select">
+                <form action="../PHP/produto.php" method="POST">
+                    <?php
+                    $pesquisa = $_GET['pesquisa'];
+                    $produto = new produto;
+                    $produto->modal_produtos_selecionados($pesquisa);
                     ?>
-                    
-                    >Concluir
-                    </button>
-                </div>
-            </form>
-        </section>
+                    <div class="botoes-submit">
+                        <button type="reset" class="botao2"> Limpar </button>
+                        <label for=""> <span>Desconto do valor total</span><input type="number"> </label>
+                        <button type="submit" class="botao1" 
 
-    </dialog>
+                        <?php 
+                        if($_GET['opcao'] == 1){echo " name='inserir-produto'";}
+                        elseif($_GET['opcao'] == 2){ echo "name='retirar-produto'";}
+                        ?>
+                        
+                        >Concluir
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+        </dialog>
     <?php } ?>
 
     <dialog id="modal-editar" class="modal">
@@ -326,9 +330,16 @@ $funcionario = $funcionario->getFuncionario();
     <script>
         function buscar(){
             var busca = window.document.getElementById("busca").value;
-            $.post('../php/produto.php', {busca: busca}, function(data){
-                $("#tabela-produtos").html(data);
-            })
+            if(busca == ''){
+                $.post('../php/produto.php', {mostrar_produtos: 1}, function(data){
+                $("#produtos").html(data);
+                })
+            }
+            else{
+                $.post('../php/produto.php', {busca: busca}, function(data){
+                $("#produtos").html(data);
+                })
+            }
         }
     </script>
 </body>

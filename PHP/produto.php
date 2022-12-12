@@ -599,12 +599,12 @@ class produto extends links_pages
             </label>";
         }
     }
-    public function buscarUsuario()
+    public function buscarProduto()
     {
-        include_once('conexao.php');
+        include('conexao.php');
         include 'LimitPages.php';
         
-        $busca = $_POST['busca'];
+        $busca = isset($_POST['busca'])? $_POST['busca']: $_GET['buscar'] ;
         $pagina = Paginas("produto", 7);
         $pagina['inicio'];
         $pagina['num_paginas'];
@@ -613,6 +613,7 @@ class produto extends links_pages
         $result = mysqli_query($conexao, $sql);
 
         ?>
+        <table>
         <thead>
             <tr class='tr'>
                 <th style="min-width: 30px;"></th>
@@ -730,7 +731,7 @@ class produto extends links_pages
             echo 
             "</tr>";
         }
-
+        echo "</table>";
         ?>
             <footer class="footer">
                 <nav  class="paginacao">
@@ -738,9 +739,9 @@ class produto extends links_pages
                     <li class="page-item">
                         <a class="page-link" href="#"><ion-icon name="chevron-back-outline"></ion-icon></a>
                     </li>
-                    <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
+                    <?php for($i = 1; $i < $pagina['num_paginas'] ; $i++){ ?>
                         <li class="page-item">
-                            <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
+                            <a class="page-link" href="produtos.php?pagina=<?php echo $i?>&buscar=<?php echo $busca?>"><?php echo $i; ?></a>
                         </li>
                     <?php } ?>
                     <li class="page-item">
@@ -750,16 +751,15 @@ class produto extends links_pages
                 </nav>
             </footer>
         <?php
-
     }
 }
 
 $produto = new produto;
-
+//inserir produto
 if (isset($_POST['submit-produto'])) {
     $produto->inserir();
 } 
-
+//deletar produto
 elseif (!empty($_GET['id_produto']) && !empty($_GET['delete'])) 
 {
     if ($_GET['delete'] == 'on') {
@@ -767,7 +767,7 @@ elseif (!empty($_GET['id_produto']) && !empty($_GET['delete']))
         $produto->delete($id);
     }
 } 
-
+# modal de entrada e saida de produtos
 elseif (isset($_POST['submit-saida-produto']) || isset($_POST['submit-entrada-produto'])) 
 {
         
@@ -780,15 +780,22 @@ elseif (isset($_POST['submit-saida-produto']) || isset($_POST['submit-entrada-pr
         $produto->validar($dados, 1);
     }
 }
+    # inserir e retirar produtos
+    elseif (isset($_POST['retirar-produto'])) {
+        $produto->retirar();
+    }
 
-elseif (isset($_POST['retirar-produto'])) {
-    $produto->retirar();
-}
-
+// update dos produtos
 elseif(isset($_POST['submit-update-produto'])){
     $produto->EditarProduto();
 }
 
+// buscar por algum produto
 elseif(isset($_POST['busca'])){
-    $produto->buscarUsuario();
+    $produto->buscarProduto();
+}
+
+//post para mostrar todos os produtos com o jquery
+elseif(isset($_POST['mostrar_produtos'])){
+    $produto->mostrar_produtos();
 }
