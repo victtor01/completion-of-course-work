@@ -1,7 +1,9 @@
 <?php
 function Paginas($tabela, $num_por_pag){
     include('conexao.PHP');
-    $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
+
+    $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
+    
     $sql = "SELECT * FROM " . $tabela;
     $query = mysqli_query($conexao, $sql);
 
@@ -10,12 +12,12 @@ function Paginas($tabela, $num_por_pag){
 
     $num_paginas = ceil($total_produtos/$quantidadePorPagina);
     $inicio = ($quantidadePorPagina * $pagina)-$quantidadePorPagina;
-    
-    return $vetor = array(
+
+    return [
         "inicio" => $inicio,
         "num_paginas" => $num_paginas, 
-        "quantidadePorPagina" => $quantidadePorPagina,
-    );
+        "quantidadePorPagina" => $quantidadePorPagina
+    ];
 }
 
 ?>

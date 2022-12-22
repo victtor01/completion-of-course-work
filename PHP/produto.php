@@ -20,11 +20,11 @@ class produto extends links_pages
             header('Location: ../HTML/produtos.php'); 
             die(); 
         }
-        else { 
-            $patch = $pasta . $imagem . "." . $extensao;  
-            $move = move_uploaded_file($foto["tmp_name"], $patch); 
-            return $patch;
-        }
+        
+        $patch = $pasta . $imagem . "." . $extensao;  
+        $move = move_uploaded_file($foto["tmp_name"], $patch); 
+        return $patch;
+
     }
     public function inserir()
     {
@@ -314,20 +314,21 @@ class produto extends links_pages
 
         header('Location: ../html/produtos.php');
     }
-    public function mostrar_produtos()
+    public static function mostrar_produtos()
     {
         include 'conexao.PHP';
         include 'LimitPages.php';
-        $pagina = Paginas("produto", 7);
-        $pagina['inicio'];
-        $pagina['num_paginas'];
 
+        $pagina = Paginas("produto", 8);
+        $pagina["inicio"] . "<br>";
+        $pagina['num_paginas'];
+        
         $sql = "SELECT * FROM produto ORDER BY data_produto DESC LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
         $result = mysqli_query($conexao, $sql);
 
         if (mysqli_num_rows($result) > 0) {
         ?>
-            <table id="tabela-produtos">
+        <table id="tabela-produtos">
             <thead>
                 <tr class='tr'>
                     <th style="min-width: 30px;"></th>
@@ -342,29 +343,29 @@ class produto extends links_pages
                     <th style='min-width: 100px;'> Ações </th>
                 </tr>
             </thead>
-
         <?php
-        while ($user_data = mysqli_fetch_assoc($result)){
 
-        $id = $user_data['id_produto'];
-        $nome = $user_data['nome'];
-        $categoria = $user_data['categoria'];
-        $quantidade = $user_data['quantidade'];
-        $fornecedor = $user_data['fornecedor'];
-        $valor_investido = $user_data['valor_investido'];
-        $lucro_esperado = $user_data['lucro_esperado'];
-        $tamanho = $user_data['tamanho'];
-        $data = $user_data['data_produto'];
+        while ($user_data = mysqli_fetch_assoc($result))
+        {
+            $id = $user_data['id_produto'];
+            $nome = $user_data['nome'];
+            $categoria = $user_data['categoria'];
+            $quantidade = $user_data['quantidade'];
+            $fornecedor = $user_data['fornecedor'];
+            $valor_investido = $user_data['valor_investido'];
+            $lucro_esperado = $user_data['lucro_esperado'];
+            $tamanho = $user_data['tamanho'];
+            $data = $user_data['data_produto'];
 
-        $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
-        $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
-        $row = $result_fornecedor->fetch_assoc();
-        $fornecedor_nome = $row["nome"];
+            $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+            $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+            $row = $result_fornecedor->fetch_assoc();
+            $fornecedor_nome = $row["nome"];
 
-        $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
-        $result_categoria = mysqli_query($conexao, $sql_categoria);
-        $row = $result_categoria->fetch_assoc();
-        $categoria_nome = $row["nome"];
+            $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
+            $result_categoria = mysqli_query($conexao, $sql_categoria);
+            $row = $result_categoria->fetch_assoc();
+            $categoria_nome = $row["nome"];
 
 
             echo "<tr> <td>";
@@ -443,23 +444,27 @@ class produto extends links_pages
             echo 
             "</tr>";
         }
-        echo "</table>";
         ?>
 
+        </table>
         <footer class="footer">
             <nav  class="paginacao">
             <ul class="pagination">
+
                 <li class="page-item">
                     <a class="page-link" href="#"><ion-icon name="chevron-back-outline"></ion-icon></a>
                 </li>
+
                 <?php for($i = 1; $i < $pagina['num_paginas'] + 1; $i++){ ?>
                     <li class="page-item">
                         <a class="page-link" href="produtos.php?pagina=<?php echo $i?>"><?php echo $i; ?></a>
                     </li>
                 <?php } ?>
+                
                 <li class="page-item">
                     <a class="page-link" href="#"><ion-icon name="chevron-forward-outline"></ion-icon></a>
                 </li>
+
             </ul>
             </nav>
         </footer>
@@ -467,7 +472,7 @@ class produto extends links_pages
         <?php
         } 
         else { echo "<h3> Nenhum produto cadastrado </h3>"; }
-        
+        die();
     }
     public function validar($dados, $opcao)
     {
@@ -501,7 +506,6 @@ class produto extends links_pages
     }
     public function modal_produtos_selecionados($pesquisa)
     {
-
         include('conexao.PHP');
         $sql = "SELECT * FROM produto WHERE id_produto IN ($pesquisa)";
         $result = mysqli_query($conexao, $sql);
@@ -599,7 +603,7 @@ class produto extends links_pages
             </label>";
         }
     }
-    public function buscarProduto()
+    public static function buscarProduto()
     {
         include('conexao.php');
         include 'LimitPages.php';

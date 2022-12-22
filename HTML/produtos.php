@@ -136,8 +136,8 @@ $funcionario = $funcionario->getFuncionario();
                         </button>
                     </div>
                     <div class="div-pesquisar div">
-                        <input onkeyup="buscar()" id="busca" type="text" placeholder="Pesquise..." class="pesquisar" value="<?php if(isset($_GET['buscar'])){ echo $_GET['buscar'];}?>">
-                        <button type="button" class="btn-pesquisar" style="border: none; background: none;">
+                        <input id="busca" type="text" placeholder="Pesquise..." class="pesquisar" value="<?php if(isset($_GET['buscar'])){ echo $_GET['buscar'];}?>">
+                        <button onclick="buscar()" id="botaoPesquisar" type="button" class="btn-pesquisar" style="border: none; background: none;">
                             <img src="../imagens/lupa.png" width="25px" height="25px">
                         </button>
                     </div>
@@ -157,12 +157,7 @@ $funcionario = $funcionario->getFuncionario();
 
                 <section class="section-produtos" id="produtos">
                     <?php
-                    $produto = new produto;
-                    if(isset($_GET['buscar']) && $_GET['buscar'] != ''){
-                        $produto->buscarProduto();
-                    }else{
-                        $produto->mostrar_produtos();
-                    }
+                    isset($_GET['buscar']) ?  produto::buscarProduto() : produto::mostrar_produtos();
                     ?>             
                 </section>
             </form>
@@ -328,19 +323,9 @@ $funcionario = $funcionario->getFuncionario();
     </dialog>
 
     <script>
-        function buscar(){
-            var busca = window.document.getElementById("busca").value;
-            if(busca == ''){
-                $.post('../php/produto.php', {mostrar_produtos: 1}, function(data){
-                $("#produtos").html(data);
-                })
-            }
-            else{
-                $.post('../php/produto.php', {busca: busca}, function(data){
-                $("#produtos").html(data);
-                })
-            }
-        }
+/*         let botao = window.document.getElementById('botaoPesquisar');
+        botao.addEventListener('click', buscar()) */
+        
     </script>
 </body>
 

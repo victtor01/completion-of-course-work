@@ -128,3 +128,17 @@ function round(num) {
   var m = Number((Math.abs(num) * 100).toPrecision(15));
   return Math.round(m) / 100 * Math.sign(num);
 }
+
+function buscar(){
+  let busca = window.document.getElementById("busca").value;
+  if(busca == ''){
+      $.post('../php/produto.php', {mostrar_produtos : 1}, function(data){
+      $("#produtos").html(data);
+      })
+  }
+  else{
+      $.post('../php/produto.php', {busca: busca}, function(data){
+      $("#produtos").html(data);
+      })
+  }
+}
