@@ -18,6 +18,11 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
     $query = $conexao->query($sql);
     $row = $query->fetch_assoc();
     $COUNT_FOR = $row['CONTAGEM_FOR'];
+
+    $sql = "SELECT COUNT(*) as CONTAGEM_ENTRADAS FROM entrada";
+    $query = $conexao->query($sql);
+    $row = $query->fetch_assoc();
+    $count_entradas = $row["CONTAGEM_ENTRADAS"]; 
     
 
     require_once '../PHP/funcionarios.php';
@@ -85,25 +90,27 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                 <a href="fornecedores.php">
                     <ion-icon name="person-outline"></ion-icon> <span> Fornecedores </span>
                 </a>
-
                 <button class="clientes-funcionarios" id="botao-financeiro" onclick="Financeiro()">
                     <ion-icon name="cash-outline"></ion-icon></ion-icon> <span> Financeiro </span>
                     <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios" id="href-financeiro">
-                    <a href="dashboard.php">
+                    <!-- <a href="dashboard.php">
                         <span> Dashboard </span>
-                    </a>
-                    <a href="#">
+                    </a> -->
+                    <a href="entrada.php">
                         <span> Entradas </span>
                     </a>
-                    <a href="#">
+                    <a href="saidas.php">
                         <span> saidas </span>
                     </a>
                 </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
-                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                    <a href="funcionarios.php">
+                    <ion-icon name="person-outline"></ion-icon> <span> Funcionários </span>
+                </a>
+                <!--     <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
                         <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
@@ -114,7 +121,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                         <a href="clientes.php">
                             <span> Clientes </span>
                         </a>
-                    </div>
+                    </div> -->
                 <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">
@@ -148,9 +155,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 <button class="acao acao-3 button">
 
-                    <p> Financeiro </p>
+                    <p> Entradas : <?php echo $count_entradas ?></p>
                     <div class="link_acao link-acao-3">
-                        <a href="#">Financeiro</a>
+                        <a href="entrada.php">Entradas</a>
                     </div>
                 </button>
             </div>
@@ -166,12 +173,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                 </div>
 
 
-                <div class="entrada_saida">
+ <!--                <div class="entrada_saida">
                     <div class="titulo_grafico">
                         <h2> Entrada e saída de caixa</h2>
                     </div>
                     <div id="chart_div"></div>
-                </div>
+                </div> -->
 
             </div>
 
@@ -195,7 +202,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
 
                 $sql_date = "SELECT DISTINCT YEAR (data_saida) as ano, MONTH (data_saida) as mes, DAY(data_saida) as dia FROM saida 
                 UNION SELECT DISTINCT YEAR (data_entrada) as ano, MONTH(data_entrada) as mes, DAY(data_entrada) as dia FROM entrada 
-                ORDER BY mes,dia ASC LIMIT 30";
+                ORDER BY ano,mes,dia ASC LIMIT 30";
 
                 $query = $conexao->query($sql_date);
 
@@ -253,8 +260,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['nome'])) {
                 }
             }
 
-            let chart2 = new google.visualization.AreaChart(document.getElementById('chart_div'));
-            chart2.draw(data2, options2);
+           /*  let chart2 = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart2.draw(data2, options2); */
 
             let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
             chart.draw(data, options);

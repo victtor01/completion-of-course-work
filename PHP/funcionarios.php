@@ -20,6 +20,7 @@ class funcionario extends links_pages{
     private $nome;
     private $foto;
     private $PrimeiroNome;
+    private $funcionario;
 
     function __construct(){
         require 'conexao.PHP';
@@ -27,7 +28,6 @@ class funcionario extends links_pages{
         $sql = "SELECT * FROM funcionarios WHERE id_funcionario = $id_funcionario";
         $query = mysqli_query($conexao, $sql);
         $row = $query->fetch_assoc();
-
 
         $this->id = $_SESSION['id'];
         $this->cargo = $_SESSION['cargo'];
@@ -85,8 +85,8 @@ class funcionario extends links_pages{
     }
     public function UpdateFuncionarios(){
         if($this->id != 1){
-            header('Locartion: '. $this->link_funcionarios);
-            die("algo deu errado!");
+            header('Location: '. $this->link_funcionarios);
+            die("algo deu rrado!");
         }
 
         include 'conexao.php';

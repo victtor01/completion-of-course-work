@@ -28,42 +28,47 @@ class produto extends links_pages
     }
     public function inserir()
     {
-        $produto = new produto;
-        include 'conexao.PHP';
+        try {
+            $produto = new produto;
+            include 'conexao.PHP';
 
-        $nome =  $_POST['nome'];
-        $categoria =  $_POST['categoria'];
-        $quantidade =  $_POST['quantidade'];
-        $fornecedor =  $_POST['fornecedor'];
-        $valor_investido =  $_POST['investimento'];
-        $lucro_esperado = $_POST['lucro'];
-        $data_produto = $_POST['data'];
-        $tamanho = $_POST['tamanho'];
-        $foto = $_FILES['foto'];
+            $nome =  $_POST['nome'];
+            $categoria =  $_POST['categoria'];
+            $quantidade =  $_POST['quantidade'];
+            $fornecedor =  $_POST['fornecedor'];
+            $valor_investido =  $_POST['investimento'];
+            $lucro_esperado = $_POST['lucro'];
+            $data_produto = $_POST['data'];
+            $tamanho = $_POST['tamanho'];
+            $foto = $_FILES['foto'];
 
-        $patch = $produto->CosntrutorImagem($foto);
+            $patch = $produto->CosntrutorImagem($foto);
 
-        $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, 
-        fornecedor, valor_investido, lucro_esperado, tamanho, data_produto, foto)
-        VALUES ('$nome', $categoria, '$quantidade',$fornecedor, '$valor_investido', 
-        '$lucro_esperado', '$tamanho','$data_produto', '$patch')";
+            $inserir_produto  = "INSERT INTO produto (nome, categoria, quantidade, 
+            fornecedor, valor_investido, lucro_esperado, tamanho, data_produto, foto)
+            VALUES ('$nome', $categoria, '$quantidade',$fornecedor, '$valor_investido', 
+            '$lucro_esperado', '$tamanho','$data_produto', '$patch')";
 
-        $query_result = mysqli_query($conexao, $inserir_produto);
+            $query_result = mysqli_query($conexao, $inserir_produto);
 
-        if($query_result){
-            $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, 
-            $tamanho, $categoria, $fornecedor);
+            if($query_result){
+                $produto->entrada($quantidade, $nome, $valor_investido, $data_produto, 
+                $tamanho, $categoria, $fornecedor);
+            }
+
+            $msg = $query_result? 1 : 0;
+            header('Location: '. $this->link_produtos . '?msg=' . $msg);
+            die();
+        } catch (\Throwable $th) {
+            //header('Location: '. $this->link_produtos . '?msg=' . $msg);
+            echo "deu errado!";
         }
-
-        $msg = $query_result? 1 : 0;
-        header('Location: '. $this->link_produtos . '?msg=' . $msg);
-        die();
     }
     public function retirar()
     {
         include('conexao.PHP');
         $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
+        
         foreach ($produtos['id'] as $chave => $id){
 
             $id_produto = $produtos['id'][$chave];
@@ -269,47 +274,50 @@ class produto extends links_pages
     } 
     public function EditarProduto()
     {
-        
-        include 'conexao.php';
-        $id = $_POST['id_produto'];
-        $sql = "SELECT * FROM produto WHERE id_produto = $id";
-        $query = mysqli_query($conexao, $sql);
-        $row = $query->fetch_assoc();
-        $tmp = $row['quantidade'];
-        
-        $nome = $_POST['nome'];
-        $categoria = $_POST['categoria'];
-        $tamanho = $_POST['tamanho'];
-        $quantidade = $_POST['quantidade'];
-        $preco = $_POST['preco'];
-        $data = $_POST['data'];
-        $fornecedor = $_POST['fornecedor'];
-        $lucro = $_POST['lucro'];
-        $foto = $_FILES['foto'];
-
-        if($foto['size'] == 0){
-            $foto = $row['foto'];
-            $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
-            tamanho='$tamanho',  quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
-            fornecedor='$fornecedor', foto='$foto', lucro_esperado='$lucro' WHERE id_produto = $id";
+        try {
+            include 'conexao.php';
+            $id = $_POST['id_produto'];
+            $sql = "SELECT * FROM produto WHERE id_produto = $id";
             $query = mysqli_query($conexao, $sql);
-        }
-        else{
-            $pasta = "../imagens/imagens-pro/";
-            $imagem = uniqid();
-            $imagem_nome = $foto['name'];
-            $extensao = strtolower(pathinfo($imagem_nome, PATHINFO_EXTENSION));
-
-            if($extensao != 'jpg' &&  $extensao != 'png' ) 
-            { header('Location: ../HTML/produtos.php'); die(); }
-            else
-            { $patch = $pasta . $imagem . "." . $extensao;  
-            $move = move_uploaded_file($foto["tmp_name"], $patch);}
-
-            $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
-            tamanho='$tamanho', quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
-            fornecedor='$fornecedor', foto='$patch' lucro_esperado='$lucro' WHERE id_produto = $id";
-            $query = mysqli_query($conexao, $sql);
+            $row = $query->fetch_assoc();
+            $tmp = $row['quantidade'];
+            
+            $nome = $_POST['nome'];
+            $categoria = $_POST['categoria'];
+            $tamanho = $_POST['tamanho'];
+            $quantidade = $_POST['quantidade'];
+            $preco = $_POST['preco'];
+            $data = $_POST['data'];
+            $fornecedor = $_POST['fornecedor'];
+            $lucro = $_POST['lucro'];
+            $foto = $_FILES['foto'];
+    
+            if($foto['size'] == 0){
+                $foto = $row['foto'];
+                $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
+                tamanho='$tamanho',  quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
+                fornecedor='$fornecedor', foto='$foto', lucro_esperado='$lucro' WHERE id_produto = $id";
+                $query = mysqli_query($conexao, $sql);
+            }
+            else{
+                $pasta = "../imagens/imagens-pro/";
+                $imagem = uniqid();
+                $imagem_nome = $foto['name'];
+                $extensao = strtolower(pathinfo($imagem_nome, PATHINFO_EXTENSION));
+    
+                if($extensao != 'jpg' &&  $extensao != 'png' ) 
+                { header('Location: ../HTML/produtos.php'); die(); }
+                else
+                { $patch = $pasta . $imagem . "." . $extensao;  
+                $move = move_uploaded_file($foto["tmp_name"], $patch);}
+    
+                $sql = "UPDATE produto SET nome='$nome', categoria='$categoria',
+                tamanho='$tamanho', quantidade='$quantidade', valor_investido='$preco', data_produto='$data',
+                fornecedor='$fornecedor', foto='$patch' lucro_esperado='$lucro' WHERE id_produto = $id";
+                $query = mysqli_query($conexao, $sql);
+            }
+        } catch (\Throwable $th) {
+            
         }
 
         header('Location: ../html/produtos.php');
@@ -320,7 +328,7 @@ class produto extends links_pages
         include 'LimitPages.php';
 
         $pagina = Paginas("produto", 8);
-        $pagina["inicio"] . "<br>";
+        $pagina["inicio"];
         $pagina['num_paginas'];
         
         $sql = "SELECT * FROM produto ORDER BY data_produto DESC LIMIT $pagina[inicio], $pagina[quantidadePorPagina]";
@@ -357,10 +365,13 @@ class produto extends links_pages
             $tamanho = $user_data['tamanho'];
             $data = $user_data['data_produto'];
 
-            $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
-            $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
-            $row = $result_fornecedor->fetch_assoc();
-            $fornecedor_nome = $row["nome"];
+            if($fornecedor)
+            {
+                $sql_fornecedor = "SELECT nome FROM fornecedor WHERE id_fornecedor = $fornecedor";
+                $result_fornecedor = mysqli_query($conexao, $sql_fornecedor);
+                $row = $result_fornecedor->fetch_assoc();
+                $fornecedor_nome = $row["nome"];
+            }
 
             $sql_categoria = "SELECT nome FROM categoria WHERE id_categoria = $categoria";
             $result_categoria = mysqli_query($conexao, $sql_categoria);
@@ -472,7 +483,6 @@ class produto extends links_pages
         <?php
         } 
         else { echo "<h3> Nenhum produto cadastrado </h3>"; }
-        die();
     }
     public function validar($dados, $opcao)
     {
@@ -756,6 +766,40 @@ class produto extends links_pages
             </footer>
         <?php
     }
+    public function inserirQuant(){
+        include('conexao.PHP');
+        $produtos = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        
+        foreach ($produtos['id'] as $chave => $id){
+
+            $id_produto = $produtos['id'][$chave];
+            $nome = $produtos['nome'][$chave];
+            $quantidade_entrada = $produtos['quantidade'][$chave];
+            $preco = $produtos['preco'][$chave];
+            $categoria = $produtos['categoria'][$chave];
+            $fornecedor = $produtos['fornecedor'][$chave];
+            $data = $produtos['data'];
+            $tamanho = $produtos['tamanho'][$chave];
+            $valor_total = (intval($quantidade_entrada) * intval($preco));
+
+            $sql_quantidade_atual = "SELECT quantidade FROM produto WHERE id_produto=$id_produto";
+            $query = mysqli_query($conexao, $sql_quantidade_atual);
+
+            $quant = mysqli_fetch_assoc($query);
+            $quantidade_atual = $quant['quantidade'];
+
+            $soma = (intval($quantidade_atual) + intval($quantidade_entrada));
+
+            $sql_update = "UPDATE produto SET quantidade = '$soma' WHERE id_produto=$id_produto";
+            $query = mysqli_query($conexao, $sql_update);
+            $produto = new produto;
+            $produto->entrada($quantidade_entrada, $nome, $valor_total, 
+            $data, $tamanho, $categoria, $fornecedor);
+
+        }
+
+        header('Location: '. $this->link_produtos);
+    }
 }
 
 $produto = new produto;
@@ -784,10 +828,13 @@ elseif (isset($_POST['submit-saida-produto']) || isset($_POST['submit-entrada-pr
         $produto->validar($dados, 1);
     }
 }
-    # inserir e retirar produtos
-    elseif (isset($_POST['retirar-produto'])) {
-        $produto->retirar();
-    }
+# inserir e retirar produtos
+elseif (isset($_POST['retirar-produto'])) {
+    $produto->retirar();
+}
+elseif(isset($_POST['inserir-produto'])){
+    $produto->inserirQuant();
+}
 
 // update dos produtos
 elseif(isset($_POST['submit-update-produto'])){

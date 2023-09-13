@@ -1,6 +1,5 @@
 <?php
 
-
 session_start();
 if(isset($_SESSION['nome']) && isset($_SESSION['id']) && isset($_SESSION['cargo'])){
     if($_SESSION['cargo'] != 1){
@@ -90,19 +89,22 @@ $funcionario = $funcionario->getFuncionario();
                     <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios" id="href-financeiro">
-                    <a href="#">
+                    <!-- <a href="#">
                         <span> Dashboard </span>
-                    </a>
-                    <a href="#">
+                    </a> -->
+                    <a href="entrada.php">
                         <span> Entradas </span>
                     </a>
-                    <a href="#">
+                    <a href="saidas.php">
                         <span> saidas </span>
                     </a>
                 </div>
-
+                
                 <?php if($_SESSION['cargo'] == 1){ ?>
-                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                    <a href="funcionarios.php">
+                    <ion-icon name="person-outline"></ion-icon> <span> Funcionários </span>
+                </a>
+                    <!-- <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
                         <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
@@ -113,7 +115,7 @@ $funcionario = $funcionario->getFuncionario();
                         <a href="clientes.php">
                             <span> Clientes </span>
                         </a>
-                    </div>
+                    </div> -->
                 <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">

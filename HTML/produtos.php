@@ -41,9 +41,10 @@ $funcionario = $funcionario->getFuncionario();
     <div class="msg" id="msg1">
         <h2>Ação conluída com sucesso!</h2>
     </div>
+
     <?php
-    if (!empty($_GET['msg'])) {
-        
+    if (!empty($_GET['msg'])) 
+    {      
         include_once('../php/mensagem.php');
         mensagem($_GET['msg']);
     }
@@ -88,19 +89,22 @@ $funcionario = $funcionario->getFuncionario();
                     <ion-icon name="chevron-forward-outline" id="ion-icon-seta-financeiro" width='10px'></ion-icon>    
                 </button>
                 <div class="href-clientes-funcionarios" id="href-financeiro">
-                    <a href="#">
+                   <!--  <a href="dashboard.php">
                         <span> Dashboard </span>
-                    </a>
-                    <a href="#">
+                    </a> -->
+                    <a href="entrada.php">
                         <span> Entradas </span>
                     </a>
-                    <a href="#">
+                    <a href="saidas.php">
                         <span> saidas </span>
                     </a>
                 </div>
 
                 <?php if($_SESSION['cargo'] == 1){ ?>
-                    <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
+                    <a href="funcionarios.php">
+                    <ion-icon name="person-outline"></ion-icon> <span> Funcionários </span>
+                </a>
+                   <!--  <button class="clientes-funcionarios" id="botao-contas" onclick="ClientesFuncionarios()">
                         <ion-icon name="person-add-outline"></ion-icon> <span> Contas </span>
                         <ion-icon name="chevron-forward-outline" id="ion-icon-seta" width='10px'></ion-icon>    
                     </button>
@@ -111,7 +115,7 @@ $funcionario = $funcionario->getFuncionario();
                         <a href="clientes.php">
                             <span> Clientes </span>
                         </a>
-                    </div>
+                    </div> -->
                 <?php }?>
 
                 <a href="../PHP/validar-user.php?logout=1" class="sair">
@@ -165,6 +169,7 @@ $funcionario = $funcionario->getFuncionario();
     </main>
 
     <dialog id="modal-entrada" class="modal">
+
         <header class="header-cadastro">
             <!-- titulo da parte de registro de produto -->
             <h1 style="font-weight: 400;">cadastrar produto</h1>
@@ -174,6 +179,7 @@ $funcionario = $funcionario->getFuncionario();
             </button>
 
         </header>
+
         <section class="section-cadastro">
             <form method="POST" action="../PHP/produto.php" enctype="multipart/form-data">
                 <!--nome do produto --> 
@@ -264,6 +270,7 @@ $funcionario = $funcionario->getFuncionario();
     </dialog>
 
     <?php if (!empty($_GET['pesquisa'])) { ?>
+        
         <dialog id="modal-saida" class="modal itens-selecionados">
 
             <header class="header-cadastro">
@@ -302,6 +309,7 @@ $funcionario = $funcionario->getFuncionario();
             </section>
 
         </dialog>
+
     <?php } ?>
 
     <dialog id="modal-editar" class="modal">
@@ -322,11 +330,6 @@ $funcionario = $funcionario->getFuncionario();
         </section>
     </dialog>
 
-    <script>
-/*         let botao = window.document.getElementById('botaoPesquisar');
-        botao.addEventListener('click', buscar()) */
-        
-    </script>
 </body>
 
 </html>

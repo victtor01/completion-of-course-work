@@ -13,26 +13,28 @@ class fornecedor
         $sql_inserir = "INSERT INTO fornecedor(nome, email, telefone) VALUES ('$nome_fornecedor','$email_fornecedor','$telefone_fornecedor')";
         $inserir = mysqli_query($conexao, $sql_inserir);
     
-        header('Location: ../HTML/categoria.php');
+        header('Location: ../HTML/fornecedores.php');
         die();
     }
     function editar(){
-        include_once('conexao.php');
-        $id = $_GET['id_fornecedor'];
-        $sql_select = "SELECT * FROM fornecedor WHERE id_fornecedor=$id";
-        $result = $conexao->query($sql_select);
-    
-       if($result->num_rows > 0) {
-            while($user_data = mysqli_fetch_assoc($result)){
-                $nome_fornecedor = $user_data['nome'];
-                $email_fornecedor = $user_data['email'];
-                $telefone = $user_data['telefone'];
-            }
-    
-        }
-        else {
-            header('Location: ../categoria-fornecedor.php');
-        }
+        include('conexao.php');
+
+        $id = $_POST['id'];
+        $email = $_POST['email'];
+        $telefone = $_POST['telefone'];
+        $nome = $_POST['nome'];
+
+        $sql = "UPDATE fornecedor SET nome='$nome', email='$email', telefone='$telefone' WHERE id_fornecedor=$id";
+        $result = $conexao->query($sql);
+
+        header('Location: ../HTML/fornecedores.php');
+        die();
+
+    }
+    function delete($id){
+        include('conexao.php');
+        $sql  = "DELETE FROM fornecedor WHERE id_fornecedor = {$id}";
+        $query = $conexao->query($sql);
     }
 }
 
@@ -43,7 +45,17 @@ if(isset($_POST['nome_fornecedor']) && isset($_POST['cadastrar-fornecedor'])){
 
 if(!empty($_GET['id_fornecedor'])){
    $fornecedor = new fornecedor;
-   $fornecedor->editar();
+   $fornecedor->delete($_GET['id_fornecedor']);
 }
 
+if(isset($_POST['id']))
+{
+    $id = $_POST['id'];
+    $email = $_POST['email'];
+    $telefone = $_POST['telefone'];
+    $nome = $_POST['nome'];
+
+    $fornecedor = new fornecedor;
+    $fornecedor->editar();
+}
 ?>
